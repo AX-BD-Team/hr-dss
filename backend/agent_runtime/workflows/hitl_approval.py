@@ -823,3 +823,11 @@ if __name__ == "__main__":
     print("\n[승인 통계]")
     stats = system.get_approval_statistics()
     print(json.dumps(stats, indent=2, ensure_ascii=False))
+
+
+# =============================================================================
+# Backward Compatibility Alias
+# =============================================================================
+
+# 테스트 호환성을 위한 alias
+HITLApprovalManager = HITLApprovalSystem

@@ -1,6 +1,6 @@
 # HR 의사결정 지원 시스템 - 문서 인덱스
 
-> 마지막 업데이트: 2025-01-28
+> 마지막 업데이트: 2025-01-30
 
 ---
 
@@ -10,7 +10,7 @@
 |------|------|------|
 | [CLAUDE.md](../CLAUDE.md) | 프로젝트 개발 문서 (AI 협업 규칙) | ✅ 완료 |
 | [개발 계획서](../hr-prototype-plan-v2.md) | Prototype 개발 계획 (WBS 포함) | ✅ 완료 |
-| [project-todo.md](./project-todo.md) | 일별 작업 체크리스트 | 🚧 진행중 |
+| [project-todo.md](./project-todo.md) | 일별 작업 체크리스트 | ✅ 완료 |
 
 ---
 
@@ -71,18 +71,20 @@
 
 | 산출물 | 경로 | 상태 |
 |--------|------|------|
-| Conversational UI | `apps/web/components/ConversationUI.tsx` | ⏳ 예정 |
-| Option Compare Dashboard | `apps/web/components/OptionCompare.tsx` | ⏳ 예정 |
-| Explanation Panel | `apps/web/components/ExplanationPanel.tsx` | ⏳ 예정 |
-| Graph Viewer | `apps/web/components/GraphViewer.tsx` | ⏳ 예정 |
+| Conversational UI | `apps/web/components/ConversationUI.tsx` | ✅ 완료 |
+| Option Compare Dashboard | `apps/web/components/OptionCompare.tsx` | ✅ 완료 |
+| Explanation Panel | `apps/web/components/ExplanationPanel.tsx` | ✅ 완료 |
+| Eval Dashboard (운영자용) | `apps/web/components/EvalDashboard.tsx` | ✅ 완료 |
+| Graph Viewer | `apps/web/components/GraphViewer.tsx` | ✅ 완료 |
 
 ### P8: 검증 + 결과 리포트 (1/30)
 
 | 산출물 | 경로 | 상태 |
 |--------|------|------|
-| 정량 비교 리포트 | `docs/reports/comparison-report.md` | ⏳ 예정 |
-| PoC Final Report | `docs/reports/poc-final-report.md` | ⏳ 예정 |
-| API 문서 | `docs/api-docs.md` | ⏳ 예정 |
+| 정량 비교 리포트 | [docs/reports/comparison-report.md](./reports/comparison-report.md) | ✅ 완료 |
+| PoC Final Report | [docs/reports/poc-final-report.md](./reports/poc-final-report.md) | ✅ 완료 |
+| API 문서 | [docs/api-docs.md](./api-docs.md) | ✅ 완료 |
+| 사용자 가이드 | [docs/user-guide.md](./user-guide.md) | ✅ 완료 |
 
 ---
 

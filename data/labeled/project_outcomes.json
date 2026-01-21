@@ -1,0 +1,1035 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generatedAt": "2025-01-24T00:00:00Z",
+    "description": "HR DSS Labeled Data - Project Outcomes",
+    "outcomeType": "PROJECT_SUCCESS",
+    "labelingMethod": "RULE_BASED",
+    "totalLabels": 20
+  },
+  "labels": [
+    {
+      "labelId": "LBL-PRJ-2024-0010",
+      "subjectType": "PROJECT",
+      "subjectId": "PRJ-2024-0010",
+      "projectName": "스타트업 AI MVP 개발",
+      "outcomeType": "PROJECT_SUCCESS",
+      "labeledAt": "2024-07-15",
+      "labeledBy": "SYSTEM",
+      "scores": {
+        "schedule": 95,
+        "margin": 90,
+        "quality": 85,
+        "satisfaction": 100
+      },
+      "totalScore": 92.5,
+      "grade": "A",
+      "label": "SUCCESS",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "schedule",
+          "description": "계획 대비 정시 완료",
+          "plannedEndDate": "2024-06-30",
+          "actualEndDate": "2024-06-28",
+          "delayDays": -2,
+          "source": "TMS"
+        },
+        {
+          "metric": "margin",
+          "description": "목표 마진 달성",
+          "targetMargin": 0.15,
+          "actualMargin": 0.165,
+          "ratio": 1.1,
+          "source": "Finance"
+        },
+        {
+          "metric": "quality",
+          "description": "품질 목표 달성",
+          "claimCount": 0,
+          "reworkRate": 0.03,
+          "source": "QA"
+        },
+        {
+          "metric": "satisfaction",
+          "description": "고객 만족도 최고",
+          "csatScore": 4.8,
+          "source": "CRM"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-PRJ-2023-0001",
+      "subjectType": "PROJECT",
+      "subjectId": "PRJ-2023-0001",
+      "projectName": "금융권 RPA 자동화",
+      "outcomeType": "PROJECT_SUCCESS",
+      "labeledAt": "2023-12-20",
+      "labeledBy": "SYSTEM",
+      "scores": {
+        "schedule": 75,
+        "margin": 90,
+        "quality": 100,
+        "satisfaction": 85
+      },
+      "totalScore": 85.0,
+      "grade": "B",
+      "label": "SUCCESS",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "schedule",
+          "description": "2주 지연 완료",
+          "plannedEndDate": "2023-11-30",
+          "actualEndDate": "2023-12-14",
+          "delayDays": 14,
+          "source": "TMS"
+        },
+        {
+          "metric": "margin",
+          "description": "목표 마진 달성",
+          "targetMargin": 0.18,
+          "actualMargin": 0.19,
+          "ratio": 1.06,
+          "source": "Finance"
+        },
+        {
+          "metric": "quality",
+          "description": "무결점 품질",
+          "claimCount": 0,
+          "reworkRate": 0.0,
+          "source": "QA"
+        },
+        {
+          "metric": "satisfaction",
+          "description": "고객 만족",
+          "csatScore": 4.2,
+          "source": "CRM"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-PRJ-2023-0002",
+      "subjectType": "PROJECT",
+      "subjectId": "PRJ-2023-0002",
+      "projectName": "제조사 MES 고도화",
+      "outcomeType": "PROJECT_SUCCESS",
+      "labeledAt": "2023-10-15",
+      "labeledBy": "SYSTEM",
+      "scores": {
+        "schedule": 50,
+        "margin": 60,
+        "quality": 60,
+        "satisfaction": 60
+      },
+      "totalScore": 55.0,
+      "grade": "D",
+      "label": "PARTIAL",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "schedule",
+          "description": "3주 지연 완료",
+          "plannedEndDate": "2023-08-31",
+          "actualEndDate": "2023-09-21",
+          "delayDays": 21,
+          "source": "TMS"
+        },
+        {
+          "metric": "margin",
+          "description": "마진 미달",
+          "targetMargin": 0.20,
+          "actualMargin": 0.16,
+          "ratio": 0.80,
+          "source": "Finance"
+        },
+        {
+          "metric": "quality",
+          "description": "품질 이슈 발생",
+          "claimCount": 2,
+          "reworkRate": 0.08,
+          "source": "QA"
+        },
+        {
+          "metric": "satisfaction",
+          "description": "보통 만족도",
+          "csatScore": 3.6,
+          "source": "CRM"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-PRJ-2023-0003",
+      "subjectType": "PROJECT",
+      "subjectId": "PRJ-2023-0003",
+      "projectName": "유통사 WMS 재구축",
+      "outcomeType": "PROJECT_SUCCESS",
+      "labeledAt": "2023-08-30",
+      "labeledBy": "SYSTEM",
+      "scores": {
+        "schedule": 100,
+        "margin": 100,
+        "quality": 85,
+        "satisfaction": 100
+      },
+      "totalScore": 96.5,
+      "grade": "A",
+      "label": "SUCCESS",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "schedule",
+          "description": "2주 조기 완료",
+          "plannedEndDate": "2023-07-31",
+          "actualEndDate": "2023-07-17",
+          "delayDays": -14,
+          "source": "TMS"
+        },
+        {
+          "metric": "margin",
+          "description": "마진 초과 달성",
+          "targetMargin": 0.15,
+          "actualMargin": 0.22,
+          "ratio": 1.47,
+          "source": "Finance"
+        },
+        {
+          "metric": "quality",
+          "description": "우수 품질",
+          "claimCount": 0,
+          "reworkRate": 0.02,
+          "source": "QA"
+        },
+        {
+          "metric": "satisfaction",
+          "description": "최고 만족도",
+          "csatScore": 4.9,
+          "source": "CRM"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-PRJ-2023-0004",
+      "subjectType": "PROJECT",
+      "subjectId": "PRJ-2023-0004",
+      "projectName": "통신사 BI 대시보드",
+      "outcomeType": "PROJECT_SUCCESS",
+      "labeledAt": "2023-06-15",
+      "labeledBy": "SYSTEM",
+      "scores": {
+        "schedule": 20,
+        "margin": 30,
+        "quality": 30,
+        "satisfaction": 30
+      },
+      "totalScore": 25.0,
+      "grade": "F",
+      "label": "FAILURE",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "schedule",
+          "description": "6주 이상 지연",
+          "plannedEndDate": "2023-04-30",
+          "actualEndDate": "2023-06-11",
+          "delayDays": 42,
+          "source": "TMS"
+        },
+        {
+          "metric": "margin",
+          "description": "마진 심각 미달",
+          "targetMargin": 0.18,
+          "actualMargin": 0.08,
+          "ratio": 0.44,
+          "source": "Finance"
+        },
+        {
+          "metric": "quality",
+          "description": "다수 품질 이슈",
+          "claimCount": 4,
+          "reworkRate": 0.15,
+          "source": "QA"
+        },
+        {
+          "metric": "satisfaction",
+          "description": "불만족",
+          "csatScore": 2.8,
+          "source": "CRM"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-PRJ-2023-0005",
+      "subjectType": "PROJECT",
+      "subjectId": "PRJ-2023-0005",
+      "projectName": "은행 코어뱅킹 전환",
+      "outcomeType": "PROJECT_SUCCESS",
+      "labeledAt": "2024-02-28",
+      "labeledBy": "SYSTEM",
+      "scores": {
+        "schedule": 75,
+        "margin": 90,
+        "quality": 85,
+        "satisfaction": 85
+      },
+      "totalScore": 83.0,
+      "grade": "B",
+      "label": "SUCCESS",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "schedule",
+          "description": "10일 지연",
+          "plannedEndDate": "2024-01-31",
+          "actualEndDate": "2024-02-10",
+          "delayDays": 10,
+          "source": "TMS"
+        },
+        {
+          "metric": "margin",
+          "description": "목표 마진 달성",
+          "targetMargin": 0.12,
+          "actualMargin": 0.13,
+          "ratio": 1.08,
+          "source": "Finance"
+        },
+        {
+          "metric": "quality",
+          "description": "우수 품질",
+          "claimCount": 0,
+          "reworkRate": 0.04,
+          "source": "QA"
+        },
+        {
+          "metric": "satisfaction",
+          "description": "만족",
+          "csatScore": 4.2,
+          "source": "CRM"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-PRJ-2023-0006",
+      "subjectType": "PROJECT",
+      "subjectId": "PRJ-2023-0006",
+      "projectName": "보험사 청구 자동화",
+      "outcomeType": "PROJECT_SUCCESS",
+      "labeledAt": "2023-09-30",
+      "labeledBy": "SYSTEM",
+      "scores": {
+        "schedule": 95,
+        "margin": 60,
+        "quality": 100,
+        "satisfaction": 85
+      },
+      "totalScore": 84.5,
+      "grade": "B",
+      "label": "SUCCESS",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "schedule",
+          "description": "정시 완료",
+          "plannedEndDate": "2023-09-15",
+          "actualEndDate": "2023-09-14",
+          "delayDays": -1,
+          "source": "TMS"
+        },
+        {
+          "metric": "margin",
+          "description": "마진 약간 미달",
+          "targetMargin": 0.20,
+          "actualMargin": 0.17,
+          "ratio": 0.85,
+          "source": "Finance"
+        },
+        {
+          "metric": "quality",
+          "description": "완벽 품질",
+          "claimCount": 0,
+          "reworkRate": 0.0,
+          "source": "QA"
+        },
+        {
+          "metric": "satisfaction",
+          "description": "만족",
+          "csatScore": 4.3,
+          "source": "CRM"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-PRJ-2023-0007",
+      "subjectType": "PROJECT",
+      "subjectId": "PRJ-2023-0007",
+      "projectName": "물류사 TMS 구축",
+      "outcomeType": "PROJECT_SUCCESS",
+      "labeledAt": "2023-11-30",
+      "labeledBy": "SYSTEM",
+      "scores": {
+        "schedule": 50,
+        "margin": 90,
+        "quality": 60,
+        "satisfaction": 60
+      },
+      "totalScore": 65.0,
+      "grade": "C",
+      "label": "PARTIAL",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "schedule",
+          "description": "4주 지연",
+          "plannedEndDate": "2023-10-15",
+          "actualEndDate": "2023-11-12",
+          "delayDays": 28,
+          "source": "TMS"
+        },
+        {
+          "metric": "margin",
+          "description": "마진 달성",
+          "targetMargin": 0.16,
+          "actualMargin": 0.165,
+          "ratio": 1.03,
+          "source": "Finance"
+        },
+        {
+          "metric": "quality",
+          "description": "품질 이슈",
+          "claimCount": 1,
+          "reworkRate": 0.09,
+          "source": "QA"
+        },
+        {
+          "metric": "satisfaction",
+          "description": "보통",
+          "csatScore": 3.5,
+          "source": "CRM"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-PRJ-2023-0008",
+      "subjectType": "PROJECT",
+      "subjectId": "PRJ-2023-0008",
+      "projectName": "대기업 ERP 업그레이드",
+      "outcomeType": "PROJECT_SUCCESS",
+      "labeledAt": "2023-12-31",
+      "labeledBy": "SYSTEM",
+      "scores": {
+        "schedule": 75,
+        "margin": 90,
+        "quality": 85,
+        "satisfaction": 100
+      },
+      "totalScore": 85.0,
+      "grade": "B",
+      "label": "SUCCESS",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "schedule",
+          "description": "1주 지연",
+          "plannedEndDate": "2023-12-15",
+          "actualEndDate": "2023-12-22",
+          "delayDays": 7,
+          "source": "TMS"
+        },
+        {
+          "metric": "margin",
+          "description": "마진 달성",
+          "targetMargin": 0.14,
+          "actualMargin": 0.145,
+          "ratio": 1.04,
+          "source": "Finance"
+        },
+        {
+          "metric": "quality",
+          "description": "우수 품질",
+          "claimCount": 0,
+          "reworkRate": 0.03,
+          "source": "QA"
+        },
+        {
+          "metric": "satisfaction",
+          "description": "최고 만족",
+          "csatScore": 4.7,
+          "source": "CRM"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-PRJ-2023-0009",
+      "subjectType": "PROJECT",
+      "subjectId": "PRJ-2023-0009",
+      "projectName": "공공기관 전자결재",
+      "outcomeType": "PROJECT_SUCCESS",
+      "labeledAt": "2023-07-31",
+      "labeledBy": "SYSTEM",
+      "scores": {
+        "schedule": 95,
+        "margin": 60,
+        "quality": 85,
+        "satisfaction": 85
+      },
+      "totalScore": 81.0,
+      "grade": "B",
+      "label": "SUCCESS",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "schedule",
+          "description": "정시 완료",
+          "plannedEndDate": "2023-07-20",
+          "actualEndDate": "2023-07-18",
+          "delayDays": -2,
+          "source": "TMS"
+        },
+        {
+          "metric": "margin",
+          "description": "마진 약간 미달",
+          "targetMargin": 0.15,
+          "actualMargin": 0.12,
+          "ratio": 0.80,
+          "source": "Finance"
+        },
+        {
+          "metric": "quality",
+          "description": "우수 품질",
+          "claimCount": 0,
+          "reworkRate": 0.02,
+          "source": "QA"
+        },
+        {
+          "metric": "satisfaction",
+          "description": "만족",
+          "csatScore": 4.1,
+          "source": "CRM"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-PRJ-2023-0010",
+      "subjectType": "PROJECT",
+      "subjectId": "PRJ-2023-0010",
+      "projectName": "헬스케어 EMR 연동",
+      "outcomeType": "PROJECT_SUCCESS",
+      "labeledAt": "2023-05-31",
+      "labeledBy": "SYSTEM",
+      "scores": {
+        "schedule": 20,
+        "margin": 0,
+        "quality": 30,
+        "satisfaction": 0
+      },
+      "totalScore": 14.0,
+      "grade": "F",
+      "label": "FAILURE",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "schedule",
+          "description": "8주 이상 지연",
+          "plannedEndDate": "2023-03-31",
+          "actualEndDate": "2023-05-26",
+          "delayDays": 56,
+          "source": "TMS"
+        },
+        {
+          "metric": "margin",
+          "description": "적자 발생",
+          "targetMargin": 0.18,
+          "actualMargin": -0.05,
+          "ratio": -0.28,
+          "source": "Finance"
+        },
+        {
+          "metric": "quality",
+          "description": "심각한 품질 문제",
+          "claimCount": 6,
+          "reworkRate": 0.25,
+          "source": "QA"
+        },
+        {
+          "metric": "satisfaction",
+          "description": "매우 불만족",
+          "csatScore": 2.1,
+          "source": "CRM"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-PRJ-2022-0001",
+      "subjectType": "PROJECT",
+      "subjectId": "PRJ-2022-0001",
+      "projectName": "제조사 스마트팩토리",
+      "outcomeType": "PROJECT_SUCCESS",
+      "labeledAt": "2022-12-31",
+      "labeledBy": "SYSTEM",
+      "scores": {
+        "schedule": 100,
+        "margin": 100,
+        "quality": 100,
+        "satisfaction": 100
+      },
+      "totalScore": 100.0,
+      "grade": "A",
+      "label": "SUCCESS",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "schedule",
+          "description": "3주 조기 완료",
+          "plannedEndDate": "2022-12-15",
+          "actualEndDate": "2022-11-25",
+          "delayDays": -20,
+          "source": "TMS"
+        },
+        {
+          "metric": "margin",
+          "description": "마진 초과 달성",
+          "targetMargin": 0.20,
+          "actualMargin": 0.28,
+          "ratio": 1.40,
+          "source": "Finance"
+        },
+        {
+          "metric": "quality",
+          "description": "완벽 품질",
+          "claimCount": 0,
+          "reworkRate": 0.0,
+          "source": "QA"
+        },
+        {
+          "metric": "satisfaction",
+          "description": "최고 만족",
+          "csatScore": 5.0,
+          "source": "CRM"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-PRJ-2022-0002",
+      "subjectType": "PROJECT",
+      "subjectId": "PRJ-2022-0002",
+      "projectName": "금융권 마이데이터",
+      "outcomeType": "PROJECT_SUCCESS",
+      "labeledAt": "2022-09-30",
+      "labeledBy": "SYSTEM",
+      "scores": {
+        "schedule": 75,
+        "margin": 90,
+        "quality": 85,
+        "satisfaction": 85
+      },
+      "totalScore": 83.0,
+      "grade": "B",
+      "label": "SUCCESS",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "schedule",
+          "description": "2주 지연",
+          "plannedEndDate": "2022-09-15",
+          "actualEndDate": "2022-09-29",
+          "delayDays": 14,
+          "source": "TMS"
+        },
+        {
+          "metric": "margin",
+          "description": "마진 달성",
+          "targetMargin": 0.16,
+          "actualMargin": 0.17,
+          "ratio": 1.06,
+          "source": "Finance"
+        },
+        {
+          "metric": "quality",
+          "description": "우수 품질",
+          "claimCount": 0,
+          "reworkRate": 0.04,
+          "source": "QA"
+        },
+        {
+          "metric": "satisfaction",
+          "description": "만족",
+          "csatScore": 4.3,
+          "source": "CRM"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-PRJ-2022-0003",
+      "subjectType": "PROJECT",
+      "subjectId": "PRJ-2022-0003",
+      "projectName": "유통사 O2O 플랫폼",
+      "outcomeType": "PROJECT_SUCCESS",
+      "labeledAt": "2022-06-30",
+      "labeledBy": "SYSTEM",
+      "scores": {
+        "schedule": 50,
+        "margin": 30,
+        "quality": 60,
+        "satisfaction": 60
+      },
+      "totalScore": 47.0,
+      "grade": "D",
+      "label": "PARTIAL",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "schedule",
+          "description": "3주 지연",
+          "plannedEndDate": "2022-05-31",
+          "actualEndDate": "2022-06-21",
+          "delayDays": 21,
+          "source": "TMS"
+        },
+        {
+          "metric": "margin",
+          "description": "마진 미달",
+          "targetMargin": 0.18,
+          "actualMargin": 0.10,
+          "ratio": 0.56,
+          "source": "Finance"
+        },
+        {
+          "metric": "quality",
+          "description": "품질 이슈",
+          "claimCount": 2,
+          "reworkRate": 0.08,
+          "source": "QA"
+        },
+        {
+          "metric": "satisfaction",
+          "description": "보통",
+          "csatScore": 3.6,
+          "source": "CRM"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-PRJ-2022-0004",
+      "subjectType": "PROJECT",
+      "subjectId": "PRJ-2022-0004",
+      "projectName": "통신사 5G 백엔드",
+      "outcomeType": "PROJECT_SUCCESS",
+      "labeledAt": "2022-11-30",
+      "labeledBy": "SYSTEM",
+      "scores": {
+        "schedule": 95,
+        "margin": 90,
+        "quality": 85,
+        "satisfaction": 85
+      },
+      "totalScore": 90.5,
+      "grade": "A",
+      "label": "SUCCESS",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "schedule",
+          "description": "정시 완료",
+          "plannedEndDate": "2022-11-15",
+          "actualEndDate": "2022-11-13",
+          "delayDays": -2,
+          "source": "TMS"
+        },
+        {
+          "metric": "margin",
+          "description": "마진 달성",
+          "targetMargin": 0.15,
+          "actualMargin": 0.16,
+          "ratio": 1.07,
+          "source": "Finance"
+        },
+        {
+          "metric": "quality",
+          "description": "우수 품질",
+          "claimCount": 0,
+          "reworkRate": 0.03,
+          "source": "QA"
+        },
+        {
+          "metric": "satisfaction",
+          "description": "만족",
+          "csatScore": 4.2,
+          "source": "CRM"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-PRJ-2022-0005",
+      "subjectType": "PROJECT",
+      "subjectId": "PRJ-2022-0005",
+      "projectName": "공공 빅데이터 플랫폼",
+      "outcomeType": "PROJECT_SUCCESS",
+      "labeledAt": "2022-08-31",
+      "labeledBy": "SYSTEM",
+      "scores": {
+        "schedule": 75,
+        "margin": 60,
+        "quality": 100,
+        "satisfaction": 85
+      },
+      "totalScore": 77.5,
+      "grade": "B",
+      "label": "SUCCESS",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "schedule",
+          "description": "1주 지연",
+          "plannedEndDate": "2022-08-15",
+          "actualEndDate": "2022-08-22",
+          "delayDays": 7,
+          "source": "TMS"
+        },
+        {
+          "metric": "margin",
+          "description": "마진 약간 미달",
+          "targetMargin": 0.12,
+          "actualMargin": 0.10,
+          "ratio": 0.83,
+          "source": "Finance"
+        },
+        {
+          "metric": "quality",
+          "description": "완벽 품질",
+          "claimCount": 0,
+          "reworkRate": 0.0,
+          "source": "QA"
+        },
+        {
+          "metric": "satisfaction",
+          "description": "만족",
+          "csatScore": 4.1,
+          "source": "CRM"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-PRJ-2022-0006",
+      "subjectType": "PROJECT",
+      "subjectId": "PRJ-2022-0006",
+      "projectName": "보험사 언더라이팅 AI",
+      "outcomeType": "PROJECT_SUCCESS",
+      "labeledAt": "2022-10-31",
+      "labeledBy": "SYSTEM",
+      "scores": {
+        "schedule": 50,
+        "margin": 90,
+        "quality": 85,
+        "satisfaction": 60
+      },
+      "totalScore": 70.0,
+      "grade": "C",
+      "label": "PARTIAL",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "schedule",
+          "description": "3주 지연",
+          "plannedEndDate": "2022-09-30",
+          "actualEndDate": "2022-10-21",
+          "delayDays": 21,
+          "source": "TMS"
+        },
+        {
+          "metric": "margin",
+          "description": "마진 달성",
+          "targetMargin": 0.17,
+          "actualMargin": 0.175,
+          "ratio": 1.03,
+          "source": "Finance"
+        },
+        {
+          "metric": "quality",
+          "description": "우수 품질",
+          "claimCount": 0,
+          "reworkRate": 0.04,
+          "source": "QA"
+        },
+        {
+          "metric": "satisfaction",
+          "description": "보통",
+          "csatScore": 3.5,
+          "source": "CRM"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-PRJ-2022-0007",
+      "subjectType": "PROJECT",
+      "subjectId": "PRJ-2022-0007",
+      "projectName": "물류사 라스트마일 최적화",
+      "outcomeType": "PROJECT_SUCCESS",
+      "labeledAt": "2022-07-31",
+      "labeledBy": "SYSTEM",
+      "scores": {
+        "schedule": 20,
+        "margin": 30,
+        "quality": 60,
+        "satisfaction": 30
+      },
+      "totalScore": 32.0,
+      "grade": "F",
+      "label": "FAILURE",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "schedule",
+          "description": "6주 이상 지연",
+          "plannedEndDate": "2022-06-15",
+          "actualEndDate": "2022-07-27",
+          "delayDays": 42,
+          "source": "TMS"
+        },
+        {
+          "metric": "margin",
+          "description": "마진 미달",
+          "targetMargin": 0.15,
+          "actualMargin": 0.08,
+          "ratio": 0.53,
+          "source": "Finance"
+        },
+        {
+          "metric": "quality",
+          "description": "품질 이슈",
+          "claimCount": 2,
+          "reworkRate": 0.07,
+          "source": "QA"
+        },
+        {
+          "metric": "satisfaction",
+          "description": "불만족",
+          "csatScore": 2.9,
+          "source": "CRM"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-PRJ-2022-0008",
+      "subjectType": "PROJECT",
+      "subjectId": "PRJ-2022-0008",
+      "projectName": "자동차 커넥티드카",
+      "outcomeType": "PROJECT_SUCCESS",
+      "labeledAt": "2022-12-15",
+      "labeledBy": "SYSTEM",
+      "scores": {
+        "schedule": 95,
+        "margin": 100,
+        "quality": 100,
+        "satisfaction": 100
+      },
+      "totalScore": 98.0,
+      "grade": "A",
+      "label": "SUCCESS",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "schedule",
+          "description": "정시 완료",
+          "plannedEndDate": "2022-12-01",
+          "actualEndDate": "2022-11-30",
+          "delayDays": -1,
+          "source": "TMS"
+        },
+        {
+          "metric": "margin",
+          "description": "마진 초과",
+          "targetMargin": 0.18,
+          "actualMargin": 0.23,
+          "ratio": 1.28,
+          "source": "Finance"
+        },
+        {
+          "metric": "quality",
+          "description": "완벽 품질",
+          "claimCount": 0,
+          "reworkRate": 0.0,
+          "source": "QA"
+        },
+        {
+          "metric": "satisfaction",
+          "description": "최고 만족",
+          "csatScore": 4.9,
+          "source": "CRM"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-PRJ-2022-0009",
+      "subjectType": "PROJECT",
+      "subjectId": "PRJ-2022-0009",
+      "projectName": "에너지 스마트그리드",
+      "outcomeType": "PROJECT_SUCCESS",
+      "labeledAt": "2022-05-31",
+      "labeledBy": "SYSTEM",
+      "scores": {
+        "schedule": 75,
+        "margin": 90,
+        "quality": 85,
+        "satisfaction": 85
+      },
+      "totalScore": 83.0,
+      "grade": "B",
+      "label": "SUCCESS",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "schedule",
+          "description": "1주 지연",
+          "plannedEndDate": "2022-05-15",
+          "actualEndDate": "2022-05-22",
+          "delayDays": 7,
+          "source": "TMS"
+        },
+        {
+          "metric": "margin",
+          "description": "마진 달성",
+          "targetMargin": 0.14,
+          "actualMargin": 0.15,
+          "ratio": 1.07,
+          "source": "Finance"
+        },
+        {
+          "metric": "quality",
+          "description": "우수 품질",
+          "claimCount": 0,
+          "reworkRate": 0.03,
+          "source": "QA"
+        },
+        {
+          "metric": "satisfaction",
+          "description": "만족",
+          "csatScore": 4.2,
+          "source": "CRM"
+        }
+      ]
+    }
+  ],
+  "statistics": {
+    "totalLabels": 20,
+    "byLabel": {
+      "SUCCESS": 12,
+      "PARTIAL": 4,
+      "FAILURE": 4
+    },
+    "byGrade": {
+      "A": 5,
+      "B": 7,
+      "C": 2,
+      "D": 2,
+      "F": 4
+    },
+    "averageScore": 71.05,
+    "scoreDistribution": {
+      "90-100": 5,
+      "75-89": 7,
+      "60-74": 2,
+      "40-59": 2,
+      "0-39": 4
+    }
+  }
+}

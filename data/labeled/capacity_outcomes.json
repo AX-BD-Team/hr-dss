@@ -1,0 +1,908 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generatedAt": "2025-01-24T00:00:00Z",
+    "description": "HR DSS Labeled Data - Capacity/Utilization Outcomes",
+    "outcomeType": "UTILIZATION_PREDICTION",
+    "labelingMethod": "RULE_BASED",
+    "totalLabels": 24
+  },
+  "labels": [
+    {
+      "labelId": "LBL-CAP-2024-Q3-ORG0011",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0011",
+      "orgUnitName": "AI/ML 1팀",
+      "period": "2024-Q3",
+      "periodStart": "2024-07-01",
+      "periodEnd": "2024-09-30",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2024-10-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.85,
+        "actualUtilization": 0.92,
+        "predictionError": 0.07,
+        "bottleneckPredicted": false,
+        "bottleneckActual": true
+      },
+      "label": "OVER_UTILIZED",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 8.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 7.36,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 8.5,
+          "description": "초과근무 포함",
+          "source": "Timesheet"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-CAP-2024-Q3-ORG0012",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0012",
+      "orgUnitName": "AI/ML 2팀",
+      "period": "2024-Q3",
+      "periodStart": "2024-07-01",
+      "periodEnd": "2024-09-30",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2024-10-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.78,
+        "actualUtilization": 0.75,
+        "predictionError": 0.03,
+        "bottleneckPredicted": false,
+        "bottleneckActual": false
+      },
+      "label": "OPTIMAL",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 6.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 4.5,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 4.5,
+          "source": "Timesheet"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-CAP-2024-Q3-ORG0021",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0021",
+      "orgUnitName": "데이터 엔지니어링 1팀",
+      "period": "2024-Q3",
+      "periodStart": "2024-07-01",
+      "periodEnd": "2024-09-30",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2024-10-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.90,
+        "actualUtilization": 0.95,
+        "predictionError": 0.05,
+        "bottleneckPredicted": true,
+        "bottleneckActual": true
+      },
+      "label": "OVER_UTILIZED",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 7.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 6.65,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 7.2,
+          "source": "Timesheet"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-CAP-2024-Q3-ORG0022",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0022",
+      "orgUnitName": "데이터 엔지니어링 2팀",
+      "period": "2024-Q3",
+      "periodStart": "2024-07-01",
+      "periodEnd": "2024-09-30",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2024-10-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.65,
+        "actualUtilization": 0.68,
+        "predictionError": 0.03,
+        "bottleneckPredicted": false,
+        "bottleneckActual": false
+      },
+      "label": "UNDER_UTILIZED",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 5.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 3.4,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 3.4,
+          "source": "Timesheet"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-CAP-2024-Q3-ORG0031",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0031",
+      "orgUnitName": "클라우드 1팀",
+      "period": "2024-Q3",
+      "periodStart": "2024-07-01",
+      "periodEnd": "2024-09-30",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2024-10-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.82,
+        "actualUtilization": 0.88,
+        "predictionError": 0.06,
+        "bottleneckPredicted": false,
+        "bottleneckActual": false
+      },
+      "label": "OPTIMAL",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 9.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 7.92,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 7.92,
+          "source": "Timesheet"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-CAP-2024-Q3-ORG0032",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0032",
+      "orgUnitName": "클라우드 2팀",
+      "period": "2024-Q3",
+      "periodStart": "2024-07-01",
+      "periodEnd": "2024-09-30",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2024-10-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.55,
+        "actualUtilization": 0.52,
+        "predictionError": 0.03,
+        "bottleneckPredicted": false,
+        "bottleneckActual": false
+      },
+      "label": "UNDER_UTILIZED",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 4.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 2.08,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 2.08,
+          "source": "Timesheet"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-CAP-2024-Q4-ORG0011",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0011",
+      "orgUnitName": "AI/ML 1팀",
+      "period": "2024-Q4",
+      "periodStart": "2024-10-01",
+      "periodEnd": "2024-12-31",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2025-01-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.88,
+        "actualUtilization": 0.94,
+        "predictionError": 0.06,
+        "bottleneckPredicted": true,
+        "bottleneckActual": true
+      },
+      "label": "OVER_UTILIZED",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 8.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 7.52,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 8.8,
+          "source": "Timesheet"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-CAP-2024-Q4-ORG0012",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0012",
+      "orgUnitName": "AI/ML 2팀",
+      "period": "2024-Q4",
+      "periodStart": "2024-10-01",
+      "periodEnd": "2024-12-31",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2025-01-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.80,
+        "actualUtilization": 0.82,
+        "predictionError": 0.02,
+        "bottleneckPredicted": false,
+        "bottleneckActual": false
+      },
+      "label": "OPTIMAL",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 6.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 4.92,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 4.92,
+          "source": "Timesheet"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-CAP-2024-Q4-ORG0021",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0021",
+      "orgUnitName": "데이터 엔지니어링 1팀",
+      "period": "2024-Q4",
+      "periodStart": "2024-10-01",
+      "periodEnd": "2024-12-31",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2025-01-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.92,
+        "actualUtilization": 0.98,
+        "predictionError": 0.06,
+        "bottleneckPredicted": true,
+        "bottleneckActual": true
+      },
+      "label": "CRITICAL",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 7.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 6.86,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 8.0,
+          "description": "심각한 초과근무",
+          "source": "Timesheet"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-CAP-2024-Q4-ORG0022",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0022",
+      "orgUnitName": "데이터 엔지니어링 2팀",
+      "period": "2024-Q4",
+      "periodStart": "2024-10-01",
+      "periodEnd": "2024-12-31",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2025-01-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.70,
+        "actualUtilization": 0.72,
+        "predictionError": 0.02,
+        "bottleneckPredicted": false,
+        "bottleneckActual": false
+      },
+      "label": "OPTIMAL",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 5.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 3.6,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 3.6,
+          "source": "Timesheet"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-CAP-2024-Q4-ORG0031",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0031",
+      "orgUnitName": "클라우드 1팀",
+      "period": "2024-Q4",
+      "periodStart": "2024-10-01",
+      "periodEnd": "2024-12-31",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2025-01-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.85,
+        "actualUtilization": 0.90,
+        "predictionError": 0.05,
+        "bottleneckPredicted": false,
+        "bottleneckActual": true
+      },
+      "label": "OVER_UTILIZED",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 9.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 8.1,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 8.5,
+          "source": "Timesheet"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-CAP-2024-Q4-ORG0032",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0032",
+      "orgUnitName": "클라우드 2팀",
+      "period": "2024-Q4",
+      "periodStart": "2024-10-01",
+      "periodEnd": "2024-12-31",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2025-01-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.60,
+        "actualUtilization": 0.58,
+        "predictionError": 0.02,
+        "bottleneckPredicted": false,
+        "bottleneckActual": false
+      },
+      "label": "UNDER_UTILIZED",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 4.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 2.32,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 2.32,
+          "source": "Timesheet"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-CAP-2024-Q2-ORG0011",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0011",
+      "orgUnitName": "AI/ML 1팀",
+      "period": "2024-Q2",
+      "periodStart": "2024-04-01",
+      "periodEnd": "2024-06-30",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2024-07-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.75,
+        "actualUtilization": 0.78,
+        "predictionError": 0.03,
+        "bottleneckPredicted": false,
+        "bottleneckActual": false
+      },
+      "label": "OPTIMAL",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 8.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 6.24,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 6.24,
+          "source": "Timesheet"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-CAP-2024-Q2-ORG0012",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0012",
+      "orgUnitName": "AI/ML 2팀",
+      "period": "2024-Q2",
+      "periodStart": "2024-04-01",
+      "periodEnd": "2024-06-30",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2024-07-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.70,
+        "actualUtilization": 0.65,
+        "predictionError": 0.05,
+        "bottleneckPredicted": false,
+        "bottleneckActual": false
+      },
+      "label": "UNDER_UTILIZED",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 6.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 3.9,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 3.9,
+          "source": "Timesheet"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-CAP-2024-Q2-ORG0021",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0021",
+      "orgUnitName": "데이터 엔지니어링 1팀",
+      "period": "2024-Q2",
+      "periodStart": "2024-04-01",
+      "periodEnd": "2024-06-30",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2024-07-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.80,
+        "actualUtilization": 0.85,
+        "predictionError": 0.05,
+        "bottleneckPredicted": false,
+        "bottleneckActual": false
+      },
+      "label": "OPTIMAL",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 7.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 5.95,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 5.95,
+          "source": "Timesheet"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-CAP-2024-Q2-ORG0022",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0022",
+      "orgUnitName": "데이터 엔지니어링 2팀",
+      "period": "2024-Q2",
+      "periodStart": "2024-04-01",
+      "periodEnd": "2024-06-30",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2024-07-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.55,
+        "actualUtilization": 0.50,
+        "predictionError": 0.05,
+        "bottleneckPredicted": false,
+        "bottleneckActual": false
+      },
+      "label": "UNDER_UTILIZED",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 5.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 2.5,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 2.5,
+          "source": "Timesheet"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-CAP-2024-Q2-ORG0031",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0031",
+      "orgUnitName": "클라우드 1팀",
+      "period": "2024-Q2",
+      "periodStart": "2024-04-01",
+      "periodEnd": "2024-06-30",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2024-07-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.72,
+        "actualUtilization": 0.75,
+        "predictionError": 0.03,
+        "bottleneckPredicted": false,
+        "bottleneckActual": false
+      },
+      "label": "OPTIMAL",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 9.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 6.75,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 6.75,
+          "source": "Timesheet"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-CAP-2024-Q2-ORG0032",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0032",
+      "orgUnitName": "클라우드 2팀",
+      "period": "2024-Q2",
+      "periodStart": "2024-04-01",
+      "periodEnd": "2024-06-30",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2024-07-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.45,
+        "actualUtilization": 0.42,
+        "predictionError": 0.03,
+        "bottleneckPredicted": false,
+        "bottleneckActual": false
+      },
+      "label": "UNDER_UTILIZED",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 4.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 1.68,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 1.68,
+          "source": "Timesheet"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-CAP-2024-Q1-ORG0011",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0011",
+      "orgUnitName": "AI/ML 1팀",
+      "period": "2024-Q1",
+      "periodStart": "2024-01-01",
+      "periodEnd": "2024-03-31",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2024-04-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.68,
+        "actualUtilization": 0.70,
+        "predictionError": 0.02,
+        "bottleneckPredicted": false,
+        "bottleneckActual": false
+      },
+      "label": "OPTIMAL",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 7.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 4.9,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 4.9,
+          "source": "Timesheet"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-CAP-2024-Q1-ORG0021",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0021",
+      "orgUnitName": "데이터 엔지니어링 1팀",
+      "period": "2024-Q1",
+      "periodStart": "2024-01-01",
+      "periodEnd": "2024-03-31",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2024-04-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.72,
+        "actualUtilization": 0.75,
+        "predictionError": 0.03,
+        "bottleneckPredicted": false,
+        "bottleneckActual": false
+      },
+      "label": "OPTIMAL",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 6.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 4.5,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 4.5,
+          "source": "Timesheet"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-CAP-2024-Q1-ORG0031",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0031",
+      "orgUnitName": "클라우드 1팀",
+      "period": "2024-Q1",
+      "periodStart": "2024-01-01",
+      "periodEnd": "2024-03-31",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2024-04-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.60,
+        "actualUtilization": 0.62,
+        "predictionError": 0.02,
+        "bottleneckPredicted": false,
+        "bottleneckActual": false
+      },
+      "label": "UNDER_UTILIZED",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 8.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 4.96,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 4.96,
+          "source": "Timesheet"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-CAP-2023-Q4-ORG0011",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0011",
+      "orgUnitName": "AI/ML 1팀",
+      "period": "2023-Q4",
+      "periodStart": "2023-10-01",
+      "periodEnd": "2023-12-31",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2024-01-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.82,
+        "actualUtilization": 0.88,
+        "predictionError": 0.06,
+        "bottleneckPredicted": false,
+        "bottleneckActual": true
+      },
+      "label": "OVER_UTILIZED",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 7.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 6.16,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 6.9,
+          "source": "Timesheet"
+        }
+      ]
+    },
+    {
+      "labelId": "LBL-CAP-2023-Q4-ORG0021",
+      "subjectType": "ORG_UNIT_PERIOD",
+      "orgUnitId": "ORG-0021",
+      "orgUnitName": "데이터 엔지니어링 1팀",
+      "period": "2023-Q4",
+      "periodStart": "2023-10-01",
+      "periodEnd": "2023-12-31",
+      "outcomeType": "UTILIZATION",
+      "labeledAt": "2024-01-15",
+      "labeledBy": "SYSTEM",
+      "metrics": {
+        "predictedUtilization": 0.78,
+        "actualUtilization": 0.82,
+        "predictionError": 0.04,
+        "bottleneckPredicted": false,
+        "bottleneckActual": false
+      },
+      "label": "OPTIMAL",
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "metric": "availableFTE",
+          "value": 6.0,
+          "source": "HR System"
+        },
+        {
+          "metric": "assignedFTE",
+          "value": 4.92,
+          "source": "TMS"
+        },
+        {
+          "metric": "actualWorkFTE",
+          "value": 4.92,
+          "source": "Timesheet"
+        }
+      ]
+    }
+  ],
+  "statistics": {
+    "totalLabels": 24,
+    "byLabel": {
+      "OPTIMAL": 11,
+      "OVER_UTILIZED": 5,
+      "UNDER_UTILIZED": 7,
+      "CRITICAL": 1
+    },
+    "predictionAccuracy": {
+      "meanAbsoluteError": 0.038,
+      "bottleneckPrecision": 0.75,
+      "bottleneckRecall": 0.60
+    },
+    "utilizationBands": {
+      "low_0_60": 7,
+      "optimal_60_85": 11,
+      "high_85_95": 5,
+      "critical_95_plus": 1
+    }
+  }
+}

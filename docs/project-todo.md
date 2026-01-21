@@ -1,6 +1,6 @@
 # HR 의사결정 지원 시스템 - 작업 체크리스트
 
-> 마지막 업데이트: 2025-01-28
+> 마지막 업데이트: 2025-01-30
 
 ---
 
@@ -13,8 +13,8 @@
 | M3: KG 구축 완료 | 1/24 | Neo4j에서 Cypher 쿼리 가능, Graph Viewer 동작 | ✅ 완료 |
 | M4: 질문 응답 가능 | 1/27 | A-1(12주 병목) 질문에 3안 생성 + 비교 가능 | ✅ 완료 |
 | M5: 에이전트 동작 | 1/28 | Agent Eval + Ontology Eval 대시보드 동작 | ✅ 완료 |
-| M6: UI 완성 | 1/29 | 전체 플로우 데모 가능 | ⏳ |
-| M7: Prototype 완성 | 1/30 | PoC Final Report 완성 | ⏳ |
+| M6: UI 완성 | 1/29 | 전체 플로우 데모 가능 | ✅ 완료 |
+| M7: Prototype 완성 | 1/30 | PoC Final Report 완성 | ✅ 완료 |
 
 ---
 
@@ -137,39 +137,39 @@
 
 ---
 
-## Day 6: 1/29 (수) - P7. 웹/앱 Prototype UI
+## Day 6: 1/29 (수) - P7. 웹/앱 Prototype UI ✅
 
 ### P8: UI 구현
 
-- [ ] **8.1** Conversational UI + Scenario Builder → `apps/web/components/ConversationUI.tsx`
-- [ ] **8.2** Option Compare Dashboard → `apps/web/components/OptionCompare.tsx`
-- [ ] **8.3** Explanation Panel (근거/추론/가정) → `apps/web/components/ExplanationPanel.tsx`
-- [ ] **8.4** Eval Dashboard (운영자용) → `apps/web/components/EvalDashboard.tsx`
+- [x] **8.1** Conversational UI + Scenario Builder → `apps/web/components/ConversationUI.tsx`
+- [x] **8.2** Option Compare Dashboard → `apps/web/components/OptionCompare.tsx`
+- [x] **8.3** Explanation Panel (근거/추론/가정) → `apps/web/components/ExplanationPanel.tsx`
+- [x] **8.4** Eval Dashboard (운영자용) → `apps/web/components/EvalDashboard.tsx`
 
 ### Day 6 체크포인트
 
-- [ ] Conversational UI (질문 입력 + 제약 설정)
-- [ ] Option Compare Dashboard (3안 비교)
-- [ ] Explanation Panel (KG 뷰 + Evidence + 추론 경로)
-- [ ] Eval Dashboard (운영자용)
+- [x] Conversational UI (질문 입력 + 시나리오 프리셋 + 제약조건 설정)
+- [x] Option Compare Dashboard (3안 비교, 레이더 차트, ROI 분석)
+- [x] Explanation Panel (추론 경로 + Evidence + 가정 + 검증 + KG 뷰)
+- [x] Eval Dashboard (시스템 헬스, 알림, 활동 피드, 빠른 이동)
 
 ---
 
-## Day 7: 1/30 (목) - P8. 검증 + 결과 리포트
+## Day 7: 1/30 (목) - P8. 검증 + 결과 리포트 ✅
 
 ### P9: 검증 및 리포트
 
-- [ ] **9.1** 기존 방식 vs PoC 비교 (베이스라인) → `docs/reports/comparison-report.md`
-- [ ] **9.2** 사용자 리뷰 + 개선 반영 → 피드백 로그 + 개선 백로그
-- [ ] **9.3** 최종 결과서 + 로드맵 → `docs/reports/poc-final-report.md`
-- [ ] **9.4** API 문서 + 사용자 가이드 → `docs/api-docs.md`, `docs/user-guide.md`
+- [x] **9.1** 기존 방식 vs PoC 비교 (베이스라인) → `docs/reports/comparison-report.md`
+- [x] **9.2** 사용자 리뷰 + 개선 반영 → 피드백 로그 + 개선 백로그 (poc-final-report.md 내 포함)
+- [x] **9.3** 최종 결과서 + 로드맵 → `docs/reports/poc-final-report.md`
+- [x] **9.4** API 문서 + 사용자 가이드 → `docs/api-docs.md`, `docs/user-guide.md`
 
 ### Day 7 체크포인트
 
-- [ ] 정량 비교 리포트 (시간/단계/품질)
-- [ ] 피드백 로그 + 개선 백로그
-- [ ] **PoC Final Report** 완성
-- [ ] Documentation Set 완성
+- [x] 정량 비교 리포트 (시간/단계/품질)
+- [x] 피드백 로그 + 개선 백로그
+- [x] **PoC Final Report** 완성
+- [x] Documentation Set 완성
 
 ---
 

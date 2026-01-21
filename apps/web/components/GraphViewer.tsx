@@ -150,7 +150,7 @@ export const GraphViewer: React.FC<GraphViewerProps> = ({
           });
         });
 
-      svg.call(zoom);
+      svg.call(zoom as any);
 
       // 화살표 마커 정의
       svg
@@ -224,20 +224,20 @@ export const GraphViewer: React.FC<GraphViewerProps> = ({
         .call(
           d3
             .drag<SVGGElement, GraphNode>()
-            .on("start", (event, d) => {
+            .on("start", (event: any, d: any) => {
               if (!event.active) simulation.alphaTarget(0.3).restart();
               d.fx = d.x;
               d.fy = d.y;
             })
-            .on("drag", (event, d) => {
+            .on("drag", (event: any, d: any) => {
               d.fx = event.x;
               d.fy = event.y;
             })
-            .on("end", (event, d) => {
+            .on("end", (event: any, d: any) => {
               if (!event.active) simulation.alphaTarget(0);
               d.fx = null;
               d.fy = null;
-            })
+            }) as any
         );
 
       // 노드 원

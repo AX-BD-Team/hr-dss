@@ -2,7 +2,7 @@
 
 > Claude와의 개발 협업을 위한 프로젝트 핵심 문서
 
-**현재 버전**: 0.1.0 | **상태**: 🚧 Development | **방법론**: SSDD
+**현재 버전**: 0.2.0 | **상태**: ✅ Prototype Complete | **방법론**: SSDD
 **기간**: 2025.01.22 ~ 2025.01.30 (평일 7일) | **목표**: PoC 준비를 위한 Prototype 구현
 
 ---
@@ -182,13 +182,20 @@ hr-dss/
 │   └── prompts/         # LLM 프롬프트 (Entity/Relation Extraction)
 ├── apps/
 │   └── web/             # Next.js 14+ Frontend
-│       ├── components/  # React 컴포넌트
+│       ├── components/  # React 컴포넌트 (8개)
 │       │   ├── ConversationUI.tsx
 │       │   ├── OptionCompare.tsx
 │       │   ├── ExplanationPanel.tsx
 │       │   ├── GraphViewer.tsx
-│       │   └── EvalDashboard.tsx
-│       └── app/         # App Router
+│       │   ├── EvalDashboard.tsx
+│       │   ├── AgentEvalDashboard.tsx
+│       │   ├── OntologyScoreCard.tsx
+│       │   └── DataQualityReport.tsx
+│       └── app/         # App Router (4개 페이지)
+│           ├── page.tsx          # / 메인
+│           ├── decisions/        # /decisions 의사결정
+│           ├── dashboard/        # /dashboard 대시보드
+│           └── graph/            # /graph KG 뷰어
 ├── backend/              # FastAPI 백엔드
 │   ├── api/             # REST API 라우터
 │   ├── agent_runtime/   # 에이전트 실행 환경

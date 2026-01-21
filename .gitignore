@@ -70,6 +70,12 @@ Thumbs.db
 *.pem
 *.key
 credentials.json
+cloudflare-secrets.env
+.dev.vars
+
+# Cloudflare
+.wrangler/
+.vercel/
 
 # Local Claude settings
 .claude/settings.local.json

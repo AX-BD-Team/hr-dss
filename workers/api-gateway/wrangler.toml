@@ -1,0 +1,75 @@
+# HR-DSS API Gateway Worker
+# Cloudflare Workers 설정
+
+name = "hr-dss-api-gateway"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# 계정 설정 (환경 변수로 오버라이드)
+# account_id = ""
+
+[observability]
+enabled = true
+
+# 개발 환경 설정
+[env.development]
+name = "hr-dss-api-gateway-dev"
+vars = { ENVIRONMENT = "development", LOG_LEVEL = "debug" }
+
+[env.development.vars]
+BACKEND_URL = "http://localhost:8000"
+ALLOWED_ORIGINS = "http://localhost:3000"
+
+# 스테이징 환경
+[env.staging]
+name = "hr-dss-api-gateway-staging"
+vars = { ENVIRONMENT = "staging", LOG_LEVEL = "info" }
+routes = [
+  { pattern = "staging-api.hr-dss.example.com/*", zone_name = "example.com" }
+]
+
+[env.staging.vars]
+BACKEND_URL = "https://hr-dss-staging.railway.app"
+ALLOWED_ORIGINS = "https://staging.hr-dss.example.com"
+
+# 프로덕션 환경
+[env.production]
+name = "hr-dss-api-gateway"
+vars = { ENVIRONMENT = "production", LOG_LEVEL = "warn" }
+routes = [
+  { pattern = "api.hr-dss.example.com/*", zone_name = "example.com" }
+]
+
+[env.production.vars]
+BACKEND_URL = "https://hr-dss.railway.app"
+ALLOWED_ORIGINS = "https://hr-dss.example.com"
+
+# Rate Limiting (Paid Plan 필요)
+# [[env.production.unsafe.bindings]]
+# name = "RATE_LIMITER"
+# type = "ratelimit"
+# namespace_id = "hr-dss-api"
+# simple = { limit = 100, period = 60 }
+
+# KV Namespace (캐싱용)
+# [[kv_namespaces]]
+# binding = "CACHE"
+# id = ""
+# preview_id = ""
+
+# R2 Bucket (파일 저장용)
+# [[r2_buckets]]
+# binding = "ASSETS"
+# bucket_name = "hr-dss-assets"
+
+# Durable Objects (세션 관리용, 선택)
+# [[durable_objects.bindings]]
+# name = "SESSIONS"
+# class_name = "SessionManager"
+
+[build]
+command = "npm run build"
+
+[site]
+bucket = "./dist"

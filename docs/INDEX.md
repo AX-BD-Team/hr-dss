@@ -91,6 +91,7 @@
 | 산출물 | 경로 | 상태 |
 |--------|------|------|
 | Phase 1 상세 계획 | [docs/specs/phase1-plan.md](./specs/phase1-plan.md) | ✅ 완료 |
+| Cloudflare 배포 계획 | [docs/specs/cloudflare-deployment-plan.md](./specs/cloudflare-deployment-plan.md) | ✅ 완료 |
 
 ---
 

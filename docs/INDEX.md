@@ -86,6 +86,12 @@
 | API 문서 | [docs/api-docs.md](./api-docs.md) | ✅ 완료 |
 | 사용자 가이드 | [docs/user-guide.md](./user-guide.md) | ✅ 완료 |
 
+### Phase 1: 파일럿 운영 계획
+
+| 산출물 | 경로 | 상태 |
+|--------|------|------|
+| Phase 1 상세 계획 | [docs/specs/phase1-plan.md](./specs/phase1-plan.md) | ✅ 완료 |
+
 ---
 
 ## 참조 문서

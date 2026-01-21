@@ -45,6 +45,8 @@
 
 ## 2. Agent APIs
 
+> 모든 Agent는 REST API endpoint를 통해 호출할 수 있습니다.
+
 ### 2.1 QueryDecompositionAgent
 
 사용자 질문을 분석하여 실행 가능한 하위 질의로 분해합니다.

@@ -200,6 +200,47 @@ class HITLApprovalSystem:
 
         return request
 
+    def process_approval(
+        self,
+        request_id: str,
+        status: ApprovalStatus,
+        approver_id: str,
+        approver_name: str,
+        approval_level: ApprovalLevel,
+        selected_option_id: str | None = None,
+        rationale: str = "",
+        modifications: dict[str, Any] | None = None,
+        conditions: list[str] | None = None,
+    ) -> ApprovalResponse:
+        """
+        승인 처리 (submit_response의 별칭)
+
+        Args:
+            request_id: 요청 ID
+            status: 승인 상태
+            approver_id: 승인자 ID
+            approver_name: 승인자 이름
+            approval_level: 승인자 레벨
+            selected_option_id: 선택된 대안 ID
+            rationale: 승인/거절 사유
+            modifications: 수정 내용
+            conditions: 조건부 승인 조건
+
+        Returns:
+            ApprovalResponse: 승인 응답
+        """
+        return self.submit_response(
+            request_id=request_id,
+            status=status,
+            approver_id=approver_id,
+            approver_name=approver_name,
+            approval_level=approval_level,
+            selected_option_id=selected_option_id,
+            rationale=rationale,
+            modifications=modifications,
+            conditions=conditions,
+        )
+
     def submit_response(
         self,
         request_id: str,

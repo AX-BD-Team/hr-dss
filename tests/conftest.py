@@ -143,5 +143,7 @@ def pytest_configure(config):
     config.addinivalue_line("markers", "day3: Day 3 KG 테스트")
     config.addinivalue_line("markers", "day4: Day 4 Agent 테스트")
     config.addinivalue_line("markers", "day5: Day 5 Workflow 테스트")
+    config.addinivalue_line("markers", "day6: Day 6 UI 테스트")
+    config.addinivalue_line("markers", "day7: Day 7 최종 검증 테스트")
     config.addinivalue_line("markers", "acceptance: Acceptance Criteria 테스트")
     config.addinivalue_line("markers", "e2e: E2E 통합 테스트")

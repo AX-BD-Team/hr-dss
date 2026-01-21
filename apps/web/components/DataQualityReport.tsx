@@ -3,6 +3,7 @@
  *
  * 데이터 품질 평가 리포트 대시보드
  * Data Readiness Scorecard와 연동
+ * 트렌드 분석, 이슈 목록, 권장 조치 포함
  */
 
 import React, { useState, useMemo } from "react";
@@ -18,6 +19,9 @@ export interface DataQualityMetrics {
   overallStatus: "READY" | "WARNING" | "NOT_READY";
   summary: DataQualitySummary;
   entityResults: EntityResult[];
+  trends?: QualityTrend[];
+  issues?: QualityIssue[];
+  recommendations?: Recommendation[];
 }
 
 export interface DataQualitySummary {
@@ -54,11 +58,43 @@ export interface PerformanceCorrelation {
   impact: string;
 }
 
+// 새로운 타입 정의
+export interface QualityTrend {
+  date: string;
+  overallScore: number;
+  metricScores: Record<string, number>;
+}
+
+export interface QualityIssue {
+  id: string;
+  severity: "CRITICAL" | "HIGH" | "MEDIUM" | "LOW";
+  category: "MISSING_DATA" | "DUPLICATE" | "INCONSISTENT" | "STALE" | "INVALID_FK";
+  entityName: string;
+  fieldName?: string;
+  description: string;
+  affectedRecords: number;
+  detectedAt: string;
+  suggestedAction?: string;
+}
+
+export interface Recommendation {
+  id: string;
+  priority: "HIGH" | "MEDIUM" | "LOW";
+  type: "DATA_FIX" | "PROCESS_IMPROVEMENT" | "MONITORING" | "VALIDATION_RULE";
+  title: string;
+  description: string;
+  expectedImpact: string;
+  effort: "LOW" | "MEDIUM" | "HIGH";
+  relatedIssues?: string[];
+}
+
 export interface DataQualityReportProps {
   metrics: DataQualityMetrics;
   performanceCorrelations?: PerformanceCorrelation[];
   onRefresh?: () => void;
   onEntityClick?: (entityName: string) => void;
+  onIssueClick?: (issueId: string) => void;
+  onRecommendationAction?: (recommendationId: string) => void;
   showImpactAnalysis?: boolean;
 }
 
@@ -74,12 +110,49 @@ const STATUS_COLORS = {
   NOT_READY: "#F44336",
 };
 
+const SEVERITY_COLORS = {
+  CRITICAL: "#D32F2F",
+  HIGH: "#F44336",
+  MEDIUM: "#FF9800",
+  LOW: "#2196F3",
+};
+
+const CATEGORY_LABELS: Record<string, { label: string; icon: string }> = {
+  MISSING_DATA: { label: "결측 데이터", icon: "[!]" },
+  DUPLICATE: { label: "중복 데이터", icon: "[=]" },
+  INCONSISTENT: { label: "데이터 불일치", icon: "[~]" },
+  STALE: { label: "오래된 데이터", icon: "[*]" },
+  INVALID_FK: { label: "FK 오류", icon: "[X]" },
+};
+
+const PRIORITY_COLORS = {
+  HIGH: "#F44336",
+  MEDIUM: "#FF9800",
+  LOW: "#4CAF50",
+};
+
+const TYPE_LABELS: Record<string, { label: string; color: string }> = {
+  DATA_FIX: { label: "데이터 수정", color: "#F44336" },
+  PROCESS_IMPROVEMENT: { label: "프로세스 개선", color: "#2196F3" },
+  MONITORING: { label: "모니터링", color: "#9C27B0" },
+  VALIDATION_RULE: { label: "검증 규칙", color: "#FF9800" },
+};
+
 const METRIC_LABELS: Record<string, { label: string; goodDirection: "higher" | "lower" }> = {
   missing_rate: { label: "결측률", goodDirection: "lower" },
   duplicate_rate: { label: "중복률", goodDirection: "lower" },
   required_field_rate: { label: "필수필드 충족률", goodDirection: "higher" },
   key_match_rate: { label: "FK 매칭률", goodDirection: "higher" },
 };
+
+const TAB_ITEMS = [
+  { id: "overview", label: "개요" },
+  { id: "entities", label: "엔터티별 상세" },
+  { id: "issues", label: "이슈 목록" },
+  { id: "trends", label: "트렌드" },
+  { id: "recommendations", label: "권장 조치" },
+  { id: "correlation", label: "영향 분석" },
+];
 
 // ============================================================
 // Helper Components

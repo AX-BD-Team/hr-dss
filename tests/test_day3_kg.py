@@ -78,11 +78,13 @@ class TestKGSchema:
 
     def test_required_relationship_types(self, neo4j_driver):
         """TC-D3-01-04: 필수 관계 타입 존재"""
+        # 핵심 관계 타입 (실제 스키마 기반)
         required = [
             "BELONGS_TO",
             "ASSIGNED_TO",
-            "HAS_COMPETENCY",
         ]
+        # 역량 관련 관계 (대안 허용)
+        competency_alternatives = ["HAS_COMPETENCY", "IMPROVES", "FOR_SUBJECT"]
 
         with neo4j_driver.session() as session:
             result = session.run(
@@ -90,9 +92,13 @@ class TestKGSchema:
             )
             rel_types = result.single()["types"]
 
-            missing = [rel for rel in required if rel not in rel_types]
-            # 일부 관계만 필수로 체크 (스키마 초기 버전)
-            assert len(missing) <= len(required) // 2, f"Missing many relationship types: {missing}"
+            # 핵심 관계 확인
+            missing_core = [rel for rel in required if rel not in rel_types]
+            assert not missing_core, f"Missing core relationship types: {missing_core}"
+
+            # 역량 관계 중 하나 이상 존재 확인
+            has_competency_rel = any(rel in rel_types for rel in competency_alternatives)
+            assert has_competency_rel, f"Missing competency relationship (expected one of {competency_alternatives})"
 
 
 @pytest.mark.day3

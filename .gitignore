@@ -70,3 +70,10 @@ Thumbs.db
 *.pem
 *.key
 credentials.json
+
+# Local Claude settings
+.claude/settings.local.json
+
+# Temporary files
+nul
+AI UI.md

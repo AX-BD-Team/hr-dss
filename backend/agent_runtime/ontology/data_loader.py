@@ -110,15 +110,32 @@ class Neo4jDataLoader:
         with open(schema_path, encoding="utf-8") as f:
             schema_content = f.read()
 
-        # CREATE CONSTRAINT와 CREATE INDEX 문만 추출
+        # CREATE CONSTRAINT와 CREATE INDEX 문을 추출 (멀티라인 지원)
         statements = []
+        current_statement = []
+        in_statement = False
+
         for line in schema_content.split("\n"):
-            line = line.strip()
-            if line.startswith("CREATE CONSTRAINT") or line.startswith("CREATE INDEX"):
-                # 세미콜론으로 끝나는지 확인
-                if not line.endswith(";"):
-                    line += ";"
-                statements.append(line)
+            line_stripped = line.strip()
+
+            # 주석이나 빈 줄 건너뛰기 (문장 중간이 아닐 때만)
+            if not in_statement:
+                if not line_stripped or line_stripped.startswith("//"):
+                    continue
+
+            # CREATE CONSTRAINT 또는 CREATE INDEX로 시작하면 문장 시작
+            if line_stripped.startswith("CREATE CONSTRAINT") or line_stripped.startswith("CREATE INDEX"):
+                in_statement = True
+                current_statement = [line_stripped]
+            elif in_statement:
+                current_statement.append(line_stripped)
+
+            # 세미콜론으로 끝나면 문장 완료
+            if in_statement and line_stripped.endswith(";"):
+                stmt = " ".join(current_statement)
+                statements.append(stmt)
+                current_statement = []
+                in_statement = False
 
         with self._driver.session(database=self.database) as session:
             for stmt in statements:
@@ -237,6 +254,15 @@ class Neo4jDataLoader:
             # OrgUnits
             for org in data.get("orgUnits", []):
                 try:
+                    # 선택적 필드에 기본값 제공
+                    org_data = {
+                        "orgUnitId": org.get("orgUnitId"),
+                        "name": org.get("name"),
+                        "type": org.get("type"),
+                        "status": org.get("status", "ACTIVE"),
+                        "headCount": org.get("headCount", 0),
+                        "parentOrgUnitId": org.get("parentOrgUnitId")
+                    }
                     session.run("""
                         MERGE (o:OrgUnit {orgUnitId: $orgUnitId})
                         SET o.name = $name,
@@ -244,7 +270,7 @@ class Neo4jDataLoader:
                             o.status = $status,
                             o.headCount = $headCount,
                             o.parentOrgUnitId = $parentOrgUnitId
-                    """, **org)
+                    """, **org_data)
                     created += 1
                 except Exception as e:
                     errors.append(f"OrgUnit {org.get('orgUnitId')}: {e}")
@@ -252,13 +278,20 @@ class Neo4jDataLoader:
             # JobRoles
             for role in data.get("jobRoles", []):
                 try:
+                    role_data = {
+                        "jobRoleId": role.get("jobRoleId"),
+                        "name": role.get("name"),
+                        "category": role.get("category", "GENERAL"),
+                        "level": role.get("level", "STAFF"),
+                        "description": role.get("description", "")
+                    }
                     session.run("""
                         MERGE (j:JobRole {jobRoleId: $jobRoleId})
                         SET j.name = $name,
                             j.category = $category,
                             j.level = $level,
                             j.description = $description
-                    """, **role)
+                    """, **role_data)
                     created += 1
                 except Exception as e:
                     errors.append(f"JobRole {role.get('jobRoleId')}: {e}")
@@ -322,6 +355,20 @@ class Neo4jDataLoader:
         with self._driver.session(database=self.database) as session:
             for emp in data.get("employees", []):
                 try:
+                    # 선택적 필드에 기본값 제공
+                    emp_data = {
+                        "employeeId": emp.get("employeeId"),
+                        "name": emp.get("name"),
+                        "email": emp.get("email"),
+                        "grade": emp.get("grade"),
+                        "status": emp.get("status", "ACTIVE"),
+                        "hireDate": emp.get("hireDate"),
+                        "orgUnitId": emp.get("orgUnitId"),
+                        "jobRoleId": emp.get("jobRoleId"),
+                        "deliveryRoleId": emp.get("deliveryRoleId"),
+                        "location": emp.get("location", "서울"),
+                        "costRate": emp.get("costRate", 0)
+                    }
                     session.run("""
                         MERGE (e:Employee {employeeId: $employeeId})
                         SET e.name = $name,
@@ -334,7 +381,7 @@ class Neo4jDataLoader:
                             e.deliveryRoleId = $deliveryRoleId,
                             e.location = $location,
                             e.costRate = $costRate
-                    """, **emp)
+                    """, **emp_data)
                     created += 1
                 except Exception as e:
                     errors.append(f"Employee {emp.get('employeeId')}: {e}")
@@ -441,6 +488,21 @@ class Neo4jDataLoader:
             # Opportunities
             for opp in data.get("opportunities", []):
                 try:
+                    # 선택적 필드에 기본값 제공
+                    opp_data = {
+                        "opportunityId": opp.get("opportunityId"),
+                        "name": opp.get("name"),
+                        "customerId": opp.get("customerId", opp.get("clientId")),
+                        "customerName": opp.get("customerName", opp.get("clientName")),
+                        "stage": opp.get("stage"),
+                        "dealValue": opp.get("dealValue", opp.get("value", 0)),
+                        "closeProbability": opp.get("closeProbability", opp.get("probability", 0)),
+                        "expectedCloseDate": opp.get("expectedCloseDate", opp.get("closeDate")),
+                        "estimatedFTE": opp.get("estimatedFTE", opp.get("requiredFTE", 0)),
+                        "estimatedDuration": opp.get("estimatedDuration", opp.get("duration", 0)),
+                        "ownerOrgUnitId": opp.get("ownerOrgUnitId", opp.get("orgUnitId")),
+                        "salesOwnerId": opp.get("salesOwnerId", opp.get("ownerId"))
+                    }
                     session.run("""
                         MERGE (o:Opportunity {opportunityId: $opportunityId})
                         SET o.name = $name,
@@ -454,7 +516,7 @@ class Neo4jDataLoader:
                             o.estimatedDuration = $estimatedDuration,
                             o.ownerOrgUnitId = $ownerOrgUnitId,
                             o.salesOwnerId = $salesOwnerId
-                    """, **opp)
+                    """, **opp_data)
                     created += 1
                 except Exception as e:
                     errors.append(f"Opportunity {opp.get('opportunityId')}: {e}")
@@ -462,6 +524,17 @@ class Neo4jDataLoader:
             # DemandSignals
             for sig in data.get("demandSignals", []):
                 try:
+                    sig_data = {
+                        "signalId": sig.get("signalId"),
+                        "signalType": sig.get("signalType", sig.get("type")),
+                        "sourceType": sig.get("sourceType", "OPPORTUNITY"),
+                        "sourceId": sig.get("sourceId", sig.get("opportunityId")),
+                        "detectedAt": sig.get("detectedAt", "2025-01-01T00:00:00Z"),
+                        "effectiveFrom": sig.get("effectiveFrom", sig.get("startDate", "2025-01-01")),
+                        "estimatedFTEChange": sig.get("estimatedFTEChange", sig.get("requiredFTE", 0)),
+                        "confidence": sig.get("confidence", sig.get("probability", 0.5)),
+                        "status": sig.get("status", "PENDING")
+                    }
                     session.run("""
                         MERGE (d:DemandSignal {signalId: $signalId})
                         SET d.signalType = $signalType,
@@ -472,7 +545,7 @@ class Neo4jDataLoader:
                             d.estimatedFTEChange = $estimatedFTEChange,
                             d.confidence = $confidence,
                             d.status = $status
-                    """, **sig)
+                    """, **sig_data)
                     created += 1
                 except Exception as e:
                     errors.append(f"DemandSignal {sig.get('signalId')}: {e}")
@@ -531,13 +604,21 @@ class Neo4jDataLoader:
             # Competencies
             for comp in data.get("competencies", []):
                 try:
+                    # 선택적 필드에 기본값 제공
+                    comp_data = {
+                        "competencyId": comp.get("competencyId"),
+                        "name": comp.get("name"),
+                        "domain": comp.get("domain", "GENERAL"),
+                        "category": comp.get("category"),
+                        "description": comp.get("description", "")
+                    }
                     session.run("""
                         MERGE (c:Competency {competencyId: $competencyId})
                         SET c.name = $name,
                             c.domain = $domain,
                             c.category = $category,
                             c.description = $description
-                    """, **comp)
+                    """, **comp_data)
                     created += 1
                 except Exception as e:
                     errors.append(f"Competency {comp.get('competencyId')}: {e}")
@@ -545,6 +626,16 @@ class Neo4jDataLoader:
             # CompetencyEvidences
             for ev in data.get("competencyEvidences", []):
                 try:
+                    ev_data = {
+                        "evidenceId": ev.get("evidenceId"),
+                        "employeeId": ev.get("employeeId"),
+                        "competencyId": ev.get("competencyId"),
+                        "level": ev.get("level", 1),
+                        "assessmentDate": ev.get("assessmentDate", ev.get("evaluatedAt", "2025-01-01")),
+                        "assessmentType": ev.get("assessmentType", ev.get("source", "SELF")),
+                        "validUntil": ev.get("validUntil", ev.get("expiresAt")),
+                        "notes": ev.get("notes", "")
+                    }
                     session.run("""
                         MERGE (ce:CompetencyEvidence {evidenceId: $evidenceId})
                         SET ce.employeeId = $employeeId,
@@ -552,9 +643,9 @@ class Neo4jDataLoader:
                             ce.level = $level,
                             ce.assessmentDate = date($assessmentDate),
                             ce.assessmentType = $assessmentType,
-                            ce.validUntil = date($validUntil),
+                            ce.validUntil = CASE WHEN $validUntil IS NOT NULL THEN date($validUntil) ELSE NULL END,
                             ce.notes = $notes
-                    """, **ev)
+                    """, **ev_data)
                     created += 1
                 except Exception as e:
                     errors.append(f"CompetencyEvidence {ev.get('evidenceId')}: {e}")
@@ -593,6 +684,19 @@ class Neo4jDataLoader:
             # Assignments
             for asn in data.get("assignments", []):
                 try:
+                    # 선택적 필드에 기본값 제공
+                    asn_data = {
+                        "assignmentId": asn.get("assignmentId"),
+                        "employeeId": asn.get("employeeId"),
+                        "projectId": asn.get("projectId"),
+                        "workPackageId": asn.get("workPackageId"),
+                        "role": asn.get("role", asn.get("deliveryRole")),
+                        "allocationFTE": asn.get("allocationFTE", asn.get("allocation", 1.0)),
+                        "startDate": asn.get("startDate"),
+                        "endDate": asn.get("endDate"),
+                        "status": asn.get("status", "ACTIVE"),
+                        "billable": asn.get("billable", True)
+                    }
                     session.run("""
                         MERGE (a:Assignment {assignmentId: $assignmentId})
                         SET a.employeeId = $employeeId,
@@ -604,7 +708,7 @@ class Neo4jDataLoader:
                             a.endDate = date($endDate),
                             a.status = $status,
                             a.billable = $billable
-                    """, **asn)
+                    """, **asn_data)
                     created += 1
                 except Exception as e:
                     errors.append(f"Assignment {asn.get('assignmentId')}: {e}")
@@ -612,13 +716,20 @@ class Neo4jDataLoader:
             # Availabilities
             for av in data.get("availabilities", []):
                 try:
+                    av_data = {
+                        "availabilityId": av.get("availabilityId"),
+                        "employeeId": av.get("employeeId"),
+                        "timeBucketId": av.get("timeBucketId", av.get("weekId")),
+                        "availableFTE": av.get("availableFTE", av.get("available", 1.0)),
+                        "reason": av.get("reason", "")
+                    }
                     session.run("""
                         MERGE (av:Availability {availabilityId: $availabilityId})
                         SET av.employeeId = $employeeId,
                             av.timeBucketId = $timeBucketId,
                             av.availableFTE = $availableFTE,
                             av.reason = $reason
-                    """, **av)
+                    """, **av_data)
                     created += 1
                 except Exception as e:
                     errors.append(f"Availability {av.get('availabilityId')}: {e}")
@@ -999,6 +1110,16 @@ class Neo4jDataLoader:
             # ModelRuns
             for run in data.get("modelRuns", []):
                 try:
+                    # 선택적 필드에 기본값 제공
+                    run_data = {
+                        "runId": run.get("runId"),
+                        "modelId": run.get("modelId"),
+                        "scenarioId": run.get("scenarioId"),
+                        "snapshotId": run.get("snapshotId"),
+                        "runAt": run.get("runAt"),
+                        "parameters": run.get("parameters", "{}"),
+                        "status": run.get("status", "COMPLETED")
+                    }
                     session.run("""
                         MERGE (mr:ModelRun {runId: $runId})
                         SET mr.modelId = $modelId,
@@ -1007,7 +1128,7 @@ class Neo4jDataLoader:
                             mr.runAt = datetime($runAt),
                             mr.parameters = $parameters,
                             mr.status = $status
-                    """, **run)
+                    """, **run_data)
                     created += 1
                 except Exception as e:
                     errors.append(f"ModelRun {run.get('runId')}: {e}")

@@ -144,7 +144,7 @@ class TestImpactSimulator:
         assert hasattr(result, "analyses"), "Missing analyses"
         assert len(result.analyses) >= 1, f"Expected >= 1 analysis, got {len(result.analyses)}"
         # 첫 번째 분석의 메트릭 확인
-        assert len(result.analyses[0].metrics) >= 3, f"Expected >= 3 metrics"
+        assert len(result.analyses[0].metrics) >= 3, "Expected >= 3 metrics"
 
     def test_metrics_have_values(self, agent):
         """TC-D4-03-01: 메트릭에 As-Is/To-Be 값 포함"""

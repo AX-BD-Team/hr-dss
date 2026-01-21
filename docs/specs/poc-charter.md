@@ -1,0 +1,165 @@
+# HR 의사결정 지원 시스템 PoC Charter v1
+
+> 작성일: 2025-01-22 | 버전: 1.0
+
+---
+
+## 1. 프로젝트 개요
+
+| 항목 | 내용 |
+|------|------|
+| 프로젝트명 | HR 의사결정 지원 시스템 Prototype |
+| 기간 | 2025.01.22 (수) ~ 2025.01.30 (목) / 평일 7일 |
+| 목표 | PoC 준비를 위한 Prototype 구현 - **"팔란티어 수준 예측"** 가능성 검증 |
+| 기술 스택 | Neo4j (Ontology/KG), LLM (Claude), Next.js, Cloudflare |
+
+---
+
+## 2. 배경 및 목적
+
+### 2.1 배경
+
+현재 HR 의사결정 프로세스의 문제점:
+- 수요/공급 데이터가 분산되어 통합 분석 어려움
+- 의사결정 근거가 명시적으로 추적되지 않음
+- 예측/시뮬레이션 없이 경험 기반 판단에 의존
+- VRB/PRB 등 의사결정 회의체에서 데이터 기반 논의 부족
+
+### 2.2 목적
+
+1. **팔란티어 수준 예측 가능성 검증**: 복수 데이터 연결을 통한 예측+시뮬레이션+처방 가능 여부 확인
+2. **근거 기반 의사결정 체계 구축**: 모든 추론에 Evidence 연결
+3. **HITL 워크플로 검증**: 승인 프로세스와 실행 연결
+
+---
+
+## 3. "팔란티어 수준 예측" 정의
+
+| 요건 | 설명 | 검증 방법 |
+|------|------|----------|
+| 목표/제약 기반 | DecisionCase에 Objective/Constraint를 구조적으로 저장 | DecisionCase 노드 생성 확인 |
+| 복수 데이터 연결 | BizForce(수요) ↔ TMS(공급) ↔ R&R ↔ HR Master ↔ Cost/Risk/Outcome | KG 연결 경로 쿼리 |
+| 예측+시뮬레이션+처방 | ForecastPoint → Option/Scenario/Action → Evaluation/MetricValue | 3안 비교 시뮬레이션 |
+| 근거/감사 가능 | ModelRun + Finding + Evidence로 추적 | Evidence 연결률 95% 이상 |
+| HITL+Workflow | DecisionGate/Approval 후 WorkflowTask로 실행 연결 | 승인→실행 플로우 테스트 |
+
+---
+
+## 4. 범위 (Scope)
+
+### 4.1 In-Scope
+
+| 영역 | 포함 항목 |
+|------|----------|
+| 유스케이스 | 4대 핵심 질문 (A-1, B-1, C-1, D-1) |
+| 데이터 | Mock 데이터 6종 (persons, projects, skills, orgs, opportunities, assignments) |
+| 기능 | 질문 분해, 대안 생성, 시뮬레이션, 근거 검증, HITL 승인 |
+| UI | Conversational UI, Option Compare Dashboard, Explanation Panel |
+| 평가 | Agent Eval, Ontology Eval, Data Quality Eval |
+
+### 4.2 Out-of-Scope
+
+| 영역 | 제외 항목 | 사유 |
+|------|----------|------|
+| 데이터 | 실제 운영 데이터 연동 | 보안/거버넌스 미확정 |
+| 기능 | 자동 실행 (Workflow 자동화) | HITL 검증 우선 |
+| 인프라 | 운영 환경 배포 | Prototype 단계 |
+| 학습 | ML 모델 학습/튜닝 | 휴리스틱 우선 검증 |
+
+---
+
+## 5. 성공 기준 (Success Criteria)
+
+### 5.1 필수 달성 기준 (Must-Have)
+
+| ID | 기준 | 측정 방법 | 목표 |
+|----|------|----------|------|
+| SC-1 | 4대 유스케이스 응답 가능 | A-1, B-1, C-1, D-1 질문에 3안 생성 | 100% |
+| SC-2 | 근거 연결률 | 주장에 Evidence 연결 비율 | ≥ 95% |
+| SC-3 | 환각률 | 근거 없는 주장 비율 | ≤ 5% |
+| SC-4 | KG 엔터티 커버리지 | 28개 필수 노드 존재 | 100% |
+
+### 5.2 권장 달성 기준 (Should-Have)
+
+| ID | 기준 | 측정 방법 | 목표 |
+|----|------|----------|------|
+| SC-5 | 응답 시간 | 답변 생성 시간 | ≤ 30초 |
+| SC-6 | 재현성 | 동일 입력 시 동일 결과 | ≥ 95% |
+| SC-7 | Data Quality 영향도 | 데이터 품질 vs 예측 정확도 상관관계 | 분석 완료 |
+
+---
+
+## 6. 마일스톤
+
+| 마일스톤 | 날짜 | 검증 기준 | 담당 |
+|----------|------|-----------|------|
+| M1: 기반 완성 | 1/22 | PoC Charter + Question Set + Decision Criteria 확정 | 전체 |
+| M2: 데이터 준비 | 1/23 | Data Readiness Dashboard 동작, Mock 데이터 6종 | 데이터 |
+| M3: KG 구축 완료 | 1/24 | Neo4j에서 Cypher 쿼리 가능, Graph Viewer 동작 | 백엔드 |
+| M4: 질문 응답 가능 | 1/27 | A-1(12주 병목) 질문에 3안 생성 + 비교 가능 | Agent |
+| M5: 에이전트 동작 | 1/28 | Agent Eval + Ontology Eval 대시보드 동작 | 평가 |
+| M6: UI 완성 | 1/29 | 전체 플로우 데모 가능 | 프론트 |
+| M7: Prototype 완성 | 1/30 | PoC Final Report 완성 | 전체 |
+
+---
+
+## 7. 리스크 및 대응 계획
+
+| 리스크 | 영향도 | 발생확률 | 대응 계획 |
+|--------|--------|----------|----------|
+| 데이터 준비 지연 | 높음 | 중간 | Mock 데이터 규모 축소 (100명 → 50명) |
+| Agent 개발 지연 | 중간 | 중간 | 5개 Agent → 3개 필수 (Query/Option/Simulator) |
+| 라벨 데이터 확보 어려움 | 중간 | 높음 | 휴리스틱 기반 스코어링으로 대체 |
+| Ontology 스키마 변경 | 낮음 | 낮음 | Migration Script 준비 |
+| 전체 일정 지연 | 높음 | 낮음 | 1/31(금)로 1일 연장 가능 |
+
+---
+
+## 8. 운영체계
+
+### 8.1 Steering Group
+
+| 역할 | 담당자 | 책임 |
+|------|--------|------|
+| Sponsor | (TBD) | 의사결정, 리소스 확보 |
+| Product Owner | (TBD) | 요구사항 확정, 우선순위 결정 |
+
+### 8.2 Working Group
+
+| 역할 | 담당자 | 책임 |
+|------|--------|------|
+| Tech Lead | Sinclair | 기술 아키텍처, 개발 총괄 |
+| AI/Agent 개발 | Claude | Agent Framework 구현 |
+| 데이터 엔지니어 | (TBD) | 데이터 준비, KG 구축 |
+| 프론트엔드 | (TBD) | UI 구현 |
+
+### 8.3 회의체
+
+| 회의 | 주기 | 참석자 | 목적 |
+|------|------|--------|------|
+| Daily Standup | 매일 09:00 | Working Group | 진행 상황 공유, 이슈 논의 |
+| Milestone Review | M1~M7 완료 시 | 전체 | 마일스톤 검증, 다음 단계 확정 |
+
+---
+
+## 9. 커뮤니케이션
+
+| 채널 | 용도 |
+|------|------|
+| GitHub Issues | 태스크 관리, 이슈 추적 |
+| GitHub Discussions | 기술 논의, 의사결정 기록 |
+| Slack/Teams | 실시간 커뮤니케이션 |
+
+---
+
+## 10. 승인
+
+| 역할 | 이름 | 서명 | 날짜 |
+|------|------|------|------|
+| Sponsor | | | |
+| Product Owner | | | |
+| Tech Lead | Sinclair | ✅ | 2025-01-22 |
+
+---
+
+*이 문서는 PoC 진행 중 변경될 수 있으며, 주요 변경 시 Steering Group 승인 필요*

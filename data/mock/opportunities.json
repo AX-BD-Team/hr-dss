@@ -1,0 +1,208 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generatedAt": "2025-01-23T00:00:00Z",
+    "description": "HR DSS Mock Data - Opportunities & DemandSignals"
+  },
+  "opportunities": [
+    {
+      "opportunityId": "OPP-2024-0001",
+      "name": "금융권 AI 챗봇 구축",
+      "clientName": "K은행",
+      "industry": "금융",
+      "stage": "WON",
+      "dealValue": 2500000000,
+      "closeProbability": 1.0,
+      "expectedStartDate": "2024-06-01",
+      "expectedEndDate": "2025-05-31",
+      "ownerEmployeeId": "EMP-000010"
+    },
+    {
+      "opportunityId": "OPP-2024-0002",
+      "name": "제조사 MLOps 플랫폼",
+      "clientName": "H전자",
+      "industry": "제조",
+      "stage": "WON",
+      "dealValue": 1800000000,
+      "closeProbability": 1.0,
+      "expectedStartDate": "2024-07-15",
+      "expectedEndDate": "2025-03-31",
+      "ownerEmployeeId": "EMP-000010"
+    },
+    {
+      "opportunityId": "OPP-2024-0003",
+      "name": "유통사 데이터레이크 구축",
+      "clientName": "L마트",
+      "industry": "유통",
+      "stage": "WON",
+      "dealValue": 3200000000,
+      "closeProbability": 1.0,
+      "expectedStartDate": "2024-08-01",
+      "expectedEndDate": "2025-06-30",
+      "ownerEmployeeId": "EMP-000030"
+    },
+    {
+      "opportunityId": "OPP-2024-0004",
+      "name": "통신사 실시간 분석 시스템",
+      "clientName": "S통신",
+      "industry": "통신",
+      "stage": "WON",
+      "dealValue": 4500000000,
+      "closeProbability": 1.0,
+      "expectedStartDate": "2024-09-01",
+      "expectedEndDate": "2025-08-31",
+      "ownerEmployeeId": "EMP-000030"
+    },
+    {
+      "opportunityId": "OPP-2024-0005",
+      "name": "공공기관 클라우드 전환",
+      "clientName": "행정안전부",
+      "industry": "공공",
+      "stage": "WON",
+      "dealValue": 5000000000,
+      "closeProbability": 1.0,
+      "expectedStartDate": "2024-04-01",
+      "expectedEndDate": "2025-03-31",
+      "ownerEmployeeId": "EMP-000051"
+    },
+    {
+      "opportunityId": "OPP-2024-0006",
+      "name": "보험사 Azure 마이그레이션",
+      "clientName": "D보험",
+      "industry": "금융",
+      "stage": "WON",
+      "dealValue": 2800000000,
+      "closeProbability": 1.0,
+      "expectedStartDate": "2024-10-01",
+      "expectedEndDate": "2025-09-30",
+      "ownerEmployeeId": "EMP-000051"
+    },
+    {
+      "opportunityId": "OPP-2024-0007",
+      "name": "물류사 SRE 체계 구축",
+      "clientName": "C물류",
+      "industry": "물류",
+      "stage": "WON",
+      "dealValue": 1500000000,
+      "closeProbability": 1.0,
+      "expectedStartDate": "2024-05-15",
+      "expectedEndDate": "2025-02-28",
+      "ownerEmployeeId": "EMP-000050"
+    },
+    {
+      "opportunityId": "OPP-2024-0008",
+      "name": "대기업 SAP S/4HANA 전환",
+      "clientName": "P그룹",
+      "industry": "제조",
+      "stage": "WON",
+      "dealValue": 15000000000,
+      "closeProbability": 1.0,
+      "expectedStartDate": "2024-03-01",
+      "expectedEndDate": "2025-12-31",
+      "ownerEmployeeId": "EMP-000081"
+    },
+    {
+      "opportunityId": "OPP-2024-0009",
+      "name": "중견기업 Salesforce 도입",
+      "clientName": "A테크",
+      "industry": "IT",
+      "stage": "WON",
+      "dealValue": 800000000,
+      "closeProbability": 1.0,
+      "expectedStartDate": "2024-11-01",
+      "expectedEndDate": "2025-06-30",
+      "ownerEmployeeId": "EMP-000090"
+    },
+    {
+      "opportunityId": "OPP-2024-0010",
+      "name": "스타트업 AI MVP 개발",
+      "clientName": "B스타트업",
+      "industry": "IT",
+      "stage": "WON",
+      "dealValue": 500000000,
+      "closeProbability": 1.0,
+      "expectedStartDate": "2024-01-15",
+      "expectedEndDate": "2024-06-30",
+      "ownerEmployeeId": "EMP-000010"
+    },
+    {
+      "opportunityId": "OPP-2025-0001",
+      "name": "헬스케어 AI 진단 시스템",
+      "clientName": "M병원",
+      "industry": "헬스케어",
+      "stage": "NEGOTIATION",
+      "dealValue": 3500000000,
+      "closeProbability": 0.7,
+      "expectedStartDate": "2025-03-01",
+      "expectedEndDate": "2025-12-31",
+      "ownerEmployeeId": "EMP-000010"
+    },
+    {
+      "opportunityId": "OPP-2025-0002",
+      "name": "자동차 예측정비 플랫폼",
+      "clientName": "H자동차",
+      "industry": "제조",
+      "stage": "PROPOSAL",
+      "dealValue": 4000000000,
+      "closeProbability": 0.5,
+      "expectedStartDate": "2025-04-01",
+      "expectedEndDate": "2026-03-31",
+      "ownerEmployeeId": "EMP-000010"
+    },
+    {
+      "opportunityId": "OPP-2025-0003",
+      "name": "미디어 AI 추천 시스템",
+      "clientName": "N미디어",
+      "industry": "미디어",
+      "stage": "QUALIFIED",
+      "dealValue": 10000000000,
+      "closeProbability": 0.4,
+      "expectedStartDate": "2025-06-01",
+      "expectedEndDate": "2026-05-31",
+      "ownerEmployeeId": "EMP-000010"
+    },
+    {
+      "opportunityId": "OPP-2025-0004",
+      "name": "에너지 스마트그리드 분석",
+      "clientName": "K에너지",
+      "industry": "에너지",
+      "stage": "LEAD",
+      "dealValue": 2000000000,
+      "closeProbability": 0.2,
+      "expectedStartDate": "2025-07-01",
+      "expectedEndDate": "2026-06-30",
+      "ownerEmployeeId": "EMP-000030"
+    },
+    {
+      "opportunityId": "OPP-2025-0005",
+      "name": "교육 LMS AI 튜터",
+      "clientName": "E교육",
+      "industry": "교육",
+      "stage": "LEAD",
+      "dealValue": 1200000000,
+      "closeProbability": 0.15,
+      "expectedStartDate": "2025-09-01",
+      "expectedEndDate": "2026-08-31",
+      "ownerEmployeeId": "EMP-000010"
+    }
+  ],
+  "demandSignals": [
+    {"signalId": "SIG-2025-001", "opportunityId": "OPP-2025-0001", "sourceSystem": "BizForce", "signalType": "PIPELINE", "closeProbability": 0.7, "expectedStartDate": "2025-03-01", "createdAt": "2025-01-10T09:00:00Z"},
+    {"signalId": "SIG-2025-002", "opportunityId": "OPP-2025-0002", "sourceSystem": "BizForce", "signalType": "PIPELINE", "closeProbability": 0.5, "expectedStartDate": "2025-04-01", "createdAt": "2025-01-12T10:30:00Z"},
+    {"signalId": "SIG-2025-003", "opportunityId": "OPP-2025-0003", "sourceSystem": "BizForce", "signalType": "PIPELINE", "closeProbability": 0.4, "expectedStartDate": "2025-06-01", "createdAt": "2025-01-15T14:00:00Z"},
+    {"signalId": "SIG-2025-004", "opportunityId": "OPP-2025-0004", "sourceSystem": "BizForce", "signalType": "FORECAST", "closeProbability": 0.2, "expectedStartDate": "2025-07-01", "createdAt": "2025-01-18T11:00:00Z"},
+    {"signalId": "SIG-2025-005", "opportunityId": "OPP-2025-0005", "sourceSystem": "BizForce", "signalType": "FORECAST", "closeProbability": 0.15, "expectedStartDate": "2025-09-01", "createdAt": "2025-01-20T16:00:00Z"}
+  ],
+  "resourceDemands": [
+    {"demandId": "RD-2025-001", "signalId": "SIG-2025-001", "projectId": null, "workPackageId": null, "deliveryRoleId": "DR-001", "quantityFTE": 1, "startDate": "2025-03-01", "endDate": "2025-12-31", "probability": 0.7, "priority": "HIGH"},
+    {"demandId": "RD-2025-002", "signalId": "SIG-2025-001", "projectId": null, "workPackageId": null, "deliveryRoleId": "DR-002", "quantityFTE": 2, "startDate": "2025-03-01", "endDate": "2025-12-31", "probability": 0.7, "priority": "HIGH"},
+    {"demandId": "RD-2025-003", "signalId": "SIG-2025-001", "projectId": null, "workPackageId": null, "deliveryRoleId": "DR-007", "quantityFTE": 3, "startDate": "2025-03-01", "endDate": "2025-12-31", "probability": 0.7, "priority": "HIGH"},
+    {"demandId": "RD-2025-004", "signalId": "SIG-2025-001", "projectId": null, "workPackageId": null, "deliveryRoleId": "DR-004", "quantityFTE": 2, "startDate": "2025-03-01", "endDate": "2025-12-31", "probability": 0.7, "priority": "MEDIUM"},
+    {"demandId": "RD-2025-005", "signalId": "SIG-2025-002", "projectId": null, "workPackageId": null, "deliveryRoleId": "DR-001", "quantityFTE": 1, "startDate": "2025-04-01", "endDate": "2026-03-31", "probability": 0.5, "priority": "HIGH"},
+    {"demandId": "RD-2025-006", "signalId": "SIG-2025-002", "projectId": null, "workPackageId": null, "deliveryRoleId": "DR-007", "quantityFTE": 2, "startDate": "2025-04-01", "endDate": "2026-03-31", "probability": 0.5, "priority": "HIGH"},
+    {"demandId": "RD-2025-007", "signalId": "SIG-2025-002", "projectId": null, "workPackageId": null, "deliveryRoleId": "DR-006", "quantityFTE": 2, "startDate": "2025-04-01", "endDate": "2026-03-31", "probability": 0.5, "priority": "MEDIUM"},
+    {"demandId": "RD-2025-008", "signalId": "SIG-2025-003", "projectId": null, "workPackageId": null, "deliveryRoleId": "DR-001", "quantityFTE": 2, "startDate": "2025-06-01", "endDate": "2026-05-31", "probability": 0.4, "priority": "HIGH"},
+    {"demandId": "RD-2025-009", "signalId": "SIG-2025-003", "projectId": null, "workPackageId": null, "deliveryRoleId": "DR-002", "quantityFTE": 3, "startDate": "2025-06-01", "endDate": "2026-05-31", "probability": 0.4, "priority": "HIGH"},
+    {"demandId": "RD-2025-010", "signalId": "SIG-2025-003", "projectId": null, "workPackageId": null, "deliveryRoleId": "DR-007", "quantityFTE": 5, "startDate": "2025-06-01", "endDate": "2026-05-31", "probability": 0.4, "priority": "HIGH"}
+  ]
+}

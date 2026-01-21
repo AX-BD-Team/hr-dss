@@ -1,0 +1,34 @@
+{
+  "name": "hr-dss",
+  "version": "0.1.0",
+  "private": true,
+  "description": "HR 의사결정 지원 시스템 Prototype - 팔란티어 수준 예측 가능성 검증",
+  "keywords": ["claude", "agent", "mcp", "neo4j", "knowledge-graph", "hr", "decision-support"],
+  "license": "MIT",
+  "author": "Sinclair",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "release:patch": "npm version patch",
+    "release:minor": "npm version minor",
+    "release:major": "npm version major"
+  },
+  "devDependencies": {
+    "prettier": "^3.4.0",
+    "turbo": "^2.3.0",
+    "typescript": "^5.7.0"
+  },
+  "packageManager": "pnpm@9.14.2",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}

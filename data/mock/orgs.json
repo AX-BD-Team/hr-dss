@@ -1,0 +1,220 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generatedAt": "2025-01-23T00:00:00Z",
+    "description": "HR DSS Mock Data - Organizations"
+  },
+  "orgUnits": [
+    {
+      "orgUnitId": "ORG-0001",
+      "name": "디지털트랜스포메이션본부",
+      "type": "본부",
+      "parentOrgUnitId": null,
+      "headEmployeeId": "EMP-000001",
+      "costCenter": "CC-1000",
+      "status": "ACTIVE"
+    },
+    {
+      "orgUnitId": "ORG-0010",
+      "name": "AI솔루션실",
+      "type": "실",
+      "parentOrgUnitId": "ORG-0001",
+      "headEmployeeId": "EMP-000010",
+      "costCenter": "CC-1010",
+      "status": "ACTIVE"
+    },
+    {
+      "orgUnitId": "ORG-0011",
+      "name": "AI플랫폼팀",
+      "type": "팀",
+      "parentOrgUnitId": "ORG-0010",
+      "headEmployeeId": "EMP-000011",
+      "costCenter": "CC-1011",
+      "status": "ACTIVE"
+    },
+    {
+      "orgUnitId": "ORG-0012",
+      "name": "MLOps팀",
+      "type": "팀",
+      "parentOrgUnitId": "ORG-0010",
+      "headEmployeeId": "EMP-000020",
+      "costCenter": "CC-1012",
+      "status": "ACTIVE"
+    },
+    {
+      "orgUnitId": "ORG-0020",
+      "name": "데이터엔지니어링실",
+      "type": "실",
+      "parentOrgUnitId": "ORG-0001",
+      "headEmployeeId": "EMP-000030",
+      "costCenter": "CC-1020",
+      "status": "ACTIVE"
+    },
+    {
+      "orgUnitId": "ORG-0021",
+      "name": "데이터플랫폼팀",
+      "type": "팀",
+      "parentOrgUnitId": "ORG-0020",
+      "headEmployeeId": "EMP-000031",
+      "costCenter": "CC-1021",
+      "status": "ACTIVE"
+    },
+    {
+      "orgUnitId": "ORG-0022",
+      "name": "데이터분석팀",
+      "type": "팀",
+      "parentOrgUnitId": "ORG-0020",
+      "headEmployeeId": "EMP-000040",
+      "costCenter": "CC-1022",
+      "status": "ACTIVE"
+    },
+    {
+      "orgUnitId": "ORG-0002",
+      "name": "클라우드사업본부",
+      "type": "본부",
+      "parentOrgUnitId": null,
+      "headEmployeeId": "EMP-000050",
+      "costCenter": "CC-2000",
+      "status": "ACTIVE"
+    },
+    {
+      "orgUnitId": "ORG-0030",
+      "name": "클라우드컨설팅실",
+      "type": "실",
+      "parentOrgUnitId": "ORG-0002",
+      "headEmployeeId": "EMP-000051",
+      "costCenter": "CC-2010",
+      "status": "ACTIVE"
+    },
+    {
+      "orgUnitId": "ORG-0031",
+      "name": "AWS팀",
+      "type": "팀",
+      "parentOrgUnitId": "ORG-0030",
+      "headEmployeeId": "EMP-000052",
+      "costCenter": "CC-2011",
+      "status": "ACTIVE"
+    },
+    {
+      "orgUnitId": "ORG-0032",
+      "name": "Azure팀",
+      "type": "팀",
+      "parentOrgUnitId": "ORG-0030",
+      "headEmployeeId": "EMP-000060",
+      "costCenter": "CC-2012",
+      "status": "ACTIVE"
+    },
+    {
+      "orgUnitId": "ORG-0040",
+      "name": "인프라운영실",
+      "type": "실",
+      "parentOrgUnitId": "ORG-0002",
+      "headEmployeeId": "EMP-000070",
+      "costCenter": "CC-2020",
+      "status": "ACTIVE"
+    },
+    {
+      "orgUnitId": "ORG-0041",
+      "name": "SRE팀",
+      "type": "팀",
+      "parentOrgUnitId": "ORG-0040",
+      "headEmployeeId": "EMP-000071",
+      "costCenter": "CC-2021",
+      "status": "ACTIVE"
+    },
+    {
+      "orgUnitId": "ORG-0003",
+      "name": "솔루션사업본부",
+      "type": "본부",
+      "parentOrgUnitId": null,
+      "headEmployeeId": "EMP-000080",
+      "costCenter": "CC-3000",
+      "status": "ACTIVE"
+    },
+    {
+      "orgUnitId": "ORG-0050",
+      "name": "ERP솔루션실",
+      "type": "실",
+      "parentOrgUnitId": "ORG-0003",
+      "headEmployeeId": "EMP-000081",
+      "costCenter": "CC-3010",
+      "status": "ACTIVE"
+    },
+    {
+      "orgUnitId": "ORG-0051",
+      "name": "SAP팀",
+      "type": "팀",
+      "parentOrgUnitId": "ORG-0050",
+      "headEmployeeId": "EMP-000082",
+      "costCenter": "CC-3011",
+      "status": "ACTIVE"
+    },
+    {
+      "orgUnitId": "ORG-0060",
+      "name": "CRM솔루션실",
+      "type": "실",
+      "parentOrgUnitId": "ORG-0003",
+      "headEmployeeId": "EMP-000090",
+      "costCenter": "CC-3020",
+      "status": "ACTIVE"
+    },
+    {
+      "orgUnitId": "ORG-0061",
+      "name": "Salesforce팀",
+      "type": "팀",
+      "parentOrgUnitId": "ORG-0060",
+      "headEmployeeId": "EMP-000091",
+      "costCenter": "CC-3021",
+      "status": "ACTIVE"
+    },
+    {
+      "orgUnitId": "ORG-0004",
+      "name": "경영지원본부",
+      "type": "본부",
+      "parentOrgUnitId": null,
+      "headEmployeeId": "EMP-000095",
+      "costCenter": "CC-4000",
+      "status": "ACTIVE"
+    },
+    {
+      "orgUnitId": "ORG-0070",
+      "name": "인사팀",
+      "type": "팀",
+      "parentOrgUnitId": "ORG-0004",
+      "headEmployeeId": "EMP-000096",
+      "costCenter": "CC-4010",
+      "status": "ACTIVE"
+    }
+  ],
+  "jobRoles": [
+    {"jobRoleId": "JOB-001", "name": "PM", "jobFamily": "컨설팅", "levelBand": "Lead"},
+    {"jobRoleId": "JOB-002", "name": "아키텍트", "jobFamily": "개발", "levelBand": "Senior"},
+    {"jobRoleId": "JOB-003", "name": "시니어개발자", "jobFamily": "개발", "levelBand": "Senior"},
+    {"jobRoleId": "JOB-004", "name": "개발자", "jobFamily": "개발", "levelBand": "Mid"},
+    {"jobRoleId": "JOB-005", "name": "주니어개발자", "jobFamily": "개발", "levelBand": "Junior"},
+    {"jobRoleId": "JOB-006", "name": "데이터엔지니어", "jobFamily": "개발", "levelBand": "Mid"},
+    {"jobRoleId": "JOB-007", "name": "데이터사이언티스트", "jobFamily": "개발", "levelBand": "Senior"},
+    {"jobRoleId": "JOB-008", "name": "클라우드엔지니어", "jobFamily": "개발", "levelBand": "Mid"},
+    {"jobRoleId": "JOB-009", "name": "SRE", "jobFamily": "개발", "levelBand": "Mid"},
+    {"jobRoleId": "JOB-010", "name": "컨설턴트", "jobFamily": "컨설팅", "levelBand": "Mid"}
+  ],
+  "deliveryRoles": [
+    {"deliveryRoleId": "DR-001", "name": "PM", "category": "MANAGEMENT"},
+    {"deliveryRoleId": "DR-002", "name": "아키텍트", "category": "TECHNICAL"},
+    {"deliveryRoleId": "DR-003", "name": "테크리드", "category": "TECHNICAL"},
+    {"deliveryRoleId": "DR-004", "name": "백엔드개발자", "category": "TECHNICAL"},
+    {"deliveryRoleId": "DR-005", "name": "프론트엔드개발자", "category": "TECHNICAL"},
+    {"deliveryRoleId": "DR-006", "name": "데이터엔지니어", "category": "TECHNICAL"},
+    {"deliveryRoleId": "DR-007", "name": "ML엔지니어", "category": "TECHNICAL"},
+    {"deliveryRoleId": "DR-008", "name": "클라우드엔지니어", "category": "TECHNICAL"},
+    {"deliveryRoleId": "DR-009", "name": "QA엔지니어", "category": "SUPPORT"},
+    {"deliveryRoleId": "DR-010", "name": "DevOps엔지니어", "category": "TECHNICAL"}
+  ],
+  "responsibilities": [
+    {"responsibilityId": "RSP-001", "name": "AI플랫폼 운영", "criticality": "CRITICAL", "requiredRoleId": "DR-007"},
+    {"responsibilityId": "RSP-002", "name": "데이터파이프라인 관리", "criticality": "HIGH", "requiredRoleId": "DR-006"},
+    {"responsibilityId": "RSP-003", "name": "클라우드 인프라 관리", "criticality": "CRITICAL", "requiredRoleId": "DR-008"},
+    {"responsibilityId": "RSP-004", "name": "보안 감사", "criticality": "HIGH", "requiredRoleId": "DR-010"},
+    {"responsibilityId": "RSP-005", "name": "장애 대응", "criticality": "CRITICAL", "requiredRoleId": "DR-009"}
+  ]
+}

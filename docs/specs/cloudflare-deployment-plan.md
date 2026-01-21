@@ -92,10 +92,10 @@
 ### 2.2 도메인 구성
 
 ```
-hr-dss.example.com           → Cloudflare Pages (Frontend)
-api.hr-dss.example.com       → Cloudflare Workers → Railway (Backend)
-auth.hr-dss.example.com      → Cloudflare Zero Trust
-*.hr-dss.example.com         → Cloudflare CDN
+hr.minu.best           → Cloudflare Pages (Frontend)
+api.hr.minu.best       → Cloudflare Workers → Railway (Backend)
+auth.hr.minu.best      → Cloudflare Zero Trust
+*.hr.minu.best         → Cloudflare CDN
 ```
 
 ---
@@ -194,8 +194,8 @@ simple = { limit = 100, period = 60 }  # 분당 100 요청
 
 | 정책 이름 | 대상 | 조건 | 액션 |
 |----------|------|------|------|
-| Production Access | `hr-dss.example.com/*` | 회사 이메일 + SSO | Allow |
-| API Access | `api.hr-dss.example.com/*` | 유효한 JWT | Allow |
+| Production Access | `hr.minu.best/*` | 회사 이메일 + SSO | Allow |
+| API Access | `api.hr.minu.best/*` | 유효한 JWT | Allow |
 | Admin Access | `*/admin/*` | 관리자 그룹 + MFA | Allow |
 | Staging Access | `staging.*` | 개발팀 그룹 | Allow |
 
@@ -209,7 +209,7 @@ simple = { limit = 100, period = 60 }  # 분당 100 요청
 # Zero Trust Application 설정
 application:
   name: "HR-DSS Production"
-  domain: "hr-dss.example.com"
+  domain: "hr.minu.best"
   type: "self_hosted"
   session_duration: "8h"
 
@@ -217,7 +217,7 @@ policies:
   - name: "Allow Company Users"
     decision: "allow"
     include:
-      - email_domain: "example.com"
+      - email_domain: "minu.best"
     require:
       - login_method: ["saml"]
 
@@ -255,15 +255,15 @@ tunnel: hr-dss-backend
 credentials-file: /etc/cloudflared/credentials.json
 
 ingress:
-  - hostname: api.hr-dss.example.com
+  - hostname: api.hr.minu.best
     service: http://localhost:8000
     originRequest:
       noTLSVerify: true
 
-  - hostname: ws.hr-dss.example.com
+  - hostname: ws.hr.minu.best
     service: http://localhost:8000
     originRequest:
-      httpHostHeader: "ws.hr-dss.example.com"
+      httpHostHeader: "ws.hr.minu.best"
 
   - service: http_status:404
 ```

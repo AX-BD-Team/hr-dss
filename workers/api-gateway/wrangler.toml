@@ -26,24 +26,24 @@ ALLOWED_ORIGINS = "http://localhost:3000"
 name = "hr-dss-api-gateway-staging"
 vars = { ENVIRONMENT = "staging", LOG_LEVEL = "info" }
 routes = [
-  { pattern = "staging-api.hr-dss.example.com/*", zone_name = "example.com" }
+  { pattern = "staging-api.hr.minu.best/*", zone_name = "minu.best" }
 ]
 
 [env.staging.vars]
-BACKEND_URL = "https://hr-dss-staging.railway.app"
-ALLOWED_ORIGINS = "https://staging.hr-dss.example.com"
+BACKEND_URL = "https://hr-dss-staging.up.railway.app"
+ALLOWED_ORIGINS = "https://staging.hr.minu.best"
 
 # 프로덕션 환경
 [env.production]
 name = "hr-dss-api-gateway"
 vars = { ENVIRONMENT = "production", LOG_LEVEL = "warn" }
 routes = [
-  { pattern = "api.hr-dss.example.com/*", zone_name = "example.com" }
+  { pattern = "api.hr.minu.best/*", zone_name = "minu.best" }
 ]
 
 [env.production.vars]
-BACKEND_URL = "https://hr-dss.railway.app"
-ALLOWED_ORIGINS = "https://hr-dss.example.com"
+BACKEND_URL = "https://hr-dss.up.railway.app"
+ALLOWED_ORIGINS = "https://hr.minu.best"
 
 # Rate Limiting (Paid Plan 필요)
 # [[env.production.unsafe.bindings]]

@@ -45,7 +45,7 @@ jobs:
         run: pnpm build
         working-directory: apps/web
         env:
-          NEXT_PUBLIC_API_URL: ${{ github.event_name == 'pull_request' && 'https://staging-api.hr-dss.example.com' || 'https://api.hr-dss.example.com' }}
+          NEXT_PUBLIC_API_URL: ${{ github.event_name == 'pull_request' && 'https://staging-api.hr.minu.best' || 'https://api.hr.minu.best' }}
           NEXT_PUBLIC_ENVIRONMENT: ${{ github.event_name == 'pull_request' && 'staging' || 'production' }}
 
       - name: Deploy to Cloudflare Pages

@@ -86,11 +86,11 @@ echo "✅ HR-DSS 배포 완료 (환경: $ENVIRONMENT)"
 echo ""
 echo "📝 배포 URL:"
 if [[ "$ENVIRONMENT" == "production" ]]; then
-    echo "  - Frontend: https://hr-dss.example.com"
-    echo "  - API: https://api.hr-dss.example.com"
+    echo "  - Frontend: https://hr.minu.best"
+    echo "  - API: https://api.hr.minu.best"
 elif [[ "$ENVIRONMENT" == "staging" ]]; then
-    echo "  - Frontend: https://staging.hr-dss.example.com"
-    echo "  - API: https://staging-api.hr-dss.example.com"
+    echo "  - Frontend: https://staging.hr.minu.best"
+    echo "  - API: https://staging-api.hr.minu.best"
 else
     echo "  - Frontend: http://localhost:3000"
     echo "  - API: http://localhost:8000"

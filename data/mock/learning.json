@@ -1,0 +1,326 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generatedAt": "2026-01-21T00:00:00Z",
+    "description": "HR DSS Mock Data - Learning Programs, Courses, Enrollments, Certifications"
+  },
+  "learningPrograms": [
+    {
+      "programId": "LP-001",
+      "name": "AI/ML 전문가 양성 과정",
+      "deliveryMode": "blended",
+      "description": "Machine Learning 및 Deep Learning 핵심 역량 개발",
+      "durationHours": 120
+    },
+    {
+      "programId": "LP-002",
+      "name": "Cloud Architecture 마스터",
+      "deliveryMode": "online",
+      "description": "AWS/Azure/GCP 멀티클라우드 아키텍처 설계 역량",
+      "durationHours": 80
+    },
+    {
+      "programId": "LP-003",
+      "name": "Data Engineering 부트캠프",
+      "deliveryMode": "offline",
+      "description": "대용량 데이터 파이프라인 구축 실무 역량",
+      "durationHours": 100
+    },
+    {
+      "programId": "LP-004",
+      "name": "Generative AI 실무 적용",
+      "deliveryMode": "blended",
+      "description": "LLM 기반 서비스 개발 및 프롬프트 엔지니어링",
+      "durationHours": 60
+    },
+    {
+      "programId": "LP-005",
+      "name": "리더십 아카데미",
+      "deliveryMode": "offline",
+      "description": "차세대 리더를 위한 리더십 역량 개발",
+      "durationHours": 40
+    }
+  ],
+  "courses": [
+    {
+      "courseId": "CRS-001",
+      "title": "Python for ML/DL",
+      "deliveryMode": "online",
+      "programId": "LP-001",
+      "durationHours": 20,
+      "competencyId": "CMP-001"
+    },
+    {
+      "courseId": "CRS-002",
+      "title": "Deep Learning Fundamentals",
+      "deliveryMode": "online",
+      "programId": "LP-001",
+      "durationHours": 30,
+      "competencyId": "CMP-006"
+    },
+    {
+      "courseId": "CRS-003",
+      "title": "MLOps Best Practices",
+      "deliveryMode": "blended",
+      "programId": "LP-001",
+      "durationHours": 25,
+      "competencyId": "CMP-008"
+    },
+    {
+      "courseId": "CRS-004",
+      "title": "NLP with Transformers",
+      "deliveryMode": "online",
+      "programId": "LP-001",
+      "durationHours": 25,
+      "competencyId": "CMP-009"
+    },
+    {
+      "courseId": "CRS-005",
+      "title": "Generative AI Applications",
+      "deliveryMode": "blended",
+      "programId": "LP-004",
+      "durationHours": 30,
+      "competencyId": "CMP-007"
+    },
+    {
+      "courseId": "CRS-006",
+      "title": "Prompt Engineering Masterclass",
+      "deliveryMode": "online",
+      "programId": "LP-004",
+      "durationHours": 15,
+      "competencyId": "CMP-007"
+    },
+    {
+      "courseId": "CRS-007",
+      "title": "AWS Solutions Architect",
+      "deliveryMode": "online",
+      "programId": "LP-002",
+      "durationHours": 40,
+      "competencyId": "CMP-015"
+    },
+    {
+      "courseId": "CRS-008",
+      "title": "Azure Cloud Architecture",
+      "deliveryMode": "online",
+      "programId": "LP-002",
+      "durationHours": 40,
+      "competencyId": "CMP-016"
+    },
+    {
+      "courseId": "CRS-009",
+      "title": "Apache Spark 실무",
+      "deliveryMode": "offline",
+      "programId": "LP-003",
+      "durationHours": 30,
+      "competencyId": "CMP-012"
+    },
+    {
+      "courseId": "CRS-010",
+      "title": "Kafka & Streaming",
+      "deliveryMode": "offline",
+      "programId": "LP-003",
+      "durationHours": 25,
+      "competencyId": "CMP-013"
+    },
+    {
+      "courseId": "CRS-011",
+      "title": "Airflow Pipeline Design",
+      "deliveryMode": "blended",
+      "programId": "LP-003",
+      "durationHours": 20,
+      "competencyId": "CMP-014"
+    },
+    {
+      "courseId": "CRS-012",
+      "title": "리더십 커뮤니케이션",
+      "deliveryMode": "offline",
+      "programId": "LP-005",
+      "durationHours": 16,
+      "competencyId": "CMP-037"
+    },
+    {
+      "courseId": "CRS-013",
+      "title": "전략적 의사결정",
+      "deliveryMode": "offline",
+      "programId": "LP-005",
+      "durationHours": 12,
+      "competencyId": "CMP-037"
+    },
+    {
+      "courseId": "CRS-014",
+      "title": "Kubernetes 마스터",
+      "deliveryMode": "online",
+      "programId": "LP-002",
+      "durationHours": 30,
+      "competencyId": "CMP-018"
+    }
+  ],
+  "enrollments": [
+    {
+      "enrollmentId": "ENR-001",
+      "employeeId": "EMP-000014",
+      "courseId": "CRS-002",
+      "status": "IN_PROGRESS",
+      "plannedStart": "2026-01-15",
+      "plannedEnd": "2026-03-15",
+      "completedAt": null
+    },
+    {
+      "enrollmentId": "ENR-002",
+      "employeeId": "EMP-000015",
+      "courseId": "CRS-002",
+      "status": "IN_PROGRESS",
+      "plannedStart": "2026-01-15",
+      "plannedEnd": "2026-03-15",
+      "completedAt": null
+    },
+    {
+      "enrollmentId": "ENR-003",
+      "employeeId": "EMP-000016",
+      "courseId": "CRS-001",
+      "status": "IN_PROGRESS",
+      "plannedStart": "2026-01-08",
+      "plannedEnd": "2026-02-28",
+      "completedAt": null
+    },
+    {
+      "enrollmentId": "ENR-004",
+      "employeeId": "EMP-000017",
+      "courseId": "CRS-001",
+      "status": "PLANNED",
+      "plannedStart": "2026-02-01",
+      "plannedEnd": "2026-03-31",
+      "completedAt": null
+    },
+    {
+      "enrollmentId": "ENR-005",
+      "employeeId": "EMP-000013",
+      "courseId": "CRS-005",
+      "status": "COMPLETED",
+      "plannedStart": "2025-10-01",
+      "plannedEnd": "2025-12-15",
+      "completedAt": "2025-12-10"
+    },
+    {
+      "enrollmentId": "ENR-006",
+      "employeeId": "EMP-000021",
+      "courseId": "CRS-014",
+      "status": "IN_PROGRESS",
+      "plannedStart": "2026-01-10",
+      "plannedEnd": "2026-02-28",
+      "completedAt": null
+    },
+    {
+      "enrollmentId": "ENR-007",
+      "employeeId": "EMP-000033",
+      "courseId": "CRS-009",
+      "status": "IN_PROGRESS",
+      "plannedStart": "2026-01-06",
+      "plannedEnd": "2026-02-15",
+      "completedAt": null
+    },
+    {
+      "enrollmentId": "ENR-008",
+      "employeeId": "EMP-000054",
+      "courseId": "CRS-007",
+      "status": "COMPLETED",
+      "plannedStart": "2025-09-01",
+      "plannedEnd": "2025-11-30",
+      "completedAt": "2025-11-25"
+    },
+    {
+      "enrollmentId": "ENR-009",
+      "employeeId": "EMP-000011",
+      "courseId": "CRS-012",
+      "status": "PLANNED",
+      "plannedStart": "2026-02-15",
+      "plannedEnd": "2026-03-01",
+      "completedAt": null
+    },
+    {
+      "enrollmentId": "ENR-010",
+      "employeeId": "EMP-000020",
+      "courseId": "CRS-013",
+      "status": "PLANNED",
+      "plannedStart": "2026-02-15",
+      "plannedEnd": "2026-02-28",
+      "completedAt": null
+    },
+    {
+      "enrollmentId": "ENR-011",
+      "employeeId": "EMP-000042",
+      "courseId": "CRS-003",
+      "status": "IN_PROGRESS",
+      "plannedStart": "2026-01-20",
+      "plannedEnd": "2026-03-20",
+      "completedAt": null
+    },
+    {
+      "enrollmentId": "ENR-012",
+      "employeeId": "EMP-000043",
+      "courseId": "CRS-004",
+      "status": "PLANNED",
+      "plannedStart": "2026-03-01",
+      "plannedEnd": "2026-04-30",
+      "completedAt": null
+    }
+  ],
+  "certifications": [
+    {
+      "certificationId": "CERT-001",
+      "name": "AWS Solutions Architect Professional",
+      "level": "Professional",
+      "issuingOrg": "Amazon Web Services",
+      "validityMonths": 36
+    },
+    {
+      "certificationId": "CERT-002",
+      "name": "Azure Solutions Architect Expert",
+      "level": "Expert",
+      "issuingOrg": "Microsoft",
+      "validityMonths": 24
+    },
+    {
+      "certificationId": "CERT-003",
+      "name": "Google Cloud Professional Data Engineer",
+      "level": "Professional",
+      "issuingOrg": "Google Cloud",
+      "validityMonths": 24
+    },
+    {
+      "certificationId": "CERT-004",
+      "name": "Certified Kubernetes Administrator",
+      "level": "Professional",
+      "issuingOrg": "CNCF",
+      "validityMonths": 36
+    },
+    {
+      "certificationId": "CERT-005",
+      "name": "TensorFlow Developer Certificate",
+      "level": "Professional",
+      "issuingOrg": "Google",
+      "validityMonths": 36
+    },
+    {
+      "certificationId": "CERT-006",
+      "name": "Databricks Certified Data Engineer",
+      "level": "Professional",
+      "issuingOrg": "Databricks",
+      "validityMonths": 24
+    },
+    {
+      "certificationId": "CERT-007",
+      "name": "PMP (Project Management Professional)",
+      "level": "Professional",
+      "issuingOrg": "PMI",
+      "validityMonths": 36
+    },
+    {
+      "certificationId": "CERT-008",
+      "name": "SAP Certified Application Associate",
+      "level": "Associate",
+      "issuingOrg": "SAP",
+      "validityMonths": 24
+    }
+  ]
+}

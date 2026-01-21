@@ -1,0 +1,189 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generatedAt": "2026-01-21T00:00:00Z",
+    "description": "HR DSS Mock Data - Approvals, Workflow Instances, Tasks"
+  },
+  "approvals": [
+    {
+      "approvalId": "APR-001",
+      "gateId": "GATE-001",
+      "decision": "approve",
+      "approvedBy": "EMP-000001",
+      "approvedAt": "2026-01-18T14:30:00Z",
+      "comment": "OPT-002 외주 혼합 수행 방안 승인, 파트너 선정 착수 요망"
+    },
+    {
+      "approvalId": "APR-002",
+      "gateId": "GATE-003",
+      "decision": "approve",
+      "approvedBy": "EMP-000030",
+      "approvedAt": "2026-01-19T10:00:00Z",
+      "comment": "OPT-005 타 조직 지원 방안 승인, 클라우드인프라실장 협조 요청"
+    },
+    {
+      "approvalId": "APR-003",
+      "gateId": "GATE-002",
+      "decision": "pending",
+      "approvedBy": null,
+      "approvedAt": null,
+      "comment": null
+    },
+    {
+      "approvalId": "APR-004",
+      "gateId": "GATE-004",
+      "decision": "pending",
+      "approvedBy": null,
+      "approvedAt": null,
+      "comment": null
+    }
+  ],
+  "workflowInstances": [
+    {
+      "workflowId": "WF-001",
+      "approvalId": "APR-001",
+      "type": "ProjectStaffing",
+      "status": "IN_PROGRESS",
+      "startedAt": "2026-01-18T15:00:00Z",
+      "completedAt": null
+    },
+    {
+      "workflowId": "WF-002",
+      "approvalId": "APR-002",
+      "type": "ResourceReallocation",
+      "status": "IN_PROGRESS",
+      "startedAt": "2026-01-19T10:30:00Z",
+      "completedAt": null
+    },
+    {
+      "workflowId": "WF-003",
+      "approvalId": null,
+      "type": "TrainingEnrollment",
+      "status": "COMPLETED",
+      "startedAt": "2026-01-10T09:00:00Z",
+      "completedAt": "2026-01-15T17:00:00Z"
+    }
+  ],
+  "workflowTasks": [
+    {
+      "taskId": "TASK-001",
+      "workflowId": "WF-001",
+      "actionId": "ACT-003",
+      "type": "VendorSelection",
+      "owner": "EMP-000010",
+      "dueDate": "2026-01-25",
+      "status": "IN_PROGRESS",
+      "completedAt": null
+    },
+    {
+      "taskId": "TASK-002",
+      "workflowId": "WF-001",
+      "actionId": "ACT-003",
+      "type": "ContractNegotiation",
+      "owner": "EMP-000010",
+      "dueDate": "2026-02-05",
+      "status": "PENDING",
+      "completedAt": null
+    },
+    {
+      "taskId": "TASK-003",
+      "workflowId": "WF-001",
+      "actionId": "ACT-001",
+      "type": "ResourceAssignment",
+      "owner": "EMP-000011",
+      "dueDate": "2026-01-31",
+      "status": "IN_PROGRESS",
+      "completedAt": null
+    },
+    {
+      "taskId": "TASK-004",
+      "workflowId": "WF-001",
+      "actionId": "ACT-002",
+      "type": "TeamOnboarding",
+      "owner": "EMP-000011",
+      "dueDate": "2026-02-15",
+      "status": "PENDING",
+      "completedAt": null
+    },
+    {
+      "taskId": "TASK-005",
+      "workflowId": "WF-002",
+      "actionId": "ACT-006",
+      "type": "CrossTeamCoordination",
+      "owner": "EMP-000051",
+      "dueDate": "2026-01-24",
+      "status": "IN_PROGRESS",
+      "completedAt": null
+    },
+    {
+      "taskId": "TASK-006",
+      "workflowId": "WF-002",
+      "actionId": "ACT-006",
+      "type": "ResourceTransfer",
+      "owner": "EMP-000052",
+      "dueDate": "2026-02-01",
+      "status": "PENDING",
+      "completedAt": null
+    },
+    {
+      "taskId": "TASK-007",
+      "workflowId": "WF-003",
+      "actionId": null,
+      "type": "EnrollmentApproval",
+      "owner": "EMP-000011",
+      "dueDate": "2026-01-12",
+      "status": "COMPLETED",
+      "completedAt": "2026-01-11T16:00:00Z"
+    },
+    {
+      "taskId": "TASK-008",
+      "workflowId": "WF-003",
+      "actionId": null,
+      "type": "CourseRegistration",
+      "owner": "EMP-000014",
+      "dueDate": "2026-01-14",
+      "status": "COMPLETED",
+      "completedAt": "2026-01-13T10:00:00Z"
+    },
+    {
+      "taskId": "TASK-009",
+      "workflowId": "WF-003",
+      "actionId": null,
+      "type": "LMSSetup",
+      "owner": "EMP-000014",
+      "dueDate": "2026-01-15",
+      "status": "COMPLETED",
+      "completedAt": "2026-01-15T09:30:00Z"
+    },
+    {
+      "taskId": "TASK-010",
+      "workflowId": "WF-001",
+      "actionId": "ACT-001",
+      "type": "PMAssignment",
+      "owner": "EMP-000010",
+      "dueDate": "2026-01-28",
+      "status": "IN_PROGRESS",
+      "completedAt": null
+    },
+    {
+      "taskId": "TASK-011",
+      "workflowId": "WF-001",
+      "actionId": null,
+      "type": "KickoffMeeting",
+      "owner": "EMP-000011",
+      "dueDate": "2026-02-20",
+      "status": "PENDING",
+      "completedAt": null
+    },
+    {
+      "taskId": "TASK-012",
+      "workflowId": "WF-002",
+      "actionId": "ACT-005",
+      "type": "ScheduleAdjustment",
+      "owner": "EMP-000040",
+      "dueDate": "2026-01-26",
+      "status": "PENDING",
+      "completedAt": null
+    }
+  ]
+}

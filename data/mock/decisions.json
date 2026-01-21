@@ -1,0 +1,514 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generatedAt": "2026-01-21T00:00:00Z",
+    "description": "HR DSS Mock Data - Decision Cases, Options, Evaluations"
+  },
+  "decisionCases": [
+    {
+      "decisionCaseId": "DC-001",
+      "type": "GoNoGo",
+      "status": "IN_PROGRESS",
+      "createdAt": "2026-01-15T09:00:00Z",
+      "requester": "EMP-000010",
+      "dueDate": "2026-01-25",
+      "summary": "100억 미디어 AX 프로젝트 내부 수행 가능 여부 분석",
+      "targetType": "Opportunity",
+      "targetId": "OPP-001"
+    },
+    {
+      "decisionCaseId": "DC-002",
+      "type": "PortfolioBottleneck",
+      "status": "IN_PROGRESS",
+      "createdAt": "2026-01-16T10:00:00Z",
+      "requester": "EMP-000030",
+      "dueDate": "2026-01-28",
+      "summary": "데이터사이언스실 향후 12주 가동률 병목 분석",
+      "targetType": "OrgUnit",
+      "targetId": "ORG-0020"
+    },
+    {
+      "decisionCaseId": "DC-003",
+      "type": "Headcount",
+      "status": "PENDING",
+      "createdAt": "2026-01-17T11:00:00Z",
+      "requester": "EMP-000011",
+      "dueDate": "2026-01-30",
+      "summary": "AI솔루션팀 1명 증원 요청 원인분해",
+      "targetType": "OrgUnit",
+      "targetId": "ORG-0011"
+    },
+    {
+      "decisionCaseId": "DC-004",
+      "type": "CapabilityROI",
+      "status": "PENDING",
+      "createdAt": "2026-01-18T14:00:00Z",
+      "requester": "EMP-000001",
+      "dueDate": "2026-02-05",
+      "summary": "Generative AI 역량 갭 Top10 및 투자 ROI 분석",
+      "targetType": "OrgUnit",
+      "targetId": "ORG-0001"
+    }
+  ],
+  "objectives": [
+    {
+      "objectiveId": "OBJ-001",
+      "decisionCaseId": "DC-001",
+      "metricType": "SUCCESS_PROBABILITY",
+      "operator": ">=",
+      "targetValue": 0.7,
+      "scopeType": "Project",
+      "horizonStart": "2026-03-01",
+      "horizonEnd": "2027-02-28"
+    },
+    {
+      "objectiveId": "OBJ-002",
+      "decisionCaseId": "DC-001",
+      "metricType": "MARGIN",
+      "operator": ">=",
+      "targetValue": 0.15,
+      "scopeType": "Project",
+      "horizonStart": "2026-03-01",
+      "horizonEnd": "2027-02-28"
+    },
+    {
+      "objectiveId": "OBJ-003",
+      "decisionCaseId": "DC-002",
+      "metricType": "UTILIZATION",
+      "operator": "<=",
+      "targetValue": 0.9,
+      "scopeType": "OrgUnit",
+      "horizonStart": "2026-01-20",
+      "horizonEnd": "2026-04-14"
+    },
+    {
+      "objectiveId": "OBJ-004",
+      "decisionCaseId": "DC-003",
+      "metricType": "UTILIZATION",
+      "operator": "<=",
+      "targetValue": 0.85,
+      "scopeType": "OrgUnit",
+      "horizonStart": "2026-02-01",
+      "horizonEnd": "2026-06-30"
+    },
+    {
+      "objectiveId": "OBJ-005",
+      "decisionCaseId": "DC-004",
+      "metricType": "CAPABILITY_COVERAGE",
+      "operator": ">=",
+      "targetValue": 0.8,
+      "scopeType": "OrgUnit",
+      "horizonStart": "2026-01-01",
+      "horizonEnd": "2026-12-31"
+    }
+  ],
+  "constraints": [
+    {
+      "constraintId": "CON-001",
+      "decisionCaseId": "DC-001",
+      "type": "Availability",
+      "severity": "hard",
+      "expression": "PM grade >= 차장",
+      "startDate": null,
+      "endDate": null,
+      "appliesToType": "Project",
+      "appliesToId": null
+    },
+    {
+      "constraintId": "CON-002",
+      "decisionCaseId": "DC-001",
+      "type": "Budget",
+      "severity": "hard",
+      "expression": "외주비 <= 30%",
+      "startDate": null,
+      "endDate": null,
+      "appliesToType": "Project",
+      "appliesToId": null
+    },
+    {
+      "constraintId": "CON-003",
+      "decisionCaseId": "DC-002",
+      "type": "Policy",
+      "severity": "soft",
+      "expression": "기존 배치 변경 최소화",
+      "startDate": null,
+      "endDate": null,
+      "appliesToType": "OrgUnit",
+      "appliesToId": "ORG-0020"
+    },
+    {
+      "constraintId": "CON-004",
+      "decisionCaseId": "DC-003",
+      "type": "Budget",
+      "severity": "hard",
+      "expression": "연봉 8,000만원 이하",
+      "startDate": null,
+      "endDate": null,
+      "appliesToType": "Position",
+      "appliesToId": null
+    },
+    {
+      "constraintId": "CON-005",
+      "decisionCaseId": "DC-004",
+      "type": "Budget",
+      "severity": "soft",
+      "expression": "교육예산 2억원 이내",
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "appliesToType": "OrgUnit",
+      "appliesToId": "ORG-0001"
+    }
+  ],
+  "options": [
+    {
+      "optionId": "OPT-001",
+      "decisionCaseId": "DC-001",
+      "name": "100% 내부 수행",
+      "optionType": "Internal",
+      "description": "AI솔루션팀 + 데이터사이언스실 인력으로 전체 수행"
+    },
+    {
+      "optionId": "OPT-002",
+      "decisionCaseId": "DC-001",
+      "name": "외주 혼합 수행",
+      "optionType": "Mixed",
+      "description": "핵심 아키텍처/ML은 내부, 개발/운영은 외주 파트너"
+    },
+    {
+      "optionId": "OPT-003",
+      "decisionCaseId": "DC-001",
+      "name": "역량 강화 후 수행",
+      "optionType": "Upskill",
+      "description": "3개월 GenAI 역량 강화 후 내부 중심 수행"
+    },
+    {
+      "optionId": "OPT-004",
+      "decisionCaseId": "DC-002",
+      "name": "프로젝트 일정 조정",
+      "optionType": "Internal",
+      "description": "병목 주차의 일부 WP 일정을 앞뒤로 분산"
+    },
+    {
+      "optionId": "OPT-005",
+      "decisionCaseId": "DC-002",
+      "name": "타 조직 지원 요청",
+      "optionType": "Mixed",
+      "description": "클라우드인프라실에서 DevOps 인력 2명 일시 지원"
+    },
+    {
+      "optionId": "OPT-006",
+      "decisionCaseId": "DC-003",
+      "name": "경력직 채용",
+      "optionType": "Internal",
+      "description": "ML Engineer 경력 5년 이상 1명 채용"
+    },
+    {
+      "optionId": "OPT-007",
+      "decisionCaseId": "DC-003",
+      "name": "업무 재배분",
+      "optionType": "Internal",
+      "description": "운영 업무를 DevOps팀으로 이관하여 부하 분산"
+    },
+    {
+      "optionId": "OPT-008",
+      "decisionCaseId": "DC-004",
+      "name": "집중 교육 프로그램",
+      "optionType": "Upskill",
+      "description": "GenAI/LLM 집중 교육 20명 대상 6개월 과정"
+    }
+  ],
+  "scenarios": [
+    {
+      "scenarioId": "SCN-001",
+      "optionId": "OPT-001",
+      "baselineSnapshotId": "SNAP-001",
+      "assumptions": "{\"attritionRate\": 0.05, \"learningCurve\": 0.8}"
+    },
+    {
+      "scenarioId": "SCN-002",
+      "optionId": "OPT-002",
+      "baselineSnapshotId": "SNAP-001",
+      "assumptions": "{\"outsourceRatio\": 0.4, \"partnerQuality\": 0.85}"
+    },
+    {
+      "scenarioId": "SCN-003",
+      "optionId": "OPT-003",
+      "baselineSnapshotId": "SNAP-001",
+      "assumptions": "{\"upskillSuccess\": 0.9, \"delayMonths\": 3}"
+    },
+    {
+      "scenarioId": "SCN-004",
+      "optionId": "OPT-004",
+      "baselineSnapshotId": "SNAP-002",
+      "assumptions": "{\"scheduleFlexibility\": 0.7}"
+    },
+    {
+      "scenarioId": "SCN-005",
+      "optionId": "OPT-005",
+      "baselineSnapshotId": "SNAP-002",
+      "assumptions": "{\"supportDuration\": 8, \"teamAdaptation\": 0.85}"
+    }
+  ],
+  "actions": [
+    {
+      "actionId": "ACT-001",
+      "scenarioId": "SCN-001",
+      "type": "Reassign",
+      "owner": "EMP-000011",
+      "startDate": "2026-02-01",
+      "endDate": "2026-02-28",
+      "status": "PLANNED",
+      "description": "박민지 차장을 PM으로 배치"
+    },
+    {
+      "actionId": "ACT-002",
+      "scenarioId": "SCN-001",
+      "type": "Reassign",
+      "owner": "EMP-000010",
+      "startDate": "2026-02-15",
+      "endDate": "2027-02-28",
+      "status": "PLANNED",
+      "description": "최서연 과장 외 3명 프로젝트 전담 배치"
+    },
+    {
+      "actionId": "ACT-003",
+      "scenarioId": "SCN-002",
+      "type": "Outsource",
+      "owner": "EMP-000010",
+      "startDate": "2026-03-01",
+      "endDate": "2027-01-31",
+      "status": "PLANNED",
+      "description": "개발 파트 외주 계약 (4명 규모)"
+    },
+    {
+      "actionId": "ACT-004",
+      "scenarioId": "SCN-003",
+      "type": "Upskill",
+      "owner": "EMP-000011",
+      "startDate": "2026-02-01",
+      "endDate": "2026-04-30",
+      "status": "PLANNED",
+      "description": "팀원 4명 GenAI 집중 교육 이수"
+    },
+    {
+      "actionId": "ACT-005",
+      "scenarioId": "SCN-004",
+      "type": "ScopeChange",
+      "owner": "EMP-000030",
+      "startDate": "2026-01-25",
+      "endDate": "2026-02-05",
+      "status": "PLANNED",
+      "description": "WP-003 일정을 2주 후로 조정"
+    },
+    {
+      "actionId": "ACT-006",
+      "scenarioId": "SCN-005",
+      "type": "Reassign",
+      "owner": "EMP-000051",
+      "startDate": "2026-02-01",
+      "endDate": "2026-03-31",
+      "status": "PLANNED",
+      "description": "클라우드인프라실 DevOps 2명 임시 지원"
+    }
+  ],
+  "evaluations": [
+    {
+      "evaluationId": "EVAL-001",
+      "optionId": "OPT-001",
+      "totalScore": 72.5,
+      "successProbability": 0.65,
+      "rationale": "내부 역량은 충분하나 GenAI 경험 부족으로 리스크 존재"
+    },
+    {
+      "evaluationId": "EVAL-002",
+      "optionId": "OPT-002",
+      "totalScore": 81.0,
+      "successProbability": 0.78,
+      "rationale": "검증된 파트너 활용으로 리스크 분산, 마진율 목표 달성 가능"
+    },
+    {
+      "evaluationId": "EVAL-003",
+      "optionId": "OPT-003",
+      "totalScore": 68.5,
+      "successProbability": 0.72,
+      "rationale": "장기적 역량 확보에 유리하나 프로젝트 시작 지연 리스크"
+    },
+    {
+      "evaluationId": "EVAL-004",
+      "optionId": "OPT-004",
+      "totalScore": 75.0,
+      "successProbability": 0.80,
+      "rationale": "비용 추가 없이 병목 해소 가능, 고객 일정 협의 필요"
+    },
+    {
+      "evaluationId": "EVAL-005",
+      "optionId": "OPT-005",
+      "totalScore": 70.0,
+      "successProbability": 0.75,
+      "rationale": "타 조직 협조 필요, 조직 간 조율 비용 발생"
+    }
+  ],
+  "metricValues": [
+    {
+      "metricValueId": "MV-001",
+      "evaluationId": "EVAL-001",
+      "metricType": "UTILIZATION",
+      "asIsValue": 0.78,
+      "toBeValue": 0.95,
+      "delta": 0.17,
+      "unit": "ratio"
+    },
+    {
+      "metricValueId": "MV-002",
+      "evaluationId": "EVAL-001",
+      "metricType": "MARGIN",
+      "asIsValue": 0.0,
+      "toBeValue": 0.12,
+      "delta": 0.12,
+      "unit": "ratio"
+    },
+    {
+      "metricValueId": "MV-003",
+      "evaluationId": "EVAL-002",
+      "metricType": "UTILIZATION",
+      "asIsValue": 0.78,
+      "toBeValue": 0.88,
+      "delta": 0.10,
+      "unit": "ratio"
+    },
+    {
+      "metricValueId": "MV-004",
+      "evaluationId": "EVAL-002",
+      "metricType": "MARGIN",
+      "asIsValue": 0.0,
+      "toBeValue": 0.18,
+      "delta": 0.18,
+      "unit": "ratio"
+    },
+    {
+      "metricValueId": "MV-005",
+      "evaluationId": "EVAL-004",
+      "metricType": "UTILIZATION",
+      "asIsValue": 0.95,
+      "toBeValue": 0.85,
+      "delta": -0.10,
+      "unit": "ratio"
+    }
+  ],
+  "impactAssessments": [
+    {
+      "impactId": "IA-001",
+      "optionId": "OPT-001",
+      "dimension": "Cost",
+      "value": 0.0,
+      "narrative": "추가 비용 없음, 기존 인건비로 수행"
+    },
+    {
+      "impactId": "IA-002",
+      "optionId": "OPT-001",
+      "dimension": "Risk",
+      "value": 0.35,
+      "narrative": "GenAI 경험 부족으로 기술 리스크 중간"
+    },
+    {
+      "impactId": "IA-003",
+      "optionId": "OPT-002",
+      "dimension": "Cost",
+      "value": 2.5,
+      "narrative": "외주비 약 2.5억원 추가 발생"
+    },
+    {
+      "impactId": "IA-004",
+      "optionId": "OPT-002",
+      "dimension": "Risk",
+      "value": 0.15,
+      "narrative": "검증된 파트너로 기술 리스크 낮음"
+    },
+    {
+      "impactId": "IA-005",
+      "optionId": "OPT-003",
+      "dimension": "Speed",
+      "value": -3.0,
+      "narrative": "프로젝트 시작 3개월 지연"
+    },
+    {
+      "impactId": "IA-006",
+      "optionId": "OPT-003",
+      "dimension": "Capability",
+      "value": 0.8,
+      "narrative": "장기적 GenAI 역량 80% 확보"
+    }
+  ],
+  "risks": [
+    {
+      "riskId": "RISK-001",
+      "optionId": "OPT-001",
+      "category": "Technical",
+      "probability": 0.4,
+      "impact": 0.7,
+      "score": 0.28,
+      "description": "GenAI 모델 최적화 실패로 성능 미달"
+    },
+    {
+      "riskId": "RISK-002",
+      "optionId": "OPT-001",
+      "category": "Resource",
+      "probability": 0.3,
+      "impact": 0.6,
+      "score": 0.18,
+      "description": "핵심 인력 이탈로 프로젝트 지연"
+    },
+    {
+      "riskId": "RISK-003",
+      "optionId": "OPT-002",
+      "category": "Vendor",
+      "probability": 0.2,
+      "impact": 0.5,
+      "score": 0.10,
+      "description": "외주 파트너 품질 미달"
+    },
+    {
+      "riskId": "RISK-004",
+      "optionId": "OPT-003",
+      "category": "Schedule",
+      "probability": 0.5,
+      "impact": 0.8,
+      "score": 0.40,
+      "description": "고객 일정 요구로 지연 불가 시 계약 취소"
+    }
+  ],
+  "decisionGates": [
+    {
+      "gateId": "GATE-001",
+      "decisionCaseId": "DC-001",
+      "process": "VRB",
+      "name": "Value Review Board",
+      "sequence": 1,
+      "status": "PENDING"
+    },
+    {
+      "gateId": "GATE-002",
+      "decisionCaseId": "DC-001",
+      "process": "PRB",
+      "name": "Project Review Board",
+      "sequence": 2,
+      "status": "PENDING"
+    },
+    {
+      "gateId": "GATE-003",
+      "decisionCaseId": "DC-002",
+      "process": "Pre-PRB",
+      "name": "Resource Allocation Review",
+      "sequence": 1,
+      "status": "PENDING"
+    },
+    {
+      "gateId": "GATE-004",
+      "decisionCaseId": "DC-003",
+      "process": "VRB",
+      "name": "Headcount Approval",
+      "sequence": 1,
+      "status": "PENDING"
+    }
+  ]
+}

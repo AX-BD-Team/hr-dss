@@ -1,0 +1,342 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generatedAt": "2026-01-21T00:00:00Z",
+    "description": "HR DSS Mock Data - Models, Forecasts, Findings, Evidence"
+  },
+  "models": [
+    {
+      "modelId": "MDL-001",
+      "name": "Capacity Forecaster",
+      "type": "heuristic",
+      "version": "1.0.0",
+      "description": "주차별 조직 가동률 예측 모델 (Assignment + Demand 기반)"
+    },
+    {
+      "modelId": "MDL-002",
+      "name": "Success Probability Estimator",
+      "type": "ml",
+      "version": "1.2.0",
+      "description": "프로젝트 성공확률 예측 (과거 Outcome 학습 기반)"
+    },
+    {
+      "modelId": "MDL-003",
+      "name": "Competency Gap Analyzer",
+      "type": "rules",
+      "version": "1.0.0",
+      "description": "수요 대비 역량 갭 분석 (요구역량 vs 보유역량)"
+    },
+    {
+      "modelId": "MDL-004",
+      "name": "Bottleneck Detector",
+      "type": "heuristic",
+      "version": "1.1.0",
+      "description": "병목 주차/역할/역량 탐지 모델"
+    }
+  ],
+  "dataSnapshots": [
+    {
+      "snapshotId": "SNAP-001",
+      "asOf": "2026-01-20T00:00:00Z",
+      "datasetVersions": "{\"assignments\": \"v2026.01.20\", \"availability\": \"v2026.01.20\", \"demands\": \"v2026.01.20\"}",
+      "description": "2026년 1월 20일 기준 데이터 스냅샷"
+    },
+    {
+      "snapshotId": "SNAP-002",
+      "asOf": "2026-01-15T00:00:00Z",
+      "datasetVersions": "{\"assignments\": \"v2026.01.15\", \"availability\": \"v2026.01.15\", \"demands\": \"v2026.01.15\"}",
+      "description": "2026년 1월 15일 기준 데이터 스냅샷"
+    },
+    {
+      "snapshotId": "SNAP-003",
+      "asOf": "2026-01-10T00:00:00Z",
+      "datasetVersions": "{\"assignments\": \"v2026.01.10\", \"availability\": \"v2026.01.10\", \"demands\": \"v2026.01.10\"}",
+      "description": "2026년 1월 10일 기준 데이터 스냅샷"
+    }
+  ],
+  "modelRuns": [
+    {
+      "runId": "RUN-001",
+      "modelId": "MDL-001",
+      "scenarioId": null,
+      "snapshotId": "SNAP-001",
+      "runAt": "2026-01-20T10:30:00Z",
+      "parameters": "{\"horizon_weeks\": 12, \"include_pipeline\": true, \"probability_threshold\": 0.5}",
+      "status": "COMPLETED"
+    },
+    {
+      "runId": "RUN-002",
+      "modelId": "MDL-004",
+      "scenarioId": null,
+      "snapshotId": "SNAP-001",
+      "runAt": "2026-01-20T10:35:00Z",
+      "parameters": "{\"utilization_threshold\": 0.9, \"bottleneck_weeks\": 2}",
+      "status": "COMPLETED"
+    },
+    {
+      "runId": "RUN-003",
+      "modelId": "MDL-002",
+      "scenarioId": "SCN-001",
+      "snapshotId": "SNAP-001",
+      "runAt": "2026-01-20T11:00:00Z",
+      "parameters": "{\"opportunity_id\": \"OPP-001\", \"option_type\": \"Internal\"}",
+      "status": "COMPLETED"
+    },
+    {
+      "runId": "RUN-004",
+      "modelId": "MDL-002",
+      "scenarioId": "SCN-002",
+      "snapshotId": "SNAP-001",
+      "runAt": "2026-01-20T11:05:00Z",
+      "parameters": "{\"opportunity_id\": \"OPP-001\", \"option_type\": \"Mixed\"}",
+      "status": "COMPLETED"
+    },
+    {
+      "runId": "RUN-005",
+      "modelId": "MDL-003",
+      "scenarioId": null,
+      "snapshotId": "SNAP-001",
+      "runAt": "2026-01-20T11:30:00Z",
+      "parameters": "{\"org_unit_id\": \"ORG-0001\", \"competency_domain\": \"AI/ML\"}",
+      "status": "COMPLETED"
+    }
+  ],
+  "forecastPoints": [
+    {
+      "forecastPointId": "FP-001",
+      "runId": "RUN-001",
+      "metricType": "UTILIZATION",
+      "value": 0.82,
+      "unit": "ratio",
+      "lowerBound": 0.78,
+      "upperBound": 0.86,
+      "confidence": 0.85,
+      "method": "weighted_average",
+      "bucketId": "TB-2026-W04",
+      "subjectType": "OrgUnit",
+      "subjectId": "ORG-0011"
+    },
+    {
+      "forecastPointId": "FP-002",
+      "runId": "RUN-001",
+      "metricType": "UTILIZATION",
+      "value": 0.91,
+      "unit": "ratio",
+      "lowerBound": 0.87,
+      "upperBound": 0.95,
+      "confidence": 0.80,
+      "method": "weighted_average",
+      "bucketId": "TB-2026-W05",
+      "subjectType": "OrgUnit",
+      "subjectId": "ORG-0011"
+    },
+    {
+      "forecastPointId": "FP-003",
+      "runId": "RUN-001",
+      "metricType": "UTILIZATION",
+      "value": 0.95,
+      "unit": "ratio",
+      "lowerBound": 0.90,
+      "upperBound": 1.00,
+      "confidence": 0.75,
+      "method": "weighted_average",
+      "bucketId": "TB-2026-W06",
+      "subjectType": "OrgUnit",
+      "subjectId": "ORG-0011"
+    },
+    {
+      "forecastPointId": "FP-004",
+      "runId": "RUN-001",
+      "metricType": "UTILIZATION",
+      "value": 0.88,
+      "unit": "ratio",
+      "lowerBound": 0.83,
+      "upperBound": 0.93,
+      "confidence": 0.82,
+      "method": "weighted_average",
+      "bucketId": "TB-2026-W04",
+      "subjectType": "OrgUnit",
+      "subjectId": "ORG-0021"
+    },
+    {
+      "forecastPointId": "FP-005",
+      "runId": "RUN-001",
+      "metricType": "UTILIZATION",
+      "value": 0.92,
+      "unit": "ratio",
+      "lowerBound": 0.88,
+      "upperBound": 0.96,
+      "confidence": 0.78,
+      "method": "weighted_average",
+      "bucketId": "TB-2026-W07",
+      "subjectType": "OrgUnit",
+      "subjectId": "ORG-0021"
+    },
+    {
+      "forecastPointId": "FP-006",
+      "runId": "RUN-003",
+      "metricType": "SUCCESS_PROBABILITY",
+      "value": 0.65,
+      "unit": "probability",
+      "lowerBound": 0.55,
+      "upperBound": 0.75,
+      "confidence": 0.70,
+      "method": "ml_classifier",
+      "bucketId": null,
+      "subjectType": "Opportunity",
+      "subjectId": "OPP-001"
+    },
+    {
+      "forecastPointId": "FP-007",
+      "runId": "RUN-004",
+      "metricType": "SUCCESS_PROBABILITY",
+      "value": 0.78,
+      "unit": "probability",
+      "lowerBound": 0.70,
+      "upperBound": 0.86,
+      "confidence": 0.75,
+      "method": "ml_classifier",
+      "bucketId": null,
+      "subjectType": "Opportunity",
+      "subjectId": "OPP-001"
+    },
+    {
+      "forecastPointId": "FP-008",
+      "runId": "RUN-005",
+      "metricType": "COMPETENCY_GAP",
+      "value": 3.5,
+      "unit": "FTE",
+      "lowerBound": 2.8,
+      "upperBound": 4.2,
+      "confidence": 0.80,
+      "method": "gap_analysis",
+      "bucketId": null,
+      "subjectType": "OrgUnit",
+      "subjectId": "ORG-0001"
+    }
+  ],
+  "findings": [
+    {
+      "findingId": "FIND-001",
+      "runId": "RUN-002",
+      "type": "OVER_UTILIZATION",
+      "severity": "HIGH",
+      "narrative": "AI솔루션팀(ORG-0011) 2026-W05~W07 구간 가동률 90% 초과 예상",
+      "rootCause": "프로젝트 PRJ-001, PRJ-003 동시 진행 + 신규 OPP-001 수주 시 추가 부하",
+      "rank": 1,
+      "affectsType": "OrgUnit",
+      "affectsId": "ORG-0011"
+    },
+    {
+      "findingId": "FIND-002",
+      "runId": "RUN-002",
+      "type": "OVER_UTILIZATION",
+      "severity": "MEDIUM",
+      "narrative": "데이터엔지니어링팀(ORG-0021) 2026-W07~W08 구간 가동률 90% 초과 예상",
+      "rootCause": "데이터 파이프라인 구축 프로젝트(PRJ-004) 피크 구간",
+      "rank": 2,
+      "affectsType": "OrgUnit",
+      "affectsId": "ORG-0021"
+    },
+    {
+      "findingId": "FIND-003",
+      "runId": "RUN-002",
+      "type": "SKILL_GAP",
+      "severity": "HIGH",
+      "narrative": "Generative AI(CMP-007) 역량 Lv4 이상 보유자 2명, 수요 대비 3명 부족",
+      "rootCause": "GenAI 프로젝트 급증 대비 내부 역량 미확보",
+      "rank": 1,
+      "affectsType": "Competency",
+      "affectsId": "CMP-007"
+    },
+    {
+      "findingId": "FIND-004",
+      "runId": "RUN-002",
+      "type": "SKILL_GAP",
+      "severity": "MEDIUM",
+      "narrative": "MLOps(CMP-008) 역량 Lv4 이상 보유자 1명, 수요 대비 2명 부족",
+      "rootCause": "ML 운영 자동화 수요 증가",
+      "rank": 2,
+      "affectsType": "Competency",
+      "affectsId": "CMP-008"
+    },
+    {
+      "findingId": "FIND-005",
+      "runId": "RUN-002",
+      "type": "ROLE_GAP",
+      "severity": "MEDIUM",
+      "narrative": "데이터 아키텍트(DR-006) 역할 1명 부족, 프로젝트 2건 대기 중",
+      "rootCause": "시니어 인력 이탈 후 미충원",
+      "rank": 3,
+      "affectsType": "OrgUnit",
+      "affectsId": "ORG-0020"
+    },
+    {
+      "findingId": "FIND-006",
+      "runId": "RUN-005",
+      "type": "SKILL_GAP",
+      "severity": "HIGH",
+      "narrative": "AI/ML 도메인 전체 역량 갭 3.5 FTE, 2026년 파이프라인 대응 불가",
+      "rootCause": "GenAI, MLOps, NLP 역량 동시 부족",
+      "rank": 1,
+      "affectsType": "OrgUnit",
+      "affectsId": "ORG-0001"
+    }
+  ],
+  "evidence": [
+    {
+      "evidenceId": "EV-001",
+      "findingId": "FIND-001",
+      "sourceSystem": "TMS",
+      "sourceType": "query",
+      "sourceRef": "SELECT SUM(allocationFTE) FROM Assignment WHERE orgUnitId='ORG-0011' AND bucketId IN ('TB-2026-W05','TB-2026-W06','TB-2026-W07')",
+      "capturedAt": "2026-01-20T10:35:00Z",
+      "note": "AI솔루션팀 W05-W07 배정 FTE 합계: 7.2 FTE (정원 6명)"
+    },
+    {
+      "evidenceId": "EV-002",
+      "findingId": "FIND-001",
+      "sourceSystem": "BizForce",
+      "sourceType": "table",
+      "sourceRef": "Opportunity.OPP-001 (100억 미디어 AX)",
+      "capturedAt": "2026-01-20T10:35:00Z",
+      "note": "수주 확률 70%, 예상 투입 3 FTE"
+    },
+    {
+      "evidenceId": "EV-003",
+      "findingId": "FIND-003",
+      "sourceSystem": "HR",
+      "sourceType": "query",
+      "sourceRef": "SELECT COUNT(*) FROM CompetencyEvidence WHERE competencyId='CMP-007' AND level>=4",
+      "capturedAt": "2026-01-20T11:30:00Z",
+      "note": "GenAI Lv4+ 보유자: 최서연(EMP-000012), 정도윤(EMP-000013)"
+    },
+    {
+      "evidenceId": "EV-004",
+      "findingId": "FIND-003",
+      "sourceSystem": "BizForce",
+      "sourceType": "query",
+      "sourceRef": "SELECT SUM(estimatedFTE) FROM Opportunity WHERE stage IN ('PROPOSAL','NEGOTIATION') AND requiredCompetency LIKE '%GenAI%'",
+      "capturedAt": "2026-01-20T11:30:00Z",
+      "note": "GenAI 요구 파이프라인 FTE 합계: 8.5 FTE"
+    },
+    {
+      "evidenceId": "EV-005",
+      "findingId": "FIND-002",
+      "sourceSystem": "TMS",
+      "sourceType": "query",
+      "sourceRef": "SELECT * FROM Assignment WHERE projectId='PRJ-004' AND status='ACTIVE'",
+      "capturedAt": "2026-01-20T10:40:00Z",
+      "note": "PRJ-004 투입 현황: 데이터엔지니어링팀 4명 전담"
+    },
+    {
+      "evidenceId": "EV-006",
+      "findingId": "FIND-006",
+      "sourceSystem": "HR",
+      "sourceType": "doc",
+      "sourceRef": "2026년 역량 개발 계획서",
+      "capturedAt": "2026-01-20T11:35:00Z",
+      "note": "AI/ML 역량 개발 목표 대비 현재 달성률 65%"
+    }
+  ]
+}

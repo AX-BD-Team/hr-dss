@@ -1,6 +1,6 @@
 # HR 의사결정 지원 시스템 - 문서 인덱스
 
-> 마지막 업데이트: 2025-01-23
+> 마지막 업데이트: 2025-01-28
 
 ---
 
@@ -39,28 +39,33 @@
 
 | 산출물 | 경로 | 상태 |
 |--------|------|------|
-| Outcome Definition v1 | `docs/specs/outcome-definition.md` | ⏳ 예정 |
-| Demand Data Spec v1 | `docs/specs/demand-data-spec.md` | ⏳ 예정 |
-| Ontology Schema v0.1.1 | `data/schemas/schema.cypher` | ⏳ 예정 |
-| Labeled Dataset v1 | `data/labeled/*.json` | ⏳ 예정 |
+| Outcome Definition v1 | [docs/specs/outcome-definition.md](./specs/outcome-definition.md) | ✅ 완료 |
+| Demand Data Spec v1 | [docs/specs/demand-data-spec.md](./specs/demand-data-spec.md) | ✅ 완료 |
+| Ontology Schema v0.1.1 | `data/schemas/schema.cypher` | ✅ 완료 |
+| Labeled Dataset v1 | `data/labeled/*.json` (44건) | ✅ 완료 |
+| Data Loader | `backend/agent_runtime/ontology/data_loader.py` | ✅ 완료 |
+| KG Query Module | `backend/agent_runtime/ontology/kg_query.py` | ✅ 완료 |
+| Graph Viewer | `apps/web/components/GraphViewer.tsx` | ✅ 완료 |
 
 ### P5: LLM/Agent 의사결정 엔진 (1/27)
 
 | 산출물 | 경로 | 상태 |
 |--------|------|------|
-| Query Decomposition Agent | `backend/agent_runtime/agents/query_decomposition.py` | ⏳ 예정 |
-| Option Generator Agent | `backend/agent_runtime/agents/option_generator.py` | ⏳ 예정 |
-| Impact Simulator | `backend/agent_runtime/agents/impact_simulator.py` | ⏳ 예정 |
-| Validator | `backend/agent_runtime/agents/validator.py` | ⏳ 예정 |
+| Query Decomposition Agent | `backend/agent_runtime/agents/query_decomposition.py` | ✅ 완료 |
+| Option Generator Agent | `backend/agent_runtime/agents/option_generator.py` | ✅ 완료 |
+| Impact Simulator | `backend/agent_runtime/agents/impact_simulator.py` | ✅ 완료 |
+| Success Probability Agent | `backend/agent_runtime/agents/success_probability.py` | ✅ 완료 |
+| Validator | `backend/agent_runtime/agents/validator.py` | ✅ 완료 |
 
 ### P6: Workflow + 평가 시스템 (1/28)
 
 | 산출물 | 경로 | 상태 |
 |--------|------|------|
-| Workflow Builder Agent | `backend/agent_runtime/agents/workflow_builder.py` | ⏳ 예정 |
-| HITL 승인 시스템 | `backend/agent_runtime/workflows/hitl_approval.py` | ⏳ 예정 |
-| Agent Eval Dashboard | `apps/web/components/AgentEvalDashboard.tsx` | ⏳ 예정 |
-| Ontology Scorecard | `apps/web/components/OntologyScoreCard.tsx` | ⏳ 예정 |
+| Workflow Builder Agent | `backend/agent_runtime/agents/workflow_builder.py` | ✅ 완료 |
+| HITL 승인 시스템 | `backend/agent_runtime/workflows/hitl_approval.py` | ✅ 완료 |
+| Agent Eval Dashboard | `apps/web/components/AgentEvalDashboard.tsx` | ✅ 완료 |
+| Ontology Scorecard | `apps/web/components/OntologyScoreCard.tsx` | ✅ 완료 |
+| Data Quality Report | `apps/web/components/DataQualityReport.tsx` | ✅ 완료 |
 
 ### P7: 웹/앱 Prototype UI (1/29)
 
@@ -85,6 +90,7 @@
 
 | 문서 | 설명 |
 |------|------|
+| [Ontology 설계 v0.1.1](../HR%20의사결정%20지원%20핵심%20Ontology%20설계.md) | 핵심 Ontology 설계 (28개 노드, 30+ 관계) |
 | [Ontology 스키마 상세](../hr-prototype-plan-v2.md#3-ontology-스키마-v011) | 28개 노드, 30+ 관계 타입 |
 | [4대 유스케이스](../hr-prototype-plan-v2.md#42-4대-유스케이스) | A-1, B-1, C-1, D-1 질문 |
 | [Agent 평가 지표](../hr-prototype-plan-v2.md#day-5-128-화---p6-workflow--평가-시스템) | 완결성, 근거 연결률, 환각률 등 |

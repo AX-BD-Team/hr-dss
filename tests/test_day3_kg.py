@@ -6,7 +6,6 @@ Knowledge Graph 스키마 및 Mock 데이터 검증
 
 import json
 import re
-from pathlib import Path
 
 import pytest
 
@@ -182,7 +181,6 @@ class TestKGQueryPerformance:
         import time
 
         employees = mock_data.get("persons", {}).get("employees", [])
-        org_units = mock_data.get("orgs", {}).get("orgUnits", [])
 
         start = time.time()
 

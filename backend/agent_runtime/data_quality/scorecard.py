@@ -237,10 +237,10 @@ class DataReadinessScorecard:
         missing_count = 0
         missing_details = {}
 
-        for field in required:
-            field_missing = sum(1 for r in records if not r.get(field))
+        for field_name in required:
+            field_missing = sum(1 for r in records if not r.get(field_name))
             if field_missing > 0:
-                missing_details[field] = field_missing
+                missing_details[field_name] = field_missing
             missing_count += field_missing
 
         rate = missing_count / total_fields if total_fields > 0 else 0
@@ -335,7 +335,7 @@ class DataReadinessScorecard:
 
         total_fks = 0
         matched_fks = 0
-        unmatched_details = {}
+        unmatched_details: dict[str, list[Any]] = {}
 
         for fk_field, (ref_entity, ref_field) in fk_relations.items():
             ref_records = self.data.get(ref_entity, [])

@@ -1,0 +1,657 @@
+{
+  "generated_at": "2026-01-21T20:37:05.849882",
+  "data_source": "data\\mock",
+  "overall_score": 100.0,
+  "overall_status": "READY",
+  "summary": {
+    "total_entities": 15,
+    "total_records": 356,
+    "passed_entities": 15,
+    "failed_entities": 0,
+    "readiness_level": "READY"
+  },
+  "entity_results": [
+    {
+      "entity_name": "orgUnits",
+      "record_count": 20,
+      "overall_status": "PASS",
+      "metrics": [
+        {
+          "name": "missing_rate",
+          "description": "필수 필드 결측 비율",
+          "value": 0.0,
+          "target": 0.1,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "missing_fields": {}
+          }
+        },
+        {
+          "name": "duplicate_rate",
+          "description": "키 중복 비율",
+          "value": 0.0,
+          "target": 0.01,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "pk_field": "orgUnitId",
+            "duplicates": 0
+          }
+        },
+        {
+          "name": "required_field_rate",
+          "description": "필수 필드 충족률",
+          "value": 1.0,
+          "target": 0.8,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "complete_records": 20,
+            "total_records": 20
+          }
+        }
+      ]
+    },
+    {
+      "entity_name": "jobRoles",
+      "record_count": 10,
+      "overall_status": "PASS",
+      "metrics": [
+        {
+          "name": "missing_rate",
+          "description": "필수 필드 결측 비율",
+          "value": 0.0,
+          "target": 0.1,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "message": "필수 필드 정의 없음"
+          }
+        },
+        {
+          "name": "duplicate_rate",
+          "description": "키 중복 비율",
+          "value": 0.0,
+          "target": 0.01,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "pk_field": "jobRoleId",
+            "duplicates": 0
+          }
+        },
+        {
+          "name": "required_field_rate",
+          "description": "필수 필드 충족률",
+          "value": 1.0,
+          "target": 0.8,
+          "unit": "%",
+          "status": "PASS",
+          "details": {}
+        }
+      ]
+    },
+    {
+      "entity_name": "deliveryRoles",
+      "record_count": 10,
+      "overall_status": "PASS",
+      "metrics": [
+        {
+          "name": "missing_rate",
+          "description": "필수 필드 결측 비율",
+          "value": 0.0,
+          "target": 0.1,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "message": "필수 필드 정의 없음"
+          }
+        },
+        {
+          "name": "duplicate_rate",
+          "description": "키 중복 비율",
+          "value": 0.0,
+          "target": 0.01,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "pk_field": "deliveryRoleId",
+            "duplicates": 0
+          }
+        },
+        {
+          "name": "required_field_rate",
+          "description": "필수 필드 충족률",
+          "value": 1.0,
+          "target": 0.8,
+          "unit": "%",
+          "status": "PASS",
+          "details": {}
+        }
+      ]
+    },
+    {
+      "entity_name": "responsibilities",
+      "record_count": 5,
+      "overall_status": "PASS",
+      "metrics": [
+        {
+          "name": "missing_rate",
+          "description": "필수 필드 결측 비율",
+          "value": 0.0,
+          "target": 0.1,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "message": "필수 필드 정의 없음"
+          }
+        },
+        {
+          "name": "duplicate_rate",
+          "description": "키 중복 비율",
+          "value": 0.0,
+          "target": 0.01,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "pk_field": "responsibilityId",
+            "duplicates": 0
+          }
+        },
+        {
+          "name": "required_field_rate",
+          "description": "필수 필드 충족률",
+          "value": 1.0,
+          "target": 0.8,
+          "unit": "%",
+          "status": "PASS",
+          "details": {}
+        }
+      ]
+    },
+    {
+      "entity_name": "employees",
+      "record_count": 65,
+      "overall_status": "PASS",
+      "metrics": [
+        {
+          "name": "missing_rate",
+          "description": "필수 필드 결측 비율",
+          "value": 0.0,
+          "target": 0.1,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "missing_fields": {}
+          }
+        },
+        {
+          "name": "duplicate_rate",
+          "description": "키 중복 비율",
+          "value": 0.0,
+          "target": 0.01,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "pk_field": "employeeId",
+            "duplicates": 0
+          }
+        },
+        {
+          "name": "required_field_rate",
+          "description": "필수 필드 충족률",
+          "value": 1.0,
+          "target": 0.8,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "complete_records": 65,
+            "total_records": 65
+          }
+        },
+        {
+          "name": "key_match_rate",
+          "description": "FK 매칭률",
+          "value": 1.0,
+          "target": 0.95,
+          "unit": "%",
+          "status": "PASS",
+          "details": {}
+        }
+      ]
+    },
+    {
+      "entity_name": "projects",
+      "record_count": 12,
+      "overall_status": "PASS",
+      "metrics": [
+        {
+          "name": "missing_rate",
+          "description": "필수 필드 결측 비율",
+          "value": 0.0,
+          "target": 0.1,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "missing_fields": {}
+          }
+        },
+        {
+          "name": "duplicate_rate",
+          "description": "키 중복 비율",
+          "value": 0.0,
+          "target": 0.01,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "pk_field": "projectId",
+            "duplicates": 0
+          }
+        },
+        {
+          "name": "required_field_rate",
+          "description": "필수 필드 충족률",
+          "value": 1.0,
+          "target": 0.8,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "complete_records": 12,
+            "total_records": 12
+          }
+        },
+        {
+          "name": "key_match_rate",
+          "description": "FK 매칭률",
+          "value": 1.0,
+          "target": 0.95,
+          "unit": "%",
+          "status": "PASS",
+          "details": {}
+        }
+      ]
+    },
+    {
+      "entity_name": "workPackages",
+      "record_count": 30,
+      "overall_status": "PASS",
+      "metrics": [
+        {
+          "name": "missing_rate",
+          "description": "필수 필드 결측 비율",
+          "value": 0.0,
+          "target": 0.1,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "message": "필수 필드 정의 없음"
+          }
+        },
+        {
+          "name": "duplicate_rate",
+          "description": "키 중복 비율",
+          "value": 0.0,
+          "target": 0.01,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "pk_field": "workPackageId",
+            "duplicates": 0
+          }
+        },
+        {
+          "name": "required_field_rate",
+          "description": "필수 필드 충족률",
+          "value": 1.0,
+          "target": 0.8,
+          "unit": "%",
+          "status": "PASS",
+          "details": {}
+        }
+      ]
+    },
+    {
+      "entity_name": "opportunities",
+      "record_count": 15,
+      "overall_status": "PASS",
+      "metrics": [
+        {
+          "name": "missing_rate",
+          "description": "필수 필드 결측 비율",
+          "value": 0.0,
+          "target": 0.1,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "missing_fields": {}
+          }
+        },
+        {
+          "name": "duplicate_rate",
+          "description": "키 중복 비율",
+          "value": 0.0,
+          "target": 0.01,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "pk_field": "opportunityId",
+            "duplicates": 0
+          }
+        },
+        {
+          "name": "required_field_rate",
+          "description": "필수 필드 충족률",
+          "value": 1.0,
+          "target": 0.8,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "complete_records": 15,
+            "total_records": 15
+          }
+        }
+      ]
+    },
+    {
+      "entity_name": "demandSignals",
+      "record_count": 5,
+      "overall_status": "PASS",
+      "metrics": [
+        {
+          "name": "missing_rate",
+          "description": "필수 필드 결측 비율",
+          "value": 0.0,
+          "target": 0.1,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "message": "필수 필드 정의 없음"
+          }
+        },
+        {
+          "name": "duplicate_rate",
+          "description": "키 중복 비율",
+          "value": 0.0,
+          "target": 0.01,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "pk_field": "signalId",
+            "duplicates": 0
+          }
+        },
+        {
+          "name": "required_field_rate",
+          "description": "필수 필드 충족률",
+          "value": 1.0,
+          "target": 0.8,
+          "unit": "%",
+          "status": "PASS",
+          "details": {}
+        }
+      ]
+    },
+    {
+      "entity_name": "resourceDemands",
+      "record_count": 10,
+      "overall_status": "PASS",
+      "metrics": [
+        {
+          "name": "missing_rate",
+          "description": "필수 필드 결측 비율",
+          "value": 0.0,
+          "target": 0.1,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "message": "필수 필드 정의 없음"
+          }
+        },
+        {
+          "name": "duplicate_rate",
+          "description": "키 중복 비율",
+          "value": 0.0,
+          "target": 0.01,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "pk_field": "demandId",
+            "duplicates": 0
+          }
+        },
+        {
+          "name": "required_field_rate",
+          "description": "필수 필드 충족률",
+          "value": 1.0,
+          "target": 0.8,
+          "unit": "%",
+          "status": "PASS",
+          "details": {}
+        }
+      ]
+    },
+    {
+      "entity_name": "competencies",
+      "record_count": 40,
+      "overall_status": "PASS",
+      "metrics": [
+        {
+          "name": "missing_rate",
+          "description": "필수 필드 결측 비율",
+          "value": 0.0,
+          "target": 0.1,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "missing_fields": {}
+          }
+        },
+        {
+          "name": "duplicate_rate",
+          "description": "키 중복 비율",
+          "value": 0.0,
+          "target": 0.01,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "pk_field": "competencyId",
+            "duplicates": 0
+          }
+        },
+        {
+          "name": "required_field_rate",
+          "description": "필수 필드 충족률",
+          "value": 1.0,
+          "target": 0.8,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "complete_records": 40,
+            "total_records": 40
+          }
+        }
+      ]
+    },
+    {
+      "entity_name": "competencyEvidences",
+      "record_count": 50,
+      "overall_status": "PASS",
+      "metrics": [
+        {
+          "name": "missing_rate",
+          "description": "필수 필드 결측 비율",
+          "value": 0.0,
+          "target": 0.1,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "missing_fields": {}
+          }
+        },
+        {
+          "name": "duplicate_rate",
+          "description": "키 중복 비율",
+          "value": 0.0,
+          "target": 0.01,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "pk_field": "evidenceId",
+            "duplicates": 0
+          }
+        },
+        {
+          "name": "required_field_rate",
+          "description": "필수 필드 충족률",
+          "value": 1.0,
+          "target": 0.8,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "complete_records": 50,
+            "total_records": 50
+          }
+        },
+        {
+          "name": "key_match_rate",
+          "description": "FK 매칭률",
+          "value": 1.0,
+          "target": 0.95,
+          "unit": "%",
+          "status": "PASS",
+          "details": {}
+        }
+      ]
+    },
+    {
+      "entity_name": "assignments",
+      "record_count": 42,
+      "overall_status": "PASS",
+      "metrics": [
+        {
+          "name": "missing_rate",
+          "description": "필수 필드 결측 비율",
+          "value": 0.0,
+          "target": 0.1,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "missing_fields": {}
+          }
+        },
+        {
+          "name": "duplicate_rate",
+          "description": "키 중복 비율",
+          "value": 0.0,
+          "target": 0.01,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "pk_field": "assignmentId",
+            "duplicates": 0
+          }
+        },
+        {
+          "name": "required_field_rate",
+          "description": "필수 필드 충족률",
+          "value": 1.0,
+          "target": 0.8,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "complete_records": 42,
+            "total_records": 42
+          }
+        },
+        {
+          "name": "key_match_rate",
+          "description": "FK 매칭률",
+          "value": 1.0,
+          "target": 0.95,
+          "unit": "%",
+          "status": "PASS",
+          "details": {}
+        }
+      ]
+    },
+    {
+      "entity_name": "availabilities",
+      "record_count": 30,
+      "overall_status": "PASS",
+      "metrics": [
+        {
+          "name": "missing_rate",
+          "description": "필수 필드 결측 비율",
+          "value": 0.0,
+          "target": 0.1,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "message": "필수 필드 정의 없음"
+          }
+        },
+        {
+          "name": "duplicate_rate",
+          "description": "키 중복 비율",
+          "value": 0.0,
+          "target": 0.01,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "pk_field": "availabilityId",
+            "duplicates": 0
+          }
+        },
+        {
+          "name": "required_field_rate",
+          "description": "필수 필드 충족률",
+          "value": 1.0,
+          "target": 0.8,
+          "unit": "%",
+          "status": "PASS",
+          "details": {}
+        }
+      ]
+    },
+    {
+      "entity_name": "timeBuckets",
+      "record_count": 12,
+      "overall_status": "PASS",
+      "metrics": [
+        {
+          "name": "missing_rate",
+          "description": "필수 필드 결측 비율",
+          "value": 0.0,
+          "target": 0.1,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "message": "필수 필드 정의 없음"
+          }
+        },
+        {
+          "name": "duplicate_rate",
+          "description": "키 중복 비율",
+          "value": 0.0,
+          "target": 0.01,
+          "unit": "%",
+          "status": "PASS",
+          "details": {
+            "pk_field": "bucketId",
+            "duplicates": 0
+          }
+        },
+        {
+          "name": "required_field_rate",
+          "description": "필수 필드 충족률",
+          "value": 1.0,
+          "target": 0.8,
+          "unit": "%",
+          "status": "PASS",
+          "details": {}
+        }
+      ]
+    }
+  ]
+}

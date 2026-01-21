@@ -1,6 +1,6 @@
 # HR 의사결정 지원 시스템 - 문서 인덱스
 
-> 마지막 업데이트: 2025-01-22
+> 마지막 업데이트: 2025-01-23
 
 ---
 
@@ -29,9 +29,11 @@
 
 | 산출물 | 경로 | 상태 |
 |--------|------|------|
-| Data Catalog v1 | `docs/specs/data-catalog.md` | ⏳ 예정 |
-| Join Key Standard | `docs/specs/join-key-standard.md` | ⏳ 예정 |
-| Mock Dataset 6종 | `data/mock/*.json` | ⏳ 예정 |
+| Data Catalog v1 | [docs/specs/data-catalog.md](./specs/data-catalog.md) | ✅ 완료 |
+| Join Key Standard | [docs/specs/join-key-standard.md](./specs/join-key-standard.md) | ✅ 완료 |
+| Data Classification | [docs/specs/data-classification.md](./specs/data-classification.md) | ✅ 완료 |
+| Mock Dataset 6종 | `data/mock/*.json` | ✅ 완료 |
+| Data Readiness Scorecard | `backend/agent_runtime/data_quality/` | ✅ 완료 |
 
 ### P3-P4: Predictive Enablement + KG (1/24)
 

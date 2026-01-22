@@ -66,4 +66,4 @@ USER appuser
 # 프로덕션 서버 실행 (Railway는 $PORT 환경변수 사용)
 EXPOSE 8000
 ENV PORT=8000
-CMD uvicorn backend.api.main:app --host 0.0.0.0 --port $PORT --workers 4
+CMD ["/bin/sh", "-c", "uvicorn backend.api.main:app --host 0.0.0.0 --port ${PORT} --workers 4"]

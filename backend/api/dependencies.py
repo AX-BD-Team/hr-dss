@@ -152,7 +152,12 @@ class Neo4jService:
         """그래프 통계 조회"""
         driver = await cls.get_driver()
         if not driver:
-            return {"node_count": 0, "relationship_count": 0, "labels": {}, "relationship_types": {}}
+            return {
+                "node_count": 0,
+                "relationship_count": 0,
+                "labels": {},
+                "relationship_types": {},
+            }
 
         try:
             # 노드 수
@@ -176,7 +181,9 @@ class Neo4jService:
                 labels[label] = count_result[0]["count"] if count_result else 0
 
             # 관계 타입별 수
-            rel_types_query = "CALL db.relationshipTypes() YIELD relationshipType RETURN relationshipType"
+            rel_types_query = (
+                "CALL db.relationshipTypes() YIELD relationshipType RETURN relationshipType"
+            )
             rel_types_result = await cls.execute_query(rel_types_query)
             rel_types = {}
             for record in rel_types_result:
@@ -192,7 +199,12 @@ class Neo4jService:
                 "relationship_types": rel_types,
             }
         except Exception:
-            return {"node_count": 0, "relationship_count": 0, "labels": {}, "relationship_types": {}}
+            return {
+                "node_count": 0,
+                "relationship_count": 0,
+                "labels": {},
+                "relationship_types": {},
+            }
 
     @classmethod
     async def search(

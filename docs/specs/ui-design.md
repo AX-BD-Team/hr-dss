@@ -11,7 +11,7 @@ A2UI = UI를 ‘코드’가 아니라 ‘선언적 데이터’로 전달(안�
 AG-UI = 실행 중인 에이전트와 화면을 ‘양방향 이벤트 스트림’으로 동기화(협업/상태/툴/진행률)
 
 1. 패러다임 변화: 레가시 UI → Agentic UI
-1.1 레가시 UI가 AI 시대에 “표현”이 부족한 이유
+   1.1 레가시 UI가 AI 시대에 “표현”이 부족한 이유
 
 레가시 UI는 대부분 **정적 정보 구조(메뉴/폼/페이지)**와 요청-응답 모델을 전제합니다. 반면 에이전트 기반 UX는 다음을 전제로 합니다.
 
@@ -74,7 +74,7 @@ Trust Ladder (신뢰 사다리)
 관찰→제안→반자동→자동을 성과/안전성 지표 기반으로 올리게 하는 UX가 채택률을 결정합니다.
 
 3. 시스템 아키텍처: “프로토콜-기반 디자인 시스템”으로 재정의
-3.1 AXIS 아키텍처 스택
+   3.1 AXIS 아키텍처 스택
 
 AXIS는 “디자인 시스템”을 UI 컴포넌트 라이브러리로만 보지 않고, A2UI/AG-UI를 포함한 런타임 계층까지 포함합니다.
 
@@ -131,24 +131,23 @@ Autonomy Level Tokens (0~3: Manual→Suggestion→Semi-Auto→Auto)
 
 4.3 토큰 예시 (권장 네이밍)
 {
-  "axis": {
-    "agent": {
-      "status": {
-        "thinking": { "color": "{color.primary.500}", "icon": "brain", "motion": "pulse" },
-        "processing": { "color": "{color.warning.500}", "icon": "loader", "motion": "spin" },
-        "error": { "color": "{color.error.500}", "icon": "alert-circle" }
-      }
-    },
-    "trust": {
-      "confidence": {
-        "high": { "threshold": 0.85, "label": "높은 신뢰", "indicator": "solid" },
-        "medium": { "threshold": 0.60, "label": "검토 권장", "indicator": "dashed" },
-        "low": { "threshold": 0.00, "label": "확인 필요", "indicator": "dotted", "requiresConfirmation": true }
-      }
-    }
-  }
+"axis": {
+"agent": {
+"status": {
+"thinking": { "color": "{color.primary.500}", "icon": "brain", "motion": "pulse" },
+"processing": { "color": "{color.warning.500}", "icon": "loader", "motion": "spin" },
+"error": { "color": "{color.error.500}", "icon": "alert-circle" }
 }
-
+},
+"trust": {
+"confidence": {
+"high": { "threshold": 0.85, "label": "높은 신뢰", "indicator": "solid" },
+"medium": { "threshold": 0.60, "label": "검토 권장", "indicator": "dashed" },
+"low": { "threshold": 0.00, "label": "확인 필요", "indicator": "dotted", "requiresConfirmation": true }
+}
+}
+}
+}
 
 (AXIS 문서의 토큰 구조/의도에 맞춘 형태)
 
@@ -200,32 +199,31 @@ A2UI는 “클라이언트가 신뢰하는 카탈로그 컴포넌트만 렌더 �
 따라서 AXIS 확장 컴포넌트를 카탈로그로 선언하세요.
 
 {
-  "catalogId": "axis-v1",
-  "extends": "https://a2ui.org/specification/v0.8-a2ui/",
-  "components": {
-    "standard": ["Text", "Button", "TextField", "Card", "Row", "Column", "List"],
-    "axisExtensions": [
-      {
-        "name": "AgentMessage",
-        "category": "agent-native",
-        "properties": {
-          "content": { "type": "string", "required": true },
-          "status": { "type": "enum", "values": ["streaming", "complete", "error"] },
-          "confidence": { "type": "number", "min": 0, "max": 1 }
-        }
-      },
-      {
-        "name": "ActionConfirmation",
-        "category": "control",
-        "properties": {
-          "impact": { "type": "enum", "values": ["low", "medium", "high", "critical"] },
-          "reversible": { "type": "boolean" }
-        }
-      }
-    ]
-  }
+"catalogId": "axis-v1",
+"extends": "https://a2ui.org/specification/v0.8-a2ui/",
+"components": {
+"standard": ["Text", "Button", "TextField", "Card", "Row", "Column", "List"],
+"axisExtensions": [
+{
+"name": "AgentMessage",
+"category": "agent-native",
+"properties": {
+"content": { "type": "string", "required": true },
+"status": { "type": "enum", "values": ["streaming", "complete", "error"] },
+"confidence": { "type": "number", "min": 0, "max": 1 }
 }
-
+},
+{
+"name": "ActionConfirmation",
+"category": "control",
+"properties": {
+"impact": { "type": "enum", "values": ["low", "medium", "high", "critical"] },
+"reversible": { "type": "boolean" }
+}
+}
+]
+}
+}
 
 (AXIS 문서의 “A2UI 표준 카탈로그 확장” 방향과 동일)
 
@@ -299,7 +297,7 @@ RunError → Graceful Failure 패턴 자동 트리거
 StateDelta → UI/도메인 상태의 실시간 반영
 
 8. 구현 가이드: 바로 개발 가능한 구조/가드레일
-8.1 기술/구현 포인트(표준 기반)
+   8.1 기술/구현 포인트(표준 기반)
 
 A2UI는 JSONL 기반 스트리밍 UI 프로토콜이며, 선언적 구조/플랫 컴포넌트 리스트/데이터-컴포넌트 분리를 통해 LLM이 생성하기 쉽게 설계되어 있습니다.
 
@@ -346,7 +344,7 @@ Phase 3 (3~4개월): 멀티 에이전트/적응형 UI/오프라인/에러 패턴
 Phase 4 (상시): 성능/접근성/사용자 피드백 기반 최적화
 
 9. 바로 적용 가능한 “표준 시나리오” 2개 (A2UI+AG-UI UX 설계 예)
-시나리오 A: “회의 잡아줘” (동적 폼 + 승인)
+   시나리오 A: “회의 잡아줘” (동적 폼 + 승인)
 
 사용자가 자연어로 요청
 

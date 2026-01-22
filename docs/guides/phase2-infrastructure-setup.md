@@ -7,13 +7,13 @@
 
 ## 현재 상태 (2026-01-22)
 
-| 항목 | 상태 | URL |
-|------|------|-----|
-| Cloudflare Pages | ✅ 완료 | https://hr.minu.best |
-| Cloudflare Pages (Staging) | ✅ 완료 | https://staging.hr.minu.best |
-| Cloudflare Workers | ✅ 완료 | https://api-hr.minu.best |
-| Railway Backend | 🔄 대기 | - |
-| Neo4j Aura | ❌ 미설정 | - |
+| 항목                       | 상태      | URL                          |
+| -------------------------- | --------- | ---------------------------- |
+| Cloudflare Pages           | ✅ 완료   | https://hr.minu.best         |
+| Cloudflare Pages (Staging) | ✅ 완료   | https://staging.hr.minu.best |
+| Cloudflare Workers         | ✅ 완료   | https://api-hr.minu.best     |
+| Railway Backend            | 🔄 대기   | -                            |
+| Neo4j Aura                 | ❌ 미설정 | -                            |
 
 ---
 
@@ -113,6 +113,7 @@ NEXT_PUBLIC_ENVIRONMENT = production
 6. **Save and Deploy**
 
 > ✅ **완료**: Pages 프로젝트 `hr-dss-web` 생성 및 배포됨
+>
 > - Production: https://hr.minu.best
 > - Staging: https://staging.hr.minu.best
 
@@ -127,6 +128,7 @@ wrangler deploy --env production
 ```
 
 **배포 결과:**
+
 - Workers.dev: `https://hr-dss-api-gateway.sinclair-account.workers.dev`
 - 커스텀 도메인: `https://api-hr.minu.best`
 
@@ -278,14 +280,15 @@ Cloudflare Dashboard → `minu.best` → **DNS** → **Add record**
 > ⚠️ **중요**: Cloudflare Universal SSL은 1단계 서브도메인(`*.minu.best`)만 커버합니다.
 > 따라서 `api.hr.minu.best` 대신 `api-hr.minu.best`를 사용합니다.
 
-| Type  | Name          | Content                                              | Proxy     | 상태 |
-| ----- | ------------- | ---------------------------------------------------- | --------- | ---- |
-| CNAME | `hr`          | `hr-dss-web.pages.dev`                               | ✓ Proxied | ✅   |
-| CNAME | `staging`     | `hr-dss-web.pages.dev`                               | ✓ Proxied | ✅   |
-| CNAME | `api-hr`      | `hr-dss-api-gateway.sinclair-account.workers.dev`    | ✓ Proxied | ✅   |
-| CNAME | `api-staging` | `hr-dss-api-gateway.sinclair-account.workers.dev`    | ✓ Proxied | 🔄   |
+| Type  | Name          | Content                                           | Proxy     | 상태 |
+| ----- | ------------- | ------------------------------------------------- | --------- | ---- |
+| CNAME | `hr`          | `hr-dss-web.pages.dev`                            | ✓ Proxied | ✅   |
+| CNAME | `staging`     | `hr-dss-web.pages.dev`                            | ✓ Proxied | ✅   |
+| CNAME | `api-hr`      | `hr-dss-api-gateway.sinclair-account.workers.dev` | ✓ Proxied | ✅   |
+| CNAME | `api-staging` | `hr-dss-api-gateway.sinclair-account.workers.dev` | ✓ Proxied | 🔄   |
 
 **실제 배포 URL:**
+
 - Pages: `hr-dss-web.pages.dev`
 - Workers: `hr-dss-api-gateway.sinclair-account.workers.dev`
 
@@ -457,6 +460,7 @@ wrangler deploy --env production
 **원인**: Cloudflare Universal SSL은 `*.minu.best` (1단계)만 커버
 
 **해결**:
+
 1. **권장**: 1단계 서브도메인 사용 (`api-hr.minu.best`)
 2. **대안**: Advanced Certificate Manager 구매 (유료)
 
@@ -474,14 +478,15 @@ api-hr.minu.best     # 1단계 서브도메인
 **원인**: itty-router v5 API 변경
 
 **해결**:
+
 ```typescript
 // 변경 전 (v4)
-import { Router } from 'itty-router';
+import { Router } from "itty-router";
 const router = Router();
 router.handle(request, env, ctx);
 
 // 변경 후 (v5)
-import { AutoRouter } from 'itty-router';
+import { AutoRouter } from "itty-router";
 const router = AutoRouter();
 router.fetch(request, env, ctx);
 ```

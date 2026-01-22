@@ -174,10 +174,12 @@ async def get_schema():
             node_type = record["nodeType"]
             # `:`를 제거하고 라벨 이름 추출
             label = node_type.replace(":`", "").replace("`", "")
-            nodes.append({
-                "label": label,
-                "properties": record["properties"],
-            })
+            nodes.append(
+                {
+                    "label": label,
+                    "properties": record["properties"],
+                }
+            )
 
         # 관계 타입 조회
         rel_query = """
@@ -199,11 +201,13 @@ async def get_schema():
             try:
                 rel_info = await Neo4jService.execute_query(rel_info_query)
                 if rel_info:
-                    relationships.append({
-                        "type": rel_type,
-                        "from": rel_info[0].get("from_label", "Unknown"),
-                        "to": rel_info[0].get("to_label", "Unknown"),
-                    })
+                    relationships.append(
+                        {
+                            "type": rel_type,
+                            "from": rel_info[0].get("from_label", "Unknown"),
+                            "to": rel_info[0].get("to_label", "Unknown"),
+                        }
+                    )
             except Exception:
                 relationships.append({"type": rel_type, "from": "Unknown", "to": "Unknown"})
 
@@ -215,7 +219,10 @@ async def get_schema():
                 {"label": "Employee", "properties": ["id", "name", "level", "team_id"]},
                 {"label": "Team", "properties": ["id", "name", "division_id"]},
                 {"label": "Division", "properties": ["id", "name"]},
-                {"label": "Project", "properties": ["id", "name", "status", "start_date", "end_date"]},
+                {
+                    "label": "Project",
+                    "properties": ["id", "name", "status", "start_date", "end_date"],
+                },
                 {"label": "Skill", "properties": ["id", "name", "category"]},
                 {"label": "Decision", "properties": ["id", "title", "status", "question"]},
                 {"label": "Option", "properties": ["id", "name", "type", "success_probability"]},

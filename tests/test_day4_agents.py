@@ -41,7 +41,9 @@ class TestQueryDecomposition:
         result = agent.decompose(test_questions["A-1"])
 
         assert result is not None, "Decomposition returned None"
-        assert result.query_type == QueryType.CAPACITY, f"Expected CAPACITY, got {result.query_type}"
+        assert result.query_type == QueryType.CAPACITY, (
+            f"Expected CAPACITY, got {result.query_type}"
+        )
         # horizon은 constraints 내에 있음
         horizon = result.constraints.get("horizon_weeks", 12)
         assert horizon >= 12, f"Expected horizon >= 12, got {horizon}"
@@ -58,14 +60,18 @@ class TestQueryDecomposition:
         result = agent.decompose(test_questions["C-1"])
 
         assert result is not None, "Decomposition returned None"
-        assert result.query_type == QueryType.HEADCOUNT, f"Expected HEADCOUNT, got {result.query_type}"
+        assert result.query_type == QueryType.HEADCOUNT, (
+            f"Expected HEADCOUNT, got {result.query_type}"
+        )
 
     def test_competency_question_d1(self, agent, test_questions):
         """TC-D4-01-04: D-1 질문 분해 (COMPETENCY_GAP)"""
         result = agent.decompose(test_questions["D-1"])
 
         assert result is not None, "Decomposition returned None"
-        assert result.query_type == QueryType.COMPETENCY_GAP, f"Expected COMPETENCY_GAP, got {result.query_type}"
+        assert result.query_type == QueryType.COMPETENCY_GAP, (
+            f"Expected COMPETENCY_GAP, got {result.query_type}"
+        )
 
     def test_decomposition_has_required_fields(self, agent, test_questions):
         """질문 분해 결과에 필수 필드 포함"""
@@ -184,7 +190,9 @@ class TestSuccessProbability:
         )
 
         assert result is not None, "Calculation returned None"
-        assert 0 <= result.success_probability <= 1, f"Probability {result.success_probability} not in [0, 1]"
+        assert 0 <= result.success_probability <= 1, (
+            f"Probability {result.success_probability} not in [0, 1]"
+        )
         assert 0 <= result.confidence <= 1, f"Confidence {result.confidence} not in [0, 1]"
 
     def test_success_factors_provided(self, agent):
@@ -237,7 +245,9 @@ class TestValidator:
 
         assert hasattr(result, "hallucination_risk"), "Missing hallucination_risk"
         # 근거 없으면 환각 위험 높아야 함
-        assert result.hallucination_risk >= 0.3, f"Hallucination risk {result.hallucination_risk} too low for unevidenced claim"
+        assert result.hallucination_risk >= 0.3, (
+            f"Hallucination risk {result.hallucination_risk} too low for unevidenced claim"
+        )
 
 
 @pytest.mark.day4
@@ -274,6 +284,7 @@ class TestWorkflowBuilder:
 
         # HITL_APPROVAL 단계가 있는지 확인
         from backend.agent_runtime.agents.workflow_builder import StepType
+
         hitl_steps = [step for step in workflow.steps if step.step_type == StepType.HITL_APPROVAL]
         assert len(hitl_steps) > 0, "No HITL step found in workflow"
 
@@ -301,4 +312,6 @@ class TestAgentAcceptance:
 
         for q_type in query_types:
             result = agent.generate_options(q_type, {}, {})
-            assert len(result.options) == 3, f"Expected 3 options for {q_type}, got {len(result.options)}"
+            assert len(result.options) == 3, (
+                f"Expected 3 options for {q_type}, got {len(result.options)}"
+            )

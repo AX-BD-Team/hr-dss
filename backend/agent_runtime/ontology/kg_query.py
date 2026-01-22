@@ -11,6 +11,7 @@ from typing import Any
 
 try:
     from neo4j import Driver, GraphDatabase
+
     NEO4J_AVAILABLE = True
 except ImportError:
     NEO4J_AVAILABLE = False
@@ -22,6 +23,7 @@ logger = logging.getLogger(__name__)
 @dataclass
 class Evidence:
     """증거 데이터"""
+
     evidence_id: str
     evidence_type: str
     source: str
@@ -35,6 +37,7 @@ class Evidence:
 @dataclass
 class QueryResult:
     """쿼리 결과"""
+
     query_type: str
     data: list[dict]
     evidence: list[Evidence]
@@ -50,7 +53,7 @@ class KnowledgeGraphQuery:
         uri: str = "bolt://localhost:7687",
         username: str = "neo4j",
         password: str = "password",
-        database: str = "neo4j"
+        database: str = "neo4j",
     ):
         if not NEO4J_AVAILABLE:
             raise ImportError("neo4j 패키지가 설치되지 않았습니다.")
@@ -63,10 +66,7 @@ class KnowledgeGraphQuery:
 
     def connect(self) -> None:
         """Neo4j 연결"""
-        self._driver = GraphDatabase.driver(
-            self.uri,
-            auth=(self.username, self.password)
-        )
+        self._driver = GraphDatabase.driver(self.uri, auth=(self.username, self.password))
         self._driver.verify_connectivity()
 
     def close(self) -> None:
@@ -86,10 +86,7 @@ class KnowledgeGraphQuery:
     # =========================================================
 
     def get_org_utilization(
-        self,
-        org_unit_id: str,
-        start_date: date,
-        end_date: date
+        self, org_unit_id: str, start_date: date, end_date: date
     ) -> QueryResult:
         """조직별 가동률 조회"""
         start_time = datetime.now()
@@ -119,7 +116,7 @@ class KnowledgeGraphQuery:
                 query,
                 orgUnitId=org_unit_id,
                 startDate=start_date.isoformat(),
-                endDate=end_date.isoformat()
+                endDate=end_date.isoformat(),
             )
             data = [dict(record) for record in result]
 
@@ -131,7 +128,7 @@ class KnowledgeGraphQuery:
                 source="KG_QUERY",
                 description=f"{org_unit_id} 가동률 계산 ({start_date} ~ {end_date})",
                 value=data[0] if data else None,
-                timestamp=datetime.now()
+                timestamp=datetime.now(),
             )
         ]
 
@@ -142,14 +139,10 @@ class KnowledgeGraphQuery:
             data=data,
             evidence=evidence,
             execution_time_ms=duration,
-            total_count=len(data)
+            total_count=len(data),
         )
 
-    def get_capacity_forecast(
-        self,
-        org_unit_id: str,
-        weeks: int = 12
-    ) -> QueryResult:
+    def get_capacity_forecast(self, org_unit_id: str, weeks: int = 12) -> QueryResult:
         """조직별 Capacity 예측 (12주)"""
         start_time = datetime.now()
 
@@ -185,18 +178,11 @@ class KnowledgeGraphQuery:
         """
 
         with self._driver.session(database=self.database) as session:
-            result = session.run(
-                query,
-                orgUnitId=org_unit_id,
-                weeks=weeks
-            )
+            result = session.run(query, orgUnitId=org_unit_id, weeks=weeks)
             data = [dict(record) for record in result]
 
         # Bottleneck 식별
-        bottleneck_weeks = [
-            d for d in data
-            if d.get("utilization", 0) > 0.9
-        ]
+        bottleneck_weeks = [d for d in data if d.get("utilization", 0) > 0.9]
 
         evidence = [
             Evidence(
@@ -205,7 +191,7 @@ class KnowledgeGraphQuery:
                 source="KG_QUERY",
                 description=f"{org_unit_id} {weeks}주 Capacity 예측",
                 value={"total_weeks": len(data), "bottleneck_weeks": len(bottleneck_weeks)},
-                timestamp=datetime.now()
+                timestamp=datetime.now(),
             )
         ]
 
@@ -216,13 +202,10 @@ class KnowledgeGraphQuery:
             data=data,
             evidence=evidence,
             execution_time_ms=duration,
-            total_count=len(data)
+            total_count=len(data),
         )
 
-    def find_bottleneck_competencies(
-        self,
-        org_unit_id: str | None = None
-    ) -> QueryResult:
+    def find_bottleneck_competencies(self, org_unit_id: str | None = None) -> QueryResult:
         """병목 역량 식별"""
         start_time = datetime.now()
 
@@ -271,7 +254,7 @@ class KnowledgeGraphQuery:
                 source="KG_QUERY",
                 description="병목 역량 분석",
                 value={"bottleneck_count": len([d for d in data if d.get("gap", 0) > 0])},
-                timestamp=datetime.now()
+                timestamp=datetime.now(),
             )
         ]
 
@@ -282,17 +265,14 @@ class KnowledgeGraphQuery:
             data=data,
             evidence=evidence,
             execution_time_ms=duration,
-            total_count=len(data)
+            total_count=len(data),
         )
 
     # =========================================================
     # B-1: Go/No-go 의사결정 관련 쿼리
     # =========================================================
 
-    def evaluate_opportunity(
-        self,
-        opportunity_id: str
-    ) -> QueryResult:
+    def evaluate_opportunity(self, opportunity_id: str) -> QueryResult:
         """기회 평가 (Go/No-go 분석)"""
         start_time = datetime.now()
 
@@ -339,9 +319,9 @@ class KnowledgeGraphQuery:
                 value={
                     "resource_fit": resource_fit,
                     "available_staff": opp_data.get("availableStaff"),
-                    "required_fte": opp_data.get("requiredFTE")
+                    "required_fte": opp_data.get("requiredFTE"),
                 },
-                timestamp=datetime.now()
+                timestamp=datetime.now(),
             )
         ]
 
@@ -352,14 +332,10 @@ class KnowledgeGraphQuery:
             data=data,
             evidence=evidence,
             execution_time_ms=duration,
-            total_count=len(data)
+            total_count=len(data),
         )
 
-    def find_matching_resources(
-        self,
-        opportunity_id: str,
-        limit: int = 10
-    ) -> QueryResult:
+    def find_matching_resources(self, opportunity_id: str, limit: int = 10) -> QueryResult:
         """기회에 맞는 리소스 매칭"""
         start_time = datetime.now()
 
@@ -404,7 +380,7 @@ class KnowledgeGraphQuery:
                 source="KG_QUERY",
                 description=f"기회 {opportunity_id} 리소스 매칭",
                 value={"candidates_found": len(data)},
-                timestamp=datetime.now()
+                timestamp=datetime.now(),
             )
         ]
 
@@ -415,17 +391,14 @@ class KnowledgeGraphQuery:
             data=data,
             evidence=evidence,
             execution_time_ms=duration,
-            total_count=len(data)
+            total_count=len(data),
         )
 
     # =========================================================
     # C-1: 증원 분석 관련 쿼리
     # =========================================================
 
-    def analyze_headcount_need(
-        self,
-        org_unit_id: str
-    ) -> QueryResult:
+    def analyze_headcount_need(self, org_unit_id: str) -> QueryResult:
         """증원 필요성 분석"""
         start_time = datetime.now()
 
@@ -483,9 +456,9 @@ class KnowledgeGraphQuery:
                 description=f"{org_unit_id} 증원 필요성 분석",
                 value={
                     "recommendation": analysis.get("headcountRecommendation"),
-                    "projected_gap": analysis.get("projectedGap")
+                    "projected_gap": analysis.get("projectedGap"),
                 },
-                timestamp=datetime.now()
+                timestamp=datetime.now(),
             )
         ]
 
@@ -496,17 +469,14 @@ class KnowledgeGraphQuery:
             data=data,
             evidence=evidence,
             execution_time_ms=duration,
-            total_count=len(data)
+            total_count=len(data),
         )
 
     # =========================================================
     # D-1: 역량 갭 분석 관련 쿼리
     # =========================================================
 
-    def analyze_competency_gap(
-        self,
-        org_unit_id: str | None = None
-    ) -> QueryResult:
+    def analyze_competency_gap(self, org_unit_id: str | None = None) -> QueryResult:
         """역량 갭 분석"""
         start_time = datetime.now()
 
@@ -561,9 +531,9 @@ class KnowledgeGraphQuery:
                 description="역량 갭 분석",
                 value={
                     "total_competencies_analyzed": len(data),
-                    "critical_gaps": len(critical_gaps)
+                    "critical_gaps": len(critical_gaps),
                 },
-                timestamp=datetime.now()
+                timestamp=datetime.now(),
             )
         ]
 
@@ -574,18 +544,14 @@ class KnowledgeGraphQuery:
             data=data,
             evidence=evidence,
             execution_time_ms=duration,
-            total_count=len(data)
+            total_count=len(data),
         )
 
     # =========================================================
     # 그래프 탐색 쿼리
     # =========================================================
 
-    def get_employee_network(
-        self,
-        employee_id: str,
-        depth: int = 2
-    ) -> QueryResult:
+    def get_employee_network(self, employee_id: str, depth: int = 2) -> QueryResult:
         """직원 중심 네트워크 조회"""
         start_time = datetime.now()
 
@@ -632,7 +598,7 @@ class KnowledgeGraphQuery:
                 source="KG_QUERY",
                 description=f"직원 {employee_id} 네트워크 분석",
                 value={"depth": depth},
-                timestamp=datetime.now()
+                timestamp=datetime.now(),
             )
         ]
 
@@ -643,13 +609,10 @@ class KnowledgeGraphQuery:
             data=data,
             evidence=evidence,
             execution_time_ms=duration,
-            total_count=len(data)
+            total_count=len(data),
         )
 
-    def get_project_team(
-        self,
-        project_id: str
-    ) -> QueryResult:
+    def get_project_team(self, project_id: str) -> QueryResult:
         """프로젝트 팀 구성 조회"""
         start_time = datetime.now()
 
@@ -685,7 +648,7 @@ class KnowledgeGraphQuery:
                 source="KG_QUERY",
                 description=f"프로젝트 {project_id} 팀 구성",
                 value={"team_size": data[0].get("teamSize", 0) if data else 0},
-                timestamp=datetime.now()
+                timestamp=datetime.now(),
             )
         ]
 
@@ -696,7 +659,7 @@ class KnowledgeGraphQuery:
             data=data,
             evidence=evidence,
             execution_time_ms=duration,
-            total_count=len(data)
+            total_count=len(data),
         )
 
 
@@ -714,11 +677,7 @@ if __name__ == "__main__":
             print("=" * 60)
 
             # 조직 가동률 조회
-            result = kg.get_org_utilization(
-                "ORG-0011",
-                date(2025, 1, 1),
-                date(2025, 3, 31)
-            )
+            result = kg.get_org_utilization("ORG-0011", date(2025, 1, 1), date(2025, 3, 31))
             print(f"\n[조직 가동률] {result.total_count}건, {result.execution_time_ms:.1f}ms")
             for d in result.data:
                 print(f"  {d}")

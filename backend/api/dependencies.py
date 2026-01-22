@@ -1,4 +1,5 @@
 """공통 의존성"""
+
 from typing import Annotated
 
 from fastapi import Depends, HTTPException, status

@@ -165,13 +165,7 @@ class TestAcceptanceCriteria:
 
     def test_ac6_hitl_workflow_structure(self, project_root):
         """TC-D7-03-06: AC-6 HITL 워크플로 구조"""
-        hitl_path = (
-            project_root
-            / "backend"
-            / "agent_runtime"
-            / "workflows"
-            / "hitl_approval.py"
-        )
+        hitl_path = project_root / "backend" / "agent_runtime" / "workflows" / "hitl_approval.py"
         assert hitl_path.exists(), "HITL approval module must exist"
 
         with open(hitl_path, encoding="utf-8") as f:

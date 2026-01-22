@@ -17,33 +17,37 @@ logger = logging.getLogger(__name__)
 
 class ClaimType(Enum):
     """주장 유형"""
-    FACTUAL = "FACTUAL"           # 사실적 주장
-    NUMERICAL = "NUMERICAL"       # 수치적 주장
-    COMPARATIVE = "COMPARATIVE"   # 비교 주장
-    PREDICTIVE = "PREDICTIVE"     # 예측 주장
+
+    FACTUAL = "FACTUAL"  # 사실적 주장
+    NUMERICAL = "NUMERICAL"  # 수치적 주장
+    COMPARATIVE = "COMPARATIVE"  # 비교 주장
+    PREDICTIVE = "PREDICTIVE"  # 예측 주장
     RECOMMENDATION = "RECOMMENDATION"  # 추천 주장
 
 
 class EvidenceType(Enum):
     """근거 유형"""
-    DATA_POINT = "DATA_POINT"     # 데이터 포인트
+
+    DATA_POINT = "DATA_POINT"  # 데이터 포인트
     CALCULATION = "CALCULATION"  # 계산 결과
-    HISTORICAL = "HISTORICAL"     # 과거 사례
-    RULE = "RULE"                # 규칙/정책
-    EXTERNAL = "EXTERNAL"        # 외부 소스
+    HISTORICAL = "HISTORICAL"  # 과거 사례
+    RULE = "RULE"  # 규칙/정책
+    EXTERNAL = "EXTERNAL"  # 외부 소스
 
 
 class ValidationStatus(Enum):
     """검증 상태"""
-    VERIFIED = "VERIFIED"        # 근거 있음
-    PARTIAL = "PARTIAL"          # 부분적 근거
-    UNVERIFIED = "UNVERIFIED"    # 근거 없음 (환각 위험)
-    ASSUMPTION = "ASSUMPTION"    # 가정으로 표시됨
+
+    VERIFIED = "VERIFIED"  # 근거 있음
+    PARTIAL = "PARTIAL"  # 부분적 근거
+    UNVERIFIED = "UNVERIFIED"  # 근거 없음 (환각 위험)
+    ASSUMPTION = "ASSUMPTION"  # 가정으로 표시됨
 
 
 @dataclass
 class EvidenceLink:
     """근거 연결"""
+
     evidence_id: str
     evidence_type: EvidenceType
     source: str
@@ -56,6 +60,7 @@ class EvidenceLink:
 @dataclass
 class Claim:
     """주장"""
+
     claim_id: str
     claim_type: ClaimType
     text: str
@@ -65,6 +70,7 @@ class Claim:
 @dataclass
 class ClaimValidation:
     """주장 검증 결과"""
+
     claim: Claim
     status: ValidationStatus
     evidence_links: list[EvidenceLink]
@@ -76,6 +82,7 @@ class ClaimValidation:
 @dataclass
 class ValidationResult:
     """전체 검증 결과"""
+
     total_claims: int
     verified_claims: int
     partial_claims: int
@@ -117,8 +124,17 @@ class ValidatorAgent:
 
     # 불확실성 표현
     UNCERTAINTY_MARKERS = [
-        "약", "대략", "추정", "예상", "아마", "가능성",
-        "might", "may", "could", "probably", "likely",
+        "약",
+        "대략",
+        "추정",
+        "예상",
+        "아마",
+        "가능성",
+        "might",
+        "may",
+        "could",
+        "probably",
+        "likely",
     ]
 
     def __init__(self, kg_client: Any = None):
@@ -132,7 +148,7 @@ class ValidatorAgent:
         self,
         response_text: str,
         available_evidence: list[dict] | None = None,
-        context: dict[str, Any] | None = None
+        context: dict[str, Any] | None = None,
     ) -> ValidationResult:
         """
         응답 텍스트의 주장을 검증
@@ -185,7 +201,7 @@ class ValidatorAgent:
     def _extract_claims(self, text: str) -> list[Claim]:
         """텍스트에서 주장 추출"""
         claims = []
-        sentences = re.split(r'[.。!?]\s*', text)
+        sentences = re.split(r"[.。!?]\s*", text)
 
         for idx, sentence in enumerate(sentences):
             if not sentence.strip():
@@ -213,43 +229,33 @@ class ValidatorAgent:
 
         return ClaimType.FACTUAL
 
-    def _extract_values(
-        self,
-        text: str,
-        claim_type: ClaimType
-    ) -> dict[str, Any]:
+    def _extract_values(self, text: str, claim_type: ClaimType) -> dict[str, Any]:
         """주장에서 값 추출"""
         values = {}
 
         # 숫자 추출
-        numbers = re.findall(r'(\d+(?:\.\d+)?)', text)
+        numbers = re.findall(r"(\d+(?:\.\d+)?)", text)
         if numbers:
             values["numbers"] = [float(n) for n in numbers]
 
         # 백분율 추출
-        percentages = re.findall(r'(\d+(?:\.\d+)?)\s*%', text)
+        percentages = re.findall(r"(\d+(?:\.\d+)?)\s*%", text)
         if percentages:
             values["percentages"] = [float(p) for p in percentages]
 
         # 기간 추출
-        periods = re.findall(r'(\d+)\s*(?:주|개월|년)', text)
+        periods = re.findall(r"(\d+)\s*(?:주|개월|년)", text)
         if periods:
             values["periods"] = periods
 
         # 불확실성 표시 확인
-        has_uncertainty = any(
-            marker in text.lower()
-            for marker in self.UNCERTAINTY_MARKERS
-        )
+        has_uncertainty = any(marker in text.lower() for marker in self.UNCERTAINTY_MARKERS)
         values["has_uncertainty_marker"] = has_uncertainty
 
         return values
 
     def _validate_claim(
-        self,
-        claim: Claim,
-        available_evidence: list[dict],
-        context: dict[str, Any]
+        self, claim: Claim, available_evidence: list[dict], context: dict[str, Any]
     ) -> ClaimValidation:
         """단일 주장 검증"""
         evidence_links = []
@@ -257,24 +263,22 @@ class ValidatorAgent:
         suggestions = []
 
         # 1. 근거 매칭
-        matching_evidence = self._find_matching_evidence(
-            claim, available_evidence, context
-        )
+        matching_evidence = self._find_matching_evidence(claim, available_evidence, context)
 
         for ev in matching_evidence:
-            evidence_links.append(EvidenceLink(
-                evidence_id=ev.get("evidence_id", "EV-UNKNOWN"),
-                evidence_type=EvidenceType(ev.get("type", "DATA_POINT")),
-                source=ev.get("source", "Unknown"),
-                description=ev.get("description", ""),
-                value=ev.get("value"),
-                confidence=ev.get("confidence", 1.0),
-            ))
+            evidence_links.append(
+                EvidenceLink(
+                    evidence_id=ev.get("evidence_id", "EV-UNKNOWN"),
+                    evidence_type=EvidenceType(ev.get("type", "DATA_POINT")),
+                    source=ev.get("source", "Unknown"),
+                    description=ev.get("description", ""),
+                    value=ev.get("value"),
+                    confidence=ev.get("confidence", 1.0),
+                )
+            )
 
         # 2. 검증 상태 결정
-        status, confidence = self._determine_validation_status(
-            claim, evidence_links, context
-        )
+        status, confidence = self._determine_validation_status(claim, evidence_links, context)
 
         # 3. 이슈 및 제안 생성
         if status == ValidationStatus.UNVERIFIED:
@@ -287,9 +291,7 @@ class ValidatorAgent:
 
         # 수치 검증
         if claim.claim_type == ClaimType.NUMERICAL:
-            validation_issues = self._validate_numerical_claim(
-                claim, evidence_links, context
-            )
+            validation_issues = self._validate_numerical_claim(claim, evidence_links, context)
             issues.extend(validation_issues)
 
         return ClaimValidation(
@@ -302,10 +304,7 @@ class ValidatorAgent:
         )
 
     def _find_matching_evidence(
-        self,
-        claim: Claim,
-        available_evidence: list[dict],
-        context: dict[str, Any]
+        self, claim: Claim, available_evidence: list[dict], context: dict[str, Any]
     ) -> list[dict]:
         """주장에 맞는 근거 찾기"""
         matching = []
@@ -319,9 +318,7 @@ class ValidatorAgent:
 
             # 텍스트 유사성 체크 (간단한 키워드 매칭)
             text_match = any(
-                keyword in claim_text_lower
-                for keyword in ev_text.split()
-                if len(keyword) > 2
+                keyword in claim_text_lower for keyword in ev_text.split() if len(keyword) > 2
             )
 
             # 수치 매칭 체크
@@ -330,10 +327,7 @@ class ValidatorAgent:
                 try:
                     ev_num = float(ev_value)
                     # 10% 이내 오차 허용
-                    value_match = any(
-                        abs(n - ev_num) / max(ev_num, 1) < 0.1
-                        for n in claim_numbers
-                    )
+                    value_match = any(abs(n - ev_num) / max(ev_num, 1) < 0.1 for n in claim_numbers)
                 except (ValueError, TypeError):
                     pass
 
@@ -343,10 +337,7 @@ class ValidatorAgent:
         return matching
 
     def _determine_validation_status(
-        self,
-        claim: Claim,
-        evidence_links: list[EvidenceLink],
-        context: dict[str, Any]
+        self, claim: Claim, evidence_links: list[EvidenceLink], context: dict[str, Any]
     ) -> tuple[ValidationStatus, float]:
         """검증 상태 결정"""
 
@@ -373,10 +364,7 @@ class ValidatorAgent:
             return ValidationStatus.UNVERIFIED, 0.2
 
     def _validate_numerical_claim(
-        self,
-        claim: Claim,
-        evidence_links: list[EvidenceLink],
-        context: dict[str, Any]
+        self, claim: Claim, evidence_links: list[EvidenceLink], context: dict[str, Any]
     ) -> list[str]:
         """수치 주장 추가 검증"""
         issues = []
@@ -409,34 +397,22 @@ class ValidatorAgent:
 
         return issues
 
-    def _collect_overall_issues(
-        self,
-        validations: list[ClaimValidation]
-    ) -> list[str]:
+    def _collect_overall_issues(self, validations: list[ClaimValidation]) -> list[str]:
         """전체 이슈 수집"""
         issues = []
 
-        unverified_count = sum(
-            1 for v in validations
-            if v.status == ValidationStatus.UNVERIFIED
-        )
+        unverified_count = sum(1 for v in validations if v.status == ValidationStatus.UNVERIFIED)
 
         if unverified_count > 0:
             issues.append(f"{unverified_count}개의 주장에 근거가 없습니다 (환각 위험).")
 
-        low_confidence = [
-            v for v in validations
-            if v.confidence < 0.5
-        ]
+        low_confidence = [v for v in validations if v.confidence < 0.5]
         if low_confidence:
             issues.append(f"{len(low_confidence)}개의 주장이 낮은 신뢰도를 보입니다.")
 
         return issues
 
-    def create_evidence_report(
-        self,
-        result: ValidationResult
-    ) -> str:
+    def create_evidence_report(self, result: ValidationResult) -> str:
         """근거 보고서 생성"""
         lines = []
         lines.append("=" * 60)
@@ -477,7 +453,11 @@ class ValidatorAgent:
             }.get(v.status, "[??]")
 
             lines.append(f"\n{status_icon} {v.claim.claim_id} ({v.claim.claim_type.value})")
-            lines.append(f"    \"{v.claim.text[:80]}...\"" if len(v.claim.text) > 80 else f"    \"{v.claim.text}\"")
+            lines.append(
+                f'    "{v.claim.text[:80]}..."'
+                if len(v.claim.text) > 80
+                else f'    "{v.claim.text}"'
+            )
             lines.append(f"    상태: {v.status.value}, 신뢰도: {v.confidence:.2f}")
 
             if v.evidence_links:

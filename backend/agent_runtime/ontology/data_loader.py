@@ -19,6 +19,7 @@ from typing import Any
 
 try:
     from neo4j import Driver, GraphDatabase
+
     NEO4J_AVAILABLE = True
 except ImportError:
     NEO4J_AVAILABLE = False
@@ -30,6 +31,7 @@ logger = logging.getLogger(__name__)
 @dataclass
 class LoadResult:
     """데이터 적재 결과"""
+
     entity_type: str
     records_processed: int
     records_created: int
@@ -41,6 +43,7 @@ class LoadResult:
 @dataclass
 class LoadSummary:
     """전체 적재 요약"""
+
     started_at: datetime
     completed_at: datetime
     total_nodes: int
@@ -58,12 +61,11 @@ class Neo4jDataLoader:
         uri: str = "bolt://localhost:7687",
         username: str = "neo4j",
         password: str = "password",
-        database: str = "neo4j"
+        database: str = "neo4j",
     ):
         if not NEO4J_AVAILABLE:
             raise ImportError(
-                "neo4j 패키지가 설치되지 않았습니다. "
-                "'pip install neo4j'로 설치해주세요."
+                "neo4j 패키지가 설치되지 않았습니다. 'pip install neo4j'로 설치해주세요."
             )
 
         self.uri = uri
@@ -74,10 +76,7 @@ class Neo4jDataLoader:
 
     def connect(self) -> None:
         """Neo4j 연결"""
-        self._driver = GraphDatabase.driver(
-            self.uri,
-            auth=(self.username, self.password)
-        )
+        self._driver = GraphDatabase.driver(self.uri, auth=(self.username, self.password))
         # 연결 테스트
         self._driver.verify_connectivity()
         logger.info(f"Neo4j 연결 성공: {self.uri}")
@@ -124,7 +123,9 @@ class Neo4jDataLoader:
                     continue
 
             # CREATE CONSTRAINT 또는 CREATE INDEX로 시작하면 문장 시작
-            if line_stripped.startswith("CREATE CONSTRAINT") or line_stripped.startswith("CREATE INDEX"):
+            if line_stripped.startswith("CREATE CONSTRAINT") or line_stripped.startswith(
+                "CREATE INDEX"
+            ):
                 in_statement = True
                 current_statement = [line_stripped]
             elif in_statement:
@@ -228,7 +229,7 @@ class Neo4jDataLoader:
             total_nodes=total_nodes,
             total_relationships=total_rels,
             results=results,
-            success=all(len(r.errors) == 0 for r in results)
+            success=all(len(r.errors) == 0 for r in results),
         )
 
     def _load_orgs(self, filepath: Path) -> LoadResult:
@@ -244,7 +245,7 @@ class Neo4jDataLoader:
                 records_created=0,
                 records_updated=0,
                 errors=[f"파일을 찾을 수 없음: {filepath}"],
-                duration_ms=0
+                duration_ms=0,
             )
 
         with open(filepath, encoding="utf-8") as f:
@@ -261,16 +262,19 @@ class Neo4jDataLoader:
                         "type": org.get("type"),
                         "status": org.get("status", "ACTIVE"),
                         "headCount": org.get("headCount", 0),
-                        "parentOrgUnitId": org.get("parentOrgUnitId")
+                        "parentOrgUnitId": org.get("parentOrgUnitId"),
                     }
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (o:OrgUnit {orgUnitId: $orgUnitId})
                         SET o.name = $name,
                             o.type = $type,
                             o.status = $status,
                             o.headCount = $headCount,
                             o.parentOrgUnitId = $parentOrgUnitId
-                    """, **org_data)
+                    """,
+                        **org_data,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"OrgUnit {org.get('orgUnitId')}: {e}")
@@ -283,15 +287,18 @@ class Neo4jDataLoader:
                         "name": role.get("name"),
                         "category": role.get("category", "GENERAL"),
                         "level": role.get("level", "STAFF"),
-                        "description": role.get("description", "")
+                        "description": role.get("description", ""),
                     }
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (j:JobRole {jobRoleId: $jobRoleId})
                         SET j.name = $name,
                             j.category = $category,
                             j.level = $level,
                             j.description = $description
-                    """, **role_data)
+                    """,
+                        **role_data,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"JobRole {role.get('jobRoleId')}: {e}")
@@ -299,12 +306,15 @@ class Neo4jDataLoader:
             # DeliveryRoles
             for role in data.get("deliveryRoles", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (d:DeliveryRole {deliveryRoleId: $deliveryRoleId})
                         SET d.name = $name,
                             d.category = $category,
                             d.description = $description
-                    """, **role)
+                    """,
+                        **role,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"DeliveryRole {role.get('deliveryRoleId')}: {e}")
@@ -312,12 +322,15 @@ class Neo4jDataLoader:
             # Responsibilities
             for resp in data.get("responsibilities", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (r:Responsibility {responsibilityId: $responsibilityId})
                         SET r.name = $name,
                             r.description = $description,
                             r.category = $category
-                    """, **resp)
+                    """,
+                        **resp,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"Responsibility {resp.get('responsibilityId')}: {e}")
@@ -330,7 +343,7 @@ class Neo4jDataLoader:
             records_created=created,
             records_updated=0,
             errors=errors,
-            duration_ms=duration
+            duration_ms=duration,
         )
 
     def _load_persons(self, filepath: Path) -> LoadResult:
@@ -346,7 +359,7 @@ class Neo4jDataLoader:
                 records_created=0,
                 records_updated=0,
                 errors=[f"파일을 찾을 수 없음: {filepath}"],
-                duration_ms=0
+                duration_ms=0,
             )
 
         with open(filepath, encoding="utf-8") as f:
@@ -367,9 +380,10 @@ class Neo4jDataLoader:
                         "jobRoleId": emp.get("jobRoleId"),
                         "deliveryRoleId": emp.get("deliveryRoleId"),
                         "location": emp.get("location", "서울"),
-                        "costRate": emp.get("costRate", 0)
+                        "costRate": emp.get("costRate", 0),
                     }
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (e:Employee {employeeId: $employeeId})
                         SET e.name = $name,
                             e.email = $email,
@@ -381,7 +395,9 @@ class Neo4jDataLoader:
                             e.deliveryRoleId = $deliveryRoleId,
                             e.location = $location,
                             e.costRate = $costRate
-                    """, **emp_data)
+                    """,
+                        **emp_data,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"Employee {emp.get('employeeId')}: {e}")
@@ -394,7 +410,7 @@ class Neo4jDataLoader:
             records_created=created,
             records_updated=0,
             errors=errors,
-            duration_ms=duration
+            duration_ms=duration,
         )
 
     def _load_projects(self, filepath: Path) -> LoadResult:
@@ -410,7 +426,7 @@ class Neo4jDataLoader:
                 records_created=0,
                 records_updated=0,
                 errors=[f"파일을 찾을 수 없음: {filepath}"],
-                duration_ms=0
+                duration_ms=0,
             )
 
         with open(filepath, encoding="utf-8") as f:
@@ -420,7 +436,8 @@ class Neo4jDataLoader:
             # Projects
             for proj in data.get("projects", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (p:Project {projectId: $projectId})
                         SET p.name = $name,
                             p.opportunityId = $opportunityId,
@@ -432,7 +449,9 @@ class Neo4jDataLoader:
                             p.ownerOrgUnitId = $ownerOrgUnitId,
                             p.budgetAmount = $budgetAmount,
                             p.actualCost = $actualCost
-                    """, **proj)
+                    """,
+                        **proj,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"Project {proj.get('projectId')}: {e}")
@@ -440,7 +459,8 @@ class Neo4jDataLoader:
             # WorkPackages
             for wp in data.get("workPackages", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (w:WorkPackage {workPackageId: $workPackageId})
                         SET w.projectId = $projectId,
                             w.name = $name,
@@ -449,7 +469,9 @@ class Neo4jDataLoader:
                             w.criticality = $criticality,
                             w.estimatedFTE = $estimatedFTE,
                             w.status = $status
-                    """, **wp)
+                    """,
+                        **wp,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"WorkPackage {wp.get('workPackageId')}: {e}")
@@ -462,7 +484,7 @@ class Neo4jDataLoader:
             records_created=created,
             records_updated=0,
             errors=errors,
-            duration_ms=duration
+            duration_ms=duration,
         )
 
     def _load_opportunities(self, filepath: Path) -> LoadResult:
@@ -478,7 +500,7 @@ class Neo4jDataLoader:
                 records_created=0,
                 records_updated=0,
                 errors=[f"파일을 찾을 수 없음: {filepath}"],
-                duration_ms=0
+                duration_ms=0,
             )
 
         with open(filepath, encoding="utf-8") as f:
@@ -501,9 +523,10 @@ class Neo4jDataLoader:
                         "estimatedFTE": opp.get("estimatedFTE", opp.get("requiredFTE", 0)),
                         "estimatedDuration": opp.get("estimatedDuration", opp.get("duration", 0)),
                         "ownerOrgUnitId": opp.get("ownerOrgUnitId", opp.get("orgUnitId")),
-                        "salesOwnerId": opp.get("salesOwnerId", opp.get("ownerId"))
+                        "salesOwnerId": opp.get("salesOwnerId", opp.get("ownerId")),
                     }
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (o:Opportunity {opportunityId: $opportunityId})
                         SET o.name = $name,
                             o.customerId = $customerId,
@@ -516,7 +539,9 @@ class Neo4jDataLoader:
                             o.estimatedDuration = $estimatedDuration,
                             o.ownerOrgUnitId = $ownerOrgUnitId,
                             o.salesOwnerId = $salesOwnerId
-                    """, **opp_data)
+                    """,
+                        **opp_data,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"Opportunity {opp.get('opportunityId')}: {e}")
@@ -530,12 +555,17 @@ class Neo4jDataLoader:
                         "sourceType": sig.get("sourceType", "OPPORTUNITY"),
                         "sourceId": sig.get("sourceId", sig.get("opportunityId")),
                         "detectedAt": sig.get("detectedAt", "2025-01-01T00:00:00Z"),
-                        "effectiveFrom": sig.get("effectiveFrom", sig.get("startDate", "2025-01-01")),
-                        "estimatedFTEChange": sig.get("estimatedFTEChange", sig.get("requiredFTE", 0)),
+                        "effectiveFrom": sig.get(
+                            "effectiveFrom", sig.get("startDate", "2025-01-01")
+                        ),
+                        "estimatedFTEChange": sig.get(
+                            "estimatedFTEChange", sig.get("requiredFTE", 0)
+                        ),
                         "confidence": sig.get("confidence", sig.get("probability", 0.5)),
-                        "status": sig.get("status", "PENDING")
+                        "status": sig.get("status", "PENDING"),
                     }
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (d:DemandSignal {signalId: $signalId})
                         SET d.signalType = $signalType,
                             d.sourceType = $sourceType,
@@ -545,7 +575,9 @@ class Neo4jDataLoader:
                             d.estimatedFTEChange = $estimatedFTEChange,
                             d.confidence = $confidence,
                             d.status = $status
-                    """, **sig_data)
+                    """,
+                        **sig_data,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"DemandSignal {sig.get('signalId')}: {e}")
@@ -553,7 +585,8 @@ class Neo4jDataLoader:
             # ResourceDemands
             for dem in data.get("resourceDemands", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (r:ResourceDemand {demandId: $demandId})
                         SET r.sourceType = $sourceType,
                             r.sourceId = $sourceId,
@@ -565,7 +598,9 @@ class Neo4jDataLoader:
                             r.priority = $priority,
                             r.status = $status,
                             r.requiredCompetencies = $requiredCompetencies
-                    """, **dem)
+                    """,
+                        **dem,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"ResourceDemand {dem.get('demandId')}: {e}")
@@ -578,7 +613,7 @@ class Neo4jDataLoader:
             records_created=created,
             records_updated=0,
             errors=errors,
-            duration_ms=duration
+            duration_ms=duration,
         )
 
     def _load_skills(self, filepath: Path) -> LoadResult:
@@ -594,7 +629,7 @@ class Neo4jDataLoader:
                 records_created=0,
                 records_updated=0,
                 errors=[f"파일을 찾을 수 없음: {filepath}"],
-                duration_ms=0
+                duration_ms=0,
             )
 
         with open(filepath, encoding="utf-8") as f:
@@ -610,15 +645,18 @@ class Neo4jDataLoader:
                         "name": comp.get("name"),
                         "domain": comp.get("domain", "GENERAL"),
                         "category": comp.get("category"),
-                        "description": comp.get("description", "")
+                        "description": comp.get("description", ""),
                     }
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (c:Competency {competencyId: $competencyId})
                         SET c.name = $name,
                             c.domain = $domain,
                             c.category = $category,
                             c.description = $description
-                    """, **comp_data)
+                    """,
+                        **comp_data,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"Competency {comp.get('competencyId')}: {e}")
@@ -631,12 +669,15 @@ class Neo4jDataLoader:
                         "employeeId": ev.get("employeeId"),
                         "competencyId": ev.get("competencyId"),
                         "level": ev.get("level", 1),
-                        "assessmentDate": ev.get("assessmentDate", ev.get("evaluatedAt", "2025-01-01")),
+                        "assessmentDate": ev.get(
+                            "assessmentDate", ev.get("evaluatedAt", "2025-01-01")
+                        ),
                         "assessmentType": ev.get("assessmentType", ev.get("source", "SELF")),
                         "validUntil": ev.get("validUntil", ev.get("expiresAt")),
-                        "notes": ev.get("notes", "")
+                        "notes": ev.get("notes", ""),
                     }
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (ce:CompetencyEvidence {evidenceId: $evidenceId})
                         SET ce.employeeId = $employeeId,
                             ce.competencyId = $competencyId,
@@ -645,7 +686,9 @@ class Neo4jDataLoader:
                             ce.assessmentType = $assessmentType,
                             ce.validUntil = CASE WHEN $validUntil IS NOT NULL THEN date($validUntil) ELSE NULL END,
                             ce.notes = $notes
-                    """, **ev_data)
+                    """,
+                        **ev_data,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"CompetencyEvidence {ev.get('evidenceId')}: {e}")
@@ -658,7 +701,7 @@ class Neo4jDataLoader:
             records_created=created,
             records_updated=0,
             errors=errors,
-            duration_ms=duration
+            duration_ms=duration,
         )
 
     def _load_assignments(self, filepath: Path) -> LoadResult:
@@ -674,7 +717,7 @@ class Neo4jDataLoader:
                 records_created=0,
                 records_updated=0,
                 errors=[f"파일을 찾을 수 없음: {filepath}"],
-                duration_ms=0
+                duration_ms=0,
             )
 
         with open(filepath, encoding="utf-8") as f:
@@ -695,9 +738,10 @@ class Neo4jDataLoader:
                         "startDate": asn.get("startDate"),
                         "endDate": asn.get("endDate"),
                         "status": asn.get("status", "ACTIVE"),
-                        "billable": asn.get("billable", True)
+                        "billable": asn.get("billable", True),
                     }
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (a:Assignment {assignmentId: $assignmentId})
                         SET a.employeeId = $employeeId,
                             a.projectId = $projectId,
@@ -708,7 +752,9 @@ class Neo4jDataLoader:
                             a.endDate = date($endDate),
                             a.status = $status,
                             a.billable = $billable
-                    """, **asn_data)
+                    """,
+                        **asn_data,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"Assignment {asn.get('assignmentId')}: {e}")
@@ -721,15 +767,18 @@ class Neo4jDataLoader:
                         "employeeId": av.get("employeeId"),
                         "timeBucketId": av.get("timeBucketId", av.get("weekId")),
                         "availableFTE": av.get("availableFTE", av.get("available", 1.0)),
-                        "reason": av.get("reason", "")
+                        "reason": av.get("reason", ""),
                     }
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (av:Availability {availabilityId: $availabilityId})
                         SET av.employeeId = $employeeId,
                             av.timeBucketId = $timeBucketId,
                             av.availableFTE = $availableFTE,
                             av.reason = $reason
-                    """, **av_data)
+                    """,
+                        **av_data,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"Availability {av.get('availabilityId')}: {e}")
@@ -737,13 +786,16 @@ class Neo4jDataLoader:
             # TimeBuckets
             for tb in data.get("timeBuckets", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (t:TimeBucket {bucketId: $bucketId})
                         SET t.bucketType = $bucketType,
                             t.bucketStart = date($bucketStart),
                             t.bucketEnd = date($bucketEnd),
                             t.label = $label
-                    """, **tb)
+                    """,
+                        **tb,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"TimeBucket {tb.get('bucketId')}: {e}")
@@ -756,7 +808,7 @@ class Neo4jDataLoader:
             records_created=created,
             records_updated=0,
             errors=errors,
-            duration_ms=duration
+            duration_ms=duration,
         )
 
     def _load_learning(self, filepath: Path) -> LoadResult:
@@ -772,7 +824,7 @@ class Neo4jDataLoader:
                 records_created=0,
                 records_updated=0,
                 errors=[f"파일을 찾을 수 없음: {filepath}"],
-                duration_ms=0
+                duration_ms=0,
             )
 
         with open(filepath, encoding="utf-8") as f:
@@ -782,13 +834,16 @@ class Neo4jDataLoader:
             # LearningPrograms
             for prog in data.get("learningPrograms", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (lp:LearningProgram {programId: $programId})
                         SET lp.name = $name,
                             lp.deliveryMode = $deliveryMode,
                             lp.description = $description,
                             lp.durationHours = $durationHours
-                    """, **prog)
+                    """,
+                        **prog,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"LearningProgram {prog.get('programId')}: {e}")
@@ -796,14 +851,17 @@ class Neo4jDataLoader:
             # Courses
             for course in data.get("courses", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (c:Course {courseId: $courseId})
                         SET c.title = $title,
                             c.deliveryMode = $deliveryMode,
                             c.programId = $programId,
                             c.durationHours = $durationHours,
                             c.competencyId = $competencyId
-                    """, **course)
+                    """,
+                        **course,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"Course {course.get('courseId')}: {e}")
@@ -811,7 +869,8 @@ class Neo4jDataLoader:
             # Enrollments
             for enroll in data.get("enrollments", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (en:Enrollment {enrollmentId: $enrollmentId})
                         SET en.employeeId = $employeeId,
                             en.courseId = $courseId,
@@ -820,7 +879,9 @@ class Neo4jDataLoader:
                             en.plannedEnd = date($plannedEnd),
                             en.completedAt = CASE WHEN $completedAt IS NOT NULL
                                              THEN date($completedAt) ELSE NULL END
-                    """, **enroll)
+                    """,
+                        **enroll,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"Enrollment {enroll.get('enrollmentId')}: {e}")
@@ -828,13 +889,16 @@ class Neo4jDataLoader:
             # Certifications
             for cert in data.get("certifications", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (cert:Certification {certificationId: $certificationId})
                         SET cert.name = $name,
                             cert.level = $level,
                             cert.issuingOrg = $issuingOrg,
                             cert.validityMonths = $validityMonths
-                    """, **cert)
+                    """,
+                        **cert,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"Certification {cert.get('certificationId')}: {e}")
@@ -847,7 +911,7 @@ class Neo4jDataLoader:
             records_created=created,
             records_updated=0,
             errors=errors,
-            duration_ms=duration
+            duration_ms=duration,
         )
 
     def _load_decisions(self, filepath: Path) -> LoadResult:
@@ -863,7 +927,7 @@ class Neo4jDataLoader:
                 records_created=0,
                 records_updated=0,
                 errors=[f"파일을 찾을 수 없음: {filepath}"],
-                duration_ms=0
+                duration_ms=0,
             )
 
         with open(filepath, encoding="utf-8") as f:
@@ -873,7 +937,8 @@ class Neo4jDataLoader:
             # DecisionCases
             for dc in data.get("decisionCases", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (dc:DecisionCase {decisionCaseId: $decisionCaseId})
                         SET dc.type = $type,
                             dc.status = $status,
@@ -884,7 +949,9 @@ class Neo4jDataLoader:
                             dc.summary = $summary,
                             dc.targetType = $targetType,
                             dc.targetId = $targetId
-                    """, **dc)
+                    """,
+                        **dc,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"DecisionCase {dc.get('decisionCaseId')}: {e}")
@@ -892,7 +959,8 @@ class Neo4jDataLoader:
             # Objectives
             for obj in data.get("objectives", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (obj:Objective {objectiveId: $objectiveId})
                         SET obj.decisionCaseId = $decisionCaseId,
                             obj.metricType = $metricType,
@@ -903,7 +971,9 @@ class Neo4jDataLoader:
                                                THEN date($horizonStart) ELSE NULL END,
                             obj.horizonEnd = CASE WHEN $horizonEnd IS NOT NULL
                                              THEN date($horizonEnd) ELSE NULL END
-                    """, **obj)
+                    """,
+                        **obj,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"Objective {obj.get('objectiveId')}: {e}")
@@ -911,7 +981,8 @@ class Neo4jDataLoader:
             # Constraints
             for con in data.get("constraints", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (con:Constraint {constraintId: $constraintId})
                         SET con.decisionCaseId = $decisionCaseId,
                             con.type = $type,
@@ -923,7 +994,9 @@ class Neo4jDataLoader:
                                           THEN date($endDate) ELSE NULL END,
                             con.appliesToType = $appliesToType,
                             con.appliesToId = $appliesToId
-                    """, **con)
+                    """,
+                        **con,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"Constraint {con.get('constraintId')}: {e}")
@@ -931,13 +1004,16 @@ class Neo4jDataLoader:
             # Options
             for opt in data.get("options", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (opt:Option {optionId: $optionId})
                         SET opt.decisionCaseId = $decisionCaseId,
                             opt.name = $name,
                             opt.optionType = $optionType,
                             opt.description = $description
-                    """, **opt)
+                    """,
+                        **opt,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"Option {opt.get('optionId')}: {e}")
@@ -945,12 +1021,15 @@ class Neo4jDataLoader:
             # Scenarios
             for sc in data.get("scenarios", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (sc:Scenario {scenarioId: $scenarioId})
                         SET sc.optionId = $optionId,
                             sc.baselineSnapshotId = $baselineSnapshotId,
                             sc.assumptions = $assumptions
-                    """, **sc)
+                    """,
+                        **sc,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"Scenario {sc.get('scenarioId')}: {e}")
@@ -958,7 +1037,8 @@ class Neo4jDataLoader:
             # Actions
             for act in data.get("actions", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (act:Action {actionId: $actionId})
                         SET act.scenarioId = $scenarioId,
                             act.type = $type,
@@ -969,7 +1049,9 @@ class Neo4jDataLoader:
                                           THEN date($endDate) ELSE NULL END,
                             act.status = $status,
                             act.description = $description
-                    """, **act)
+                    """,
+                        **act,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"Action {act.get('actionId')}: {e}")
@@ -977,13 +1059,16 @@ class Neo4jDataLoader:
             # Evaluations
             for ev in data.get("evaluations", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (ev:Evaluation {evaluationId: $evaluationId})
                         SET ev.optionId = $optionId,
                             ev.totalScore = $totalScore,
                             ev.successProbability = $successProbability,
                             ev.rationale = $rationale
-                    """, **ev)
+                    """,
+                        **ev,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"Evaluation {ev.get('evaluationId')}: {e}")
@@ -991,7 +1076,8 @@ class Neo4jDataLoader:
             # MetricValues
             for mv in data.get("metricValues", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (mv:MetricValue {metricValueId: $metricValueId})
                         SET mv.evaluationId = $evaluationId,
                             mv.metricType = $metricType,
@@ -999,7 +1085,9 @@ class Neo4jDataLoader:
                             mv.toBeValue = $toBeValue,
                             mv.delta = $delta,
                             mv.unit = $unit
-                    """, **mv)
+                    """,
+                        **mv,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"MetricValue {mv.get('metricValueId')}: {e}")
@@ -1007,13 +1095,16 @@ class Neo4jDataLoader:
             # ImpactAssessments
             for ia in data.get("impactAssessments", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (ia:ImpactAssessment {impactId: $impactId})
                         SET ia.optionId = $optionId,
                             ia.dimension = $dimension,
                             ia.value = $value,
                             ia.narrative = $narrative
-                    """, **ia)
+                    """,
+                        **ia,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"ImpactAssessment {ia.get('impactId')}: {e}")
@@ -1021,7 +1112,8 @@ class Neo4jDataLoader:
             # Risks
             for risk in data.get("risks", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (r:Risk {riskId: $riskId})
                         SET r.optionId = $optionId,
                             r.category = $category,
@@ -1029,7 +1121,9 @@ class Neo4jDataLoader:
                             r.impact = $impact,
                             r.score = $score,
                             r.description = $description
-                    """, **risk)
+                    """,
+                        **risk,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"Risk {risk.get('riskId')}: {e}")
@@ -1037,14 +1131,17 @@ class Neo4jDataLoader:
             # DecisionGates
             for gate in data.get("decisionGates", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (g:DecisionGate {gateId: $gateId})
                         SET g.decisionCaseId = $decisionCaseId,
                             g.process = $process,
                             g.name = $name,
                             g.sequence = $sequence,
                             g.status = $status
-                    """, **gate)
+                    """,
+                        **gate,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"DecisionGate {gate.get('gateId')}: {e}")
@@ -1057,7 +1154,7 @@ class Neo4jDataLoader:
             records_created=created,
             records_updated=0,
             errors=errors,
-            duration_ms=duration
+            duration_ms=duration,
         )
 
     def _load_forecasts(self, filepath: Path) -> LoadResult:
@@ -1073,7 +1170,7 @@ class Neo4jDataLoader:
                 records_created=0,
                 records_updated=0,
                 errors=[f"파일을 찾을 수 없음: {filepath}"],
-                duration_ms=0
+                duration_ms=0,
             )
 
         with open(filepath, encoding="utf-8") as f:
@@ -1083,13 +1180,16 @@ class Neo4jDataLoader:
             # Models
             for model in data.get("models", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (m:Model {modelId: $modelId})
                         SET m.name = $name,
                             m.type = $type,
                             m.version = $version,
                             m.description = $description
-                    """, **model)
+                    """,
+                        **model,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"Model {model.get('modelId')}: {e}")
@@ -1097,12 +1197,15 @@ class Neo4jDataLoader:
             # DataSnapshots
             for snap in data.get("dataSnapshots", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (ds:DataSnapshot {snapshotId: $snapshotId})
                         SET ds.asOf = datetime($asOf),
                             ds.datasetVersions = $datasetVersions,
                             ds.description = $description
-                    """, **snap)
+                    """,
+                        **snap,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"DataSnapshot {snap.get('snapshotId')}: {e}")
@@ -1118,9 +1221,10 @@ class Neo4jDataLoader:
                         "snapshotId": run.get("snapshotId"),
                         "runAt": run.get("runAt"),
                         "parameters": run.get("parameters", "{}"),
-                        "status": run.get("status", "COMPLETED")
+                        "status": run.get("status", "COMPLETED"),
                     }
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (mr:ModelRun {runId: $runId})
                         SET mr.modelId = $modelId,
                             mr.scenarioId = $scenarioId,
@@ -1128,7 +1232,9 @@ class Neo4jDataLoader:
                             mr.runAt = datetime($runAt),
                             mr.parameters = $parameters,
                             mr.status = $status
-                    """, **run_data)
+                    """,
+                        **run_data,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"ModelRun {run.get('runId')}: {e}")
@@ -1136,7 +1242,8 @@ class Neo4jDataLoader:
             # ForecastPoints
             for fp in data.get("forecastPoints", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (fp:ForecastPoint {forecastPointId: $forecastPointId})
                         SET fp.runId = $runId,
                             fp.metricType = $metricType,
@@ -1149,7 +1256,9 @@ class Neo4jDataLoader:
                             fp.bucketId = $bucketId,
                             fp.subjectType = $subjectType,
                             fp.subjectId = $subjectId
-                    """, **fp)
+                    """,
+                        **fp,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"ForecastPoint {fp.get('forecastPointId')}: {e}")
@@ -1157,7 +1266,8 @@ class Neo4jDataLoader:
             # Findings
             for finding in data.get("findings", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (f:Finding {findingId: $findingId})
                         SET f.runId = $runId,
                             f.type = $type,
@@ -1167,7 +1277,9 @@ class Neo4jDataLoader:
                             f.rank = $rank,
                             f.affectsType = $affectsType,
                             f.affectsId = $affectsId
-                    """, **finding)
+                    """,
+                        **finding,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"Finding {finding.get('findingId')}: {e}")
@@ -1175,7 +1287,8 @@ class Neo4jDataLoader:
             # Evidence
             for ev in data.get("evidence", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (ev:Evidence {evidenceId: $evidenceId})
                         SET ev.findingId = $findingId,
                             ev.sourceSystem = $sourceSystem,
@@ -1183,7 +1296,9 @@ class Neo4jDataLoader:
                             ev.sourceRef = $sourceRef,
                             ev.capturedAt = datetime($capturedAt),
                             ev.note = $note
-                    """, **ev)
+                    """,
+                        **ev,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"Evidence {ev.get('evidenceId')}: {e}")
@@ -1196,7 +1311,7 @@ class Neo4jDataLoader:
             records_created=created,
             records_updated=0,
             errors=errors,
-            duration_ms=duration
+            duration_ms=duration,
         )
 
     def _load_workflows(self, filepath: Path) -> LoadResult:
@@ -1212,7 +1327,7 @@ class Neo4jDataLoader:
                 records_created=0,
                 records_updated=0,
                 errors=[f"파일을 찾을 수 없음: {filepath}"],
-                duration_ms=0
+                duration_ms=0,
             )
 
         with open(filepath, encoding="utf-8") as f:
@@ -1222,14 +1337,17 @@ class Neo4jDataLoader:
             # Approvals
             for ap in data.get("approvals", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (ap:Approval {approvalId: $approvalId})
                         SET ap.gateId = $gateId,
                             ap.decision = $decision,
                             ap.approvedBy = $approvedBy,
                             ap.approvedAt = datetime($approvedAt),
                             ap.comment = $comment
-                    """, **ap)
+                    """,
+                        **ap,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"Approval {ap.get('approvalId')}: {e}")
@@ -1237,7 +1355,8 @@ class Neo4jDataLoader:
             # WorkflowInstances
             for wi in data.get("workflowInstances", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (wi:WorkflowInstance {workflowId: $workflowId})
                         SET wi.approvalId = $approvalId,
                             wi.type = $type,
@@ -1245,7 +1364,9 @@ class Neo4jDataLoader:
                             wi.startedAt = datetime($startedAt),
                             wi.completedAt = CASE WHEN $completedAt IS NOT NULL
                                              THEN datetime($completedAt) ELSE NULL END
-                    """, **wi)
+                    """,
+                        **wi,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"WorkflowInstance {wi.get('workflowId')}: {e}")
@@ -1253,7 +1374,8 @@ class Neo4jDataLoader:
             # WorkflowTasks
             for wt in data.get("workflowTasks", []):
                 try:
-                    session.run("""
+                    session.run(
+                        """
                         MERGE (wt:WorkflowTask {taskId: $taskId})
                         SET wt.workflowId = $workflowId,
                             wt.actionId = $actionId,
@@ -1264,7 +1386,9 @@ class Neo4jDataLoader:
                             wt.status = $status,
                             wt.completedAt = CASE WHEN $completedAt IS NOT NULL
                                              THEN datetime($completedAt) ELSE NULL END
-                    """, **wt)
+                    """,
+                        **wt,
+                    )
                     created += 1
                 except Exception as e:
                     errors.append(f"WorkflowTask {wt.get('taskId')}: {e}")
@@ -1277,7 +1401,7 @@ class Neo4jDataLoader:
             records_created=created,
             records_updated=0,
             errors=errors,
-            duration_ms=duration
+            duration_ms=duration,
         )
 
     def _create_relationships(self) -> LoadResult:
@@ -1288,381 +1412,483 @@ class Neo4jDataLoader:
 
         relationship_queries = [
             # Employee -> OrgUnit
-            ("""
+            (
+                """
                 MATCH (e:Employee), (o:OrgUnit)
                 WHERE e.orgUnitId = o.orgUnitId
                 MERGE (e)-[:BELONGS_TO]->(o)
-            """, "Employee-BELONGS_TO-OrgUnit"),
-
+            """,
+                "Employee-BELONGS_TO-OrgUnit",
+            ),
             # Employee -> JobRole
-            ("""
+            (
+                """
                 MATCH (e:Employee), (j:JobRole)
                 WHERE e.jobRoleId = j.jobRoleId
                 MERGE (e)-[:HAS_JOB_ROLE]->(j)
-            """, "Employee-HAS_JOB_ROLE-JobRole"),
-
+            """,
+                "Employee-HAS_JOB_ROLE-JobRole",
+            ),
             # Employee -> DeliveryRole
-            ("""
+            (
+                """
                 MATCH (e:Employee), (d:DeliveryRole)
                 WHERE e.deliveryRoleId = d.deliveryRoleId
                 MERGE (e)-[:HAS_DELIVERY_ROLE]->(d)
-            """, "Employee-HAS_DELIVERY_ROLE-DeliveryRole"),
-
+            """,
+                "Employee-HAS_DELIVERY_ROLE-DeliveryRole",
+            ),
             # OrgUnit -> OrgUnit (parent)
-            ("""
+            (
+                """
                 MATCH (child:OrgUnit), (parent:OrgUnit)
                 WHERE child.parentOrgUnitId = parent.orgUnitId
                 MERGE (child)-[:PART_OF]->(parent)
-            """, "OrgUnit-PART_OF-OrgUnit"),
-
+            """,
+                "OrgUnit-PART_OF-OrgUnit",
+            ),
             # Project -> OrgUnit
-            ("""
+            (
+                """
                 MATCH (p:Project), (o:OrgUnit)
                 WHERE p.ownerOrgUnitId = o.orgUnitId
                 MERGE (p)-[:OWNED_BY]->(o)
-            """, "Project-OWNED_BY-OrgUnit"),
-
+            """,
+                "Project-OWNED_BY-OrgUnit",
+            ),
             # Project -> Employee (PM)
-            ("""
+            (
+                """
                 MATCH (p:Project), (e:Employee)
                 WHERE p.pmEmployeeId = e.employeeId
                 MERGE (p)-[:MANAGED_BY]->(e)
-            """, "Project-MANAGED_BY-Employee"),
-
+            """,
+                "Project-MANAGED_BY-Employee",
+            ),
             # Project -> Opportunity
-            ("""
+            (
+                """
                 MATCH (p:Project), (o:Opportunity)
                 WHERE p.opportunityId = o.opportunityId
                 MERGE (p)-[:ORIGINATED_FROM]->(o)
-            """, "Project-ORIGINATED_FROM-Opportunity"),
-
+            """,
+                "Project-ORIGINATED_FROM-Opportunity",
+            ),
             # WorkPackage -> Project
-            ("""
+            (
+                """
                 MATCH (w:WorkPackage), (p:Project)
                 WHERE w.projectId = p.projectId
                 MERGE (p)-[:CONTAINS]->(w)
-            """, "Project-CONTAINS-WorkPackage"),
-
+            """,
+                "Project-CONTAINS-WorkPackage",
+            ),
             # Assignment -> Employee
-            ("""
+            (
+                """
                 MATCH (a:Assignment), (e:Employee)
                 WHERE a.employeeId = e.employeeId
                 MERGE (a)-[:ASSIGNS]->(e)
-            """, "Assignment-ASSIGNS-Employee"),
-
+            """,
+                "Assignment-ASSIGNS-Employee",
+            ),
             # Assignment -> Project
-            ("""
+            (
+                """
                 MATCH (a:Assignment), (p:Project)
                 WHERE a.projectId = p.projectId
                 MERGE (a)-[:FOR_PROJECT]->(p)
-            """, "Assignment-FOR_PROJECT-Project"),
-
+            """,
+                "Assignment-FOR_PROJECT-Project",
+            ),
             # Assignment -> WorkPackage
-            ("""
+            (
+                """
                 MATCH (a:Assignment), (w:WorkPackage)
                 WHERE a.workPackageId = w.workPackageId
                 MERGE (a)-[:FOR_WORK_PACKAGE]->(w)
-            """, "Assignment-FOR_WORK_PACKAGE-WorkPackage"),
-
+            """,
+                "Assignment-FOR_WORK_PACKAGE-WorkPackage",
+            ),
             # Employee -> Project (ASSIGNED_TO)
-            ("""
+            (
+                """
                 MATCH (a:Assignment)-[:ASSIGNS]->(e:Employee)
                 MATCH (a)-[:FOR_PROJECT]->(p:Project)
                 MERGE (e)-[r:ASSIGNED_TO]->(p)
                 SET r.allocationFTE = a.allocationFTE,
                     r.startDate = a.startDate,
                     r.endDate = a.endDate
-            """, "Employee-ASSIGNED_TO-Project"),
-
+            """,
+                "Employee-ASSIGNED_TO-Project",
+            ),
             # CompetencyEvidence -> Employee
-            ("""
+            (
+                """
                 MATCH (ce:CompetencyEvidence), (e:Employee)
                 WHERE ce.employeeId = e.employeeId
                 MERGE (ce)-[:BELONGS_TO_EMPLOYEE]->(e)
-            """, "CompetencyEvidence-BELONGS_TO_EMPLOYEE-Employee"),
-
+            """,
+                "CompetencyEvidence-BELONGS_TO_EMPLOYEE-Employee",
+            ),
             # CompetencyEvidence -> Competency
-            ("""
+            (
+                """
                 MATCH (ce:CompetencyEvidence), (c:Competency)
                 WHERE ce.competencyId = c.competencyId
                 MERGE (ce)-[:EVIDENCES]->(c)
-            """, "CompetencyEvidence-EVIDENCES-Competency"),
-
+            """,
+                "CompetencyEvidence-EVIDENCES-Competency",
+            ),
             # Employee -> Competency (HAS_COMPETENCY)
-            ("""
+            (
+                """
                 MATCH (ce:CompetencyEvidence)-[:BELONGS_TO_EMPLOYEE]->(e:Employee)
                 MATCH (ce)-[:EVIDENCES]->(c:Competency)
                 MERGE (e)-[r:HAS_COMPETENCY]->(c)
                 SET r.level = ce.level,
                     r.assessedAt = ce.assessmentDate
-            """, "Employee-HAS_COMPETENCY-Competency"),
-
+            """,
+                "Employee-HAS_COMPETENCY-Competency",
+            ),
             # Availability -> Employee
-            ("""
+            (
+                """
                 MATCH (av:Availability), (e:Employee)
                 WHERE av.employeeId = e.employeeId
                 MERGE (av)-[:FOR_EMPLOYEE]->(e)
-            """, "Availability-FOR_EMPLOYEE-Employee"),
-
+            """,
+                "Availability-FOR_EMPLOYEE-Employee",
+            ),
             # Availability -> TimeBucket
-            ("""
+            (
+                """
                 MATCH (av:Availability), (t:TimeBucket)
                 WHERE av.timeBucketId = t.bucketId
                 MERGE (av)-[:IN_BUCKET]->(t)
-            """, "Availability-IN_BUCKET-TimeBucket"),
-
+            """,
+                "Availability-IN_BUCKET-TimeBucket",
+            ),
             # ResourceDemand -> OrgUnit
-            ("""
+            (
+                """
                 MATCH (rd:ResourceDemand), (o:OrgUnit)
                 WHERE rd.requestedOrgUnitId = o.orgUnitId
                 MERGE (rd)-[:TARGETS_ORG]->(o)
-            """, "ResourceDemand-TARGETS_ORG-OrgUnit"),
-
+            """,
+                "ResourceDemand-TARGETS_ORG-OrgUnit",
+            ),
             # Opportunity -> OrgUnit
-            ("""
+            (
+                """
                 MATCH (op:Opportunity), (o:OrgUnit)
                 WHERE op.ownerOrgUnitId = o.orgUnitId
                 MERGE (op)-[:OWNED_BY]->(o)
-            """, "Opportunity-OWNED_BY-OrgUnit"),
-
+            """,
+                "Opportunity-OWNED_BY-OrgUnit",
+            ),
             # ============================================================
             # Learning 관계
             # ============================================================
-
             # Course -> LearningProgram
-            ("""
+            (
+                """
                 MATCH (c:Course), (lp:LearningProgram)
                 WHERE c.programId = lp.programId
                 MERGE (c)-[:PART_OF_PROGRAM]->(lp)
-            """, "Course-PART_OF_PROGRAM-LearningProgram"),
-
+            """,
+                "Course-PART_OF_PROGRAM-LearningProgram",
+            ),
             # LearningProgram -> Competency (IMPROVES)
-            ("""
+            (
+                """
                 MATCH (c:Course), (comp:Competency)
                 WHERE c.competencyId = comp.competencyId
                 MATCH (c)-[:PART_OF_PROGRAM]->(lp:LearningProgram)
                 MERGE (lp)-[:IMPROVES]->(comp)
-            """, "LearningProgram-IMPROVES-Competency"),
-
+            """,
+                "LearningProgram-IMPROVES-Competency",
+            ),
             # Enrollment -> Employee
-            ("""
+            (
+                """
                 MATCH (en:Enrollment), (e:Employee)
                 WHERE en.employeeId = e.employeeId
                 MERGE (e)-[:ENROLLED_IN {status: en.status}]->(en)
-            """, "Employee-ENROLLED_IN-Enrollment"),
-
+            """,
+                "Employee-ENROLLED_IN-Enrollment",
+            ),
             # Enrollment -> Course
-            ("""
+            (
+                """
                 MATCH (en:Enrollment), (c:Course)
                 WHERE en.courseId = c.courseId
                 MERGE (en)-[:FOR_COURSE]->(c)
-            """, "Enrollment-FOR_COURSE-Course"),
-
+            """,
+                "Enrollment-FOR_COURSE-Course",
+            ),
             # ============================================================
             # Decision 관계
             # ============================================================
-
             # DecisionCase -> Target (OrgUnit/Opportunity/Project)
-            ("""
+            (
+                """
                 MATCH (dc:DecisionCase), (ou:OrgUnit)
                 WHERE dc.targetType = 'OrgUnit' AND dc.targetId = ou.orgUnitId
                 MERGE (dc)-[:ABOUT]->(ou)
-            """, "DecisionCase-ABOUT-OrgUnit"),
-
-            ("""
+            """,
+                "DecisionCase-ABOUT-OrgUnit",
+            ),
+            (
+                """
                 MATCH (dc:DecisionCase), (op:Opportunity)
                 WHERE dc.targetType = 'Opportunity' AND dc.targetId = op.opportunityId
                 MERGE (dc)-[:ABOUT]->(op)
-            """, "DecisionCase-ABOUT-Opportunity"),
-
-            ("""
+            """,
+                "DecisionCase-ABOUT-Opportunity",
+            ),
+            (
+                """
                 MATCH (dc:DecisionCase), (p:Project)
                 WHERE dc.targetType = 'Project' AND dc.targetId = p.projectId
                 MERGE (dc)-[:ABOUT]->(p)
-            """, "DecisionCase-ABOUT-Project"),
-
+            """,
+                "DecisionCase-ABOUT-Project",
+            ),
             # DecisionCase -> Objective
-            ("""
+            (
+                """
                 MATCH (obj:Objective), (dc:DecisionCase)
                 WHERE obj.decisionCaseId = dc.decisionCaseId
                 MERGE (dc)-[:HAS_OBJECTIVE]->(obj)
-            """, "DecisionCase-HAS_OBJECTIVE-Objective"),
-
+            """,
+                "DecisionCase-HAS_OBJECTIVE-Objective",
+            ),
             # DecisionCase -> Constraint
-            ("""
+            (
+                """
                 MATCH (con:Constraint), (dc:DecisionCase)
                 WHERE con.decisionCaseId = dc.decisionCaseId
                 MERGE (dc)-[:HAS_CONSTRAINT]->(con)
-            """, "DecisionCase-HAS_CONSTRAINT-Constraint"),
-
+            """,
+                "DecisionCase-HAS_CONSTRAINT-Constraint",
+            ),
             # DecisionCase -> Option
-            ("""
+            (
+                """
                 MATCH (opt:Option), (dc:DecisionCase)
                 WHERE opt.decisionCaseId = dc.decisionCaseId
                 MERGE (dc)-[:HAS_OPTION]->(opt)
-            """, "DecisionCase-HAS_OPTION-Option"),
-
+            """,
+                "DecisionCase-HAS_OPTION-Option",
+            ),
             # Option -> Scenario
-            ("""
+            (
+                """
                 MATCH (sc:Scenario), (opt:Option)
                 WHERE sc.optionId = opt.optionId
                 MERGE (opt)-[:HAS_SCENARIO]->(sc)
-            """, "Option-HAS_SCENARIO-Scenario"),
-
+            """,
+                "Option-HAS_SCENARIO-Scenario",
+            ),
             # Scenario -> Action
-            ("""
+            (
+                """
                 MATCH (act:Action), (sc:Scenario)
                 WHERE act.scenarioId = sc.scenarioId
                 MERGE (sc)-[:INCLUDES_ACTION]->(act)
-            """, "Scenario-INCLUDES_ACTION-Action"),
-
+            """,
+                "Scenario-INCLUDES_ACTION-Action",
+            ),
             # Option -> Evaluation
-            ("""
+            (
+                """
                 MATCH (ev:Evaluation), (opt:Option)
                 WHERE ev.optionId = opt.optionId
                 MERGE (opt)-[:HAS_EVALUATION]->(ev)
-            """, "Option-HAS_EVALUATION-Evaluation"),
-
+            """,
+                "Option-HAS_EVALUATION-Evaluation",
+            ),
             # Evaluation -> MetricValue
-            ("""
+            (
+                """
                 MATCH (mv:MetricValue), (ev:Evaluation)
                 WHERE mv.evaluationId = ev.evaluationId
                 MERGE (ev)-[:HAS_METRIC]->(mv)
-            """, "Evaluation-HAS_METRIC-MetricValue"),
-
+            """,
+                "Evaluation-HAS_METRIC-MetricValue",
+            ),
             # Option -> ImpactAssessment
-            ("""
+            (
+                """
                 MATCH (ia:ImpactAssessment), (opt:Option)
                 WHERE ia.optionId = opt.optionId
                 MERGE (opt)-[:HAS_IMPACT]->(ia)
-            """, "Option-HAS_IMPACT-ImpactAssessment"),
-
+            """,
+                "Option-HAS_IMPACT-ImpactAssessment",
+            ),
             # Option -> Risk
-            ("""
+            (
+                """
                 MATCH (r:Risk), (opt:Option)
                 WHERE r.optionId = opt.optionId
                 MERGE (opt)-[:HAS_RISK]->(r)
-            """, "Option-HAS_RISK-Risk"),
-
+            """,
+                "Option-HAS_RISK-Risk",
+            ),
             # DecisionCase -> DecisionGate
-            ("""
+            (
+                """
                 MATCH (g:DecisionGate), (dc:DecisionCase)
                 WHERE g.decisionCaseId = dc.decisionCaseId
                 MERGE (dc)-[:HAS_GATE]->(g)
-            """, "DecisionCase-HAS_GATE-DecisionGate"),
-
+            """,
+                "DecisionCase-HAS_GATE-DecisionGate",
+            ),
             # DecisionGate -> Approval
-            ("""
+            (
+                """
                 MATCH (ap:Approval), (g:DecisionGate)
                 WHERE ap.gateId = g.gateId
                 MERGE (g)-[:HAS_APPROVAL]->(ap)
-            """, "DecisionGate-HAS_APPROVAL-Approval"),
-
+            """,
+                "DecisionGate-HAS_APPROVAL-Approval",
+            ),
             # Approval -> WorkflowInstance
-            ("""
+            (
+                """
                 MATCH (wi:WorkflowInstance), (ap:Approval)
                 WHERE wi.approvalId = ap.approvalId
                 MERGE (ap)-[:TRIGGERS_WORKFLOW]->(wi)
-            """, "Approval-TRIGGERS_WORKFLOW-WorkflowInstance"),
-
+            """,
+                "Approval-TRIGGERS_WORKFLOW-WorkflowInstance",
+            ),
             # WorkflowInstance -> WorkflowTask
-            ("""
+            (
+                """
                 MATCH (wt:WorkflowTask), (wi:WorkflowInstance)
                 WHERE wt.workflowId = wi.workflowId
                 MERGE (wi)-[:HAS_TASK]->(wt)
-            """, "WorkflowInstance-HAS_TASK-WorkflowTask"),
-
+            """,
+                "WorkflowInstance-HAS_TASK-WorkflowTask",
+            ),
             # WorkflowTask -> Action
-            ("""
+            (
+                """
                 MATCH (wt:WorkflowTask), (act:Action)
                 WHERE wt.actionId = act.actionId
                 MERGE (wt)-[:RELATED_TO]->(act)
-            """, "WorkflowTask-RELATED_TO-Action"),
-
+            """,
+                "WorkflowTask-RELATED_TO-Action",
+            ),
             # ============================================================
             # Forecast/Explainability 관계
             # ============================================================
-
             # ModelRun -> Model
-            ("""
+            (
+                """
                 MATCH (mr:ModelRun), (m:Model)
                 WHERE mr.modelId = m.modelId
                 MERGE (mr)-[:RUNS_MODEL]->(m)
-            """, "ModelRun-RUNS_MODEL-Model"),
-
+            """,
+                "ModelRun-RUNS_MODEL-Model",
+            ),
             # ModelRun -> Scenario
-            ("""
+            (
+                """
                 MATCH (mr:ModelRun), (sc:Scenario)
                 WHERE mr.scenarioId = sc.scenarioId
                 MERGE (mr)-[:FOR_SCENARIO]->(sc)
-            """, "ModelRun-FOR_SCENARIO-Scenario"),
-
+            """,
+                "ModelRun-FOR_SCENARIO-Scenario",
+            ),
             # ModelRun -> DataSnapshot
-            ("""
+            (
+                """
                 MATCH (mr:ModelRun), (ds:DataSnapshot)
                 WHERE mr.snapshotId = ds.snapshotId
                 MERGE (mr)-[:USING_SNAPSHOT]->(ds)
-            """, "ModelRun-USING_SNAPSHOT-DataSnapshot"),
-
+            """,
+                "ModelRun-USING_SNAPSHOT-DataSnapshot",
+            ),
             # ModelRun -> ForecastPoint
-            ("""
+            (
+                """
                 MATCH (fp:ForecastPoint), (mr:ModelRun)
                 WHERE fp.runId = mr.runId
                 MERGE (mr)-[:OUTPUTS]->(fp)
-            """, "ModelRun-OUTPUTS-ForecastPoint"),
-
+            """,
+                "ModelRun-OUTPUTS-ForecastPoint",
+            ),
             # ForecastPoint -> TimeBucket
-            ("""
+            (
+                """
                 MATCH (fp:ForecastPoint), (tb:TimeBucket)
                 WHERE fp.bucketId = tb.bucketId
                 MERGE (fp)-[:FOR_BUCKET]->(tb)
-            """, "ForecastPoint-FOR_BUCKET-TimeBucket"),
-
+            """,
+                "ForecastPoint-FOR_BUCKET-TimeBucket",
+            ),
             # ForecastPoint -> Subject (OrgUnit/Project/Opportunity/WorkPackage)
-            ("""
+            (
+                """
                 MATCH (fp:ForecastPoint), (ou:OrgUnit)
                 WHERE fp.subjectType = 'OrgUnit' AND fp.subjectId = ou.orgUnitId
                 MERGE (fp)-[:FOR_SUBJECT]->(ou)
-            """, "ForecastPoint-FOR_SUBJECT-OrgUnit"),
-
-            ("""
+            """,
+                "ForecastPoint-FOR_SUBJECT-OrgUnit",
+            ),
+            (
+                """
                 MATCH (fp:ForecastPoint), (p:Project)
                 WHERE fp.subjectType = 'Project' AND fp.subjectId = p.projectId
                 MERGE (fp)-[:FOR_SUBJECT]->(p)
-            """, "ForecastPoint-FOR_SUBJECT-Project"),
-
+            """,
+                "ForecastPoint-FOR_SUBJECT-Project",
+            ),
             # ModelRun -> Finding
-            ("""
+            (
+                """
                 MATCH (f:Finding), (mr:ModelRun)
                 WHERE f.runId = mr.runId
                 MERGE (mr)-[:HAS_FINDING]->(f)
-            """, "ModelRun-HAS_FINDING-Finding"),
-
+            """,
+                "ModelRun-HAS_FINDING-Finding",
+            ),
             # Finding -> Affects (OrgUnit/WorkPackage/Competency/Responsibility)
-            ("""
+            (
+                """
                 MATCH (f:Finding), (ou:OrgUnit)
                 WHERE f.affectsType = 'OrgUnit' AND f.affectsId = ou.orgUnitId
                 MERGE (f)-[:AFFECTS]->(ou)
-            """, "Finding-AFFECTS-OrgUnit"),
-
-            ("""
+            """,
+                "Finding-AFFECTS-OrgUnit",
+            ),
+            (
+                """
                 MATCH (f:Finding), (wp:WorkPackage)
                 WHERE f.affectsType = 'WorkPackage' AND f.affectsId = wp.workPackageId
                 MERGE (f)-[:AFFECTS]->(wp)
-            """, "Finding-AFFECTS-WorkPackage"),
-
-            ("""
+            """,
+                "Finding-AFFECTS-WorkPackage",
+            ),
+            (
+                """
                 MATCH (f:Finding), (c:Competency)
                 WHERE f.affectsType = 'Competency' AND f.affectsId = c.competencyId
                 MERGE (f)-[:AFFECTS]->(c)
-            """, "Finding-AFFECTS-Competency"),
-
+            """,
+                "Finding-AFFECTS-Competency",
+            ),
             # Finding -> Evidence
-            ("""
+            (
+                """
                 MATCH (ev:Evidence), (f:Finding)
                 WHERE ev.findingId = f.findingId
                 MERGE (f)-[:EVIDENCED_BY]->(ev)
-            """, "Finding-EVIDENCED_BY-Evidence"),
+            """,
+                "Finding-EVIDENCED_BY-Evidence",
+            ),
         ]
 
         with self._driver.session(database=self.database) as session:
@@ -1684,7 +1910,7 @@ class Neo4jDataLoader:
             records_created=created,
             records_updated=0,
             errors=errors,
-            duration_ms=duration
+            duration_ms=duration,
         )
 
     def get_statistics(self) -> dict:
@@ -1726,6 +1952,7 @@ if __name__ == "__main__":
 
     # 환경변수에서 Neo4j 설정 읽기
     import os
+
     uri = os.getenv("NEO4J_URI", "bolt://localhost:7687")
     username = os.getenv("NEO4J_USERNAME", "neo4j")
     password = os.getenv("NEO4J_PASSWORD", "password")
@@ -1764,8 +1991,10 @@ if __name__ == "__main__":
             print("-" * 60)
             for result in summary.results:
                 status = "[OK]" if len(result.errors) == 0 else "[NG]"
-                print(f"{status} {result.entity_type}: {result.records_created} created, "
-                      f"{result.duration_ms:.1f}ms")
+                print(
+                    f"{status} {result.entity_type}: {result.records_created} created, "
+                    f"{result.duration_ms:.1f}ms"
+                )
                 if result.errors:
                     for err in result.errors[:3]:
                         print(f"    Error: {err}")

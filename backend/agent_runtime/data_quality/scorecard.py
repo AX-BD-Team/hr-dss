@@ -287,9 +287,7 @@ class DataReadinessScorecard:
             details={"pk_field": pk_field, "duplicates": duplicate_count},
         )
 
-    def _evaluate_required_fields(
-        self, entity_name: str, records: list[dict]
-    ) -> MetricResult:
+    def _evaluate_required_fields(self, entity_name: str, records: list[dict]) -> MetricResult:
         """필수 필드 충족률 평가"""
         required = self.REQUIRED_FIELDS.get(entity_name, [])
         if not required or not records:
@@ -370,9 +368,7 @@ class DataReadinessScorecard:
         """요약 정보 생성"""
         total_records = sum(e.record_count for e in result.entity_results)
         total_entities = len(result.entity_results)
-        passed_entities = sum(
-            1 for e in result.entity_results if e.overall_status == "PASS"
-        )
+        passed_entities = sum(1 for e in result.entity_results if e.overall_status == "PASS")
 
         return {
             "total_entities": total_entities,

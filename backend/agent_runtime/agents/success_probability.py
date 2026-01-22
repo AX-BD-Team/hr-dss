@@ -16,17 +16,19 @@ logger = logging.getLogger(__name__)
 
 class RiskCategory(Enum):
     """리스크 카테고리"""
-    RESOURCE = "RESOURCE"           # 리소스 관련
-    COMPETENCY = "COMPETENCY"       # 역량 관련
-    SCHEDULE = "SCHEDULE"           # 일정 관련
-    TECHNICAL = "TECHNICAL"         # 기술 관련
-    CUSTOMER = "CUSTOMER"           # 고객 관련
+
+    RESOURCE = "RESOURCE"  # 리소스 관련
+    COMPETENCY = "COMPETENCY"  # 역량 관련
+    SCHEDULE = "SCHEDULE"  # 일정 관련
+    TECHNICAL = "TECHNICAL"  # 기술 관련
+    CUSTOMER = "CUSTOMER"  # 고객 관련
     ORGANIZATIONAL = "ORGANIZATIONAL"  # 조직 관련
-    EXTERNAL = "EXTERNAL"           # 외부 요인
+    EXTERNAL = "EXTERNAL"  # 외부 요인
 
 
 class RiskLevel(Enum):
     """리스크 수준"""
+
     LOW = "LOW"
     MEDIUM = "MEDIUM"
     HIGH = "HIGH"
@@ -36,6 +38,7 @@ class RiskLevel(Enum):
 @dataclass
 class RiskFactor:
     """리스크 요인"""
+
     factor_id: str
     category: RiskCategory
     name: str
@@ -64,6 +67,7 @@ class RiskFactor:
 @dataclass
 class SuccessFactor:
     """성공 요인"""
+
     factor_id: str
     name: str
     weight: float  # 가중치 (0-1)
@@ -78,6 +82,7 @@ class SuccessFactor:
 @dataclass
 class ProbabilityResult:
     """성공 확률 결과"""
+
     subject_type: str  # PROJECT, OPPORTUNITY, OPTION
     subject_id: str
     subject_name: str
@@ -148,11 +153,7 @@ class SuccessProbabilityAgent:
         self.ml_model = ml_model
 
     def calculate_probability(
-        self,
-        subject_type: str,
-        subject_id: str,
-        subject_name: str,
-        context: dict[str, Any]
+        self, subject_type: str, subject_id: str, subject_name: str, context: dict[str, Any]
     ) -> ProbabilityResult:
         """
         성공 확률 계산
@@ -184,7 +185,9 @@ class SuccessProbabilityAgent:
         confidence = self._calculate_confidence(success_factors, risk_factors, context)
 
         # 5. 전체 리스크 점수
-        overall_risk = sum(rf.risk_score for rf in risk_factors) / len(risk_factors) if risk_factors else 0
+        overall_risk = (
+            sum(rf.risk_score for rf in risk_factors) / len(risk_factors) if risk_factors else 0
+        )
 
         # 6. 추천 결정
         recommendation = self._generate_recommendation(
@@ -206,14 +209,9 @@ class SuccessProbabilityAgent:
     def _get_base_probability(self, context: dict[str, Any]) -> float:
         """기본 성공 확률 조회"""
         project_type = context.get("project_type", "DEFAULT")
-        return self.PROJECT_TYPE_BASE_PROB.get(
-            project_type, self.PROJECT_TYPE_BASE_PROB["DEFAULT"]
-        )
+        return self.PROJECT_TYPE_BASE_PROB.get(project_type, self.PROJECT_TYPE_BASE_PROB["DEFAULT"])
 
-    def _analyze_success_factors(
-        self,
-        context: dict[str, Any]
-    ) -> list[SuccessFactor]:
+    def _analyze_success_factors(self, context: dict[str, Any]) -> list[SuccessFactor]:
         """성공 요인 분석"""
         factors = []
 
@@ -232,11 +230,7 @@ class SuccessProbabilityAgent:
 
         return factors
 
-    def _calculate_factor_score(
-        self,
-        factor_id: str,
-        context: dict[str, Any]
-    ) -> float:
+    def _calculate_factor_score(self, factor_id: str, context: dict[str, Any]) -> float:
         """요인별 점수 계산"""
 
         if factor_id == "resource_match":
@@ -286,11 +280,7 @@ class SuccessProbabilityAgent:
 
         return 50  # 기본값
 
-    def _get_factor_evidence(
-        self,
-        factor_id: str,
-        context: dict[str, Any]
-    ) -> list[str]:
+    def _get_factor_evidence(self, factor_id: str, context: dict[str, Any]) -> list[str]:
         """요인별 근거 수집"""
         evidence = []
 
@@ -310,10 +300,7 @@ class SuccessProbabilityAgent:
 
         return evidence
 
-    def _analyze_risk_factors(
-        self,
-        context: dict[str, Any]
-    ) -> list[RiskFactor]:
+    def _analyze_risk_factors(self, context: dict[str, Any]) -> list[RiskFactor]:
         """리스크 요인 분석"""
         risks = []
 
@@ -323,95 +310,104 @@ class SuccessProbabilityAgent:
         if available_fte < required_fte:
             gap = required_fte - available_fte
             probability = min(0.9, gap / required_fte)
-            risks.append(RiskFactor(
-                factor_id="RISK-RES-01",
-                category=RiskCategory.RESOURCE,
-                name="리소스 부족",
-                description=f"필요 인력 대비 {gap:.1f} FTE 부족",
-                probability=probability,
-                impact=0.7,
-                mitigation="외주 인력 활용 또는 일정 연장",
-                evidence=[f"필요: {required_fte} FTE, 가용: {available_fte} FTE"],
-            ))
+            risks.append(
+                RiskFactor(
+                    factor_id="RISK-RES-01",
+                    category=RiskCategory.RESOURCE,
+                    name="리소스 부족",
+                    description=f"필요 인력 대비 {gap:.1f} FTE 부족",
+                    probability=probability,
+                    impact=0.7,
+                    mitigation="외주 인력 활용 또는 일정 연장",
+                    evidence=[f"필요: {required_fte} FTE, 가용: {available_fte} FTE"],
+                )
+            )
 
         # 역량 리스크
         competency_match = context.get("competency_match_score", 0.7)
         if competency_match < 0.8:
             probability = (0.8 - competency_match) / 0.8
-            risks.append(RiskFactor(
-                factor_id="RISK-COMP-01",
-                category=RiskCategory.COMPETENCY,
-                name="역량 부족",
-                description=f"역량 매칭률 {competency_match * 100:.1f}%로 미달",
-                probability=probability,
-                impact=0.6,
-                mitigation="교육 또는 외부 전문가 영입",
-                evidence=[f"역량 매칭률: {competency_match * 100:.1f}%"],
-            ))
+            risks.append(
+                RiskFactor(
+                    factor_id="RISK-COMP-01",
+                    category=RiskCategory.COMPETENCY,
+                    name="역량 부족",
+                    description=f"역량 매칭률 {competency_match * 100:.1f}%로 미달",
+                    probability=probability,
+                    impact=0.6,
+                    mitigation="교육 또는 외부 전문가 영입",
+                    evidence=[f"역량 매칭률: {competency_match * 100:.1f}%"],
+                )
+            )
 
         # 일정 리스크
         buffer_weeks = context.get("buffer_weeks", 0)
         planned_duration = context.get("planned_duration_weeks", 12)
         if buffer_weeks < planned_duration * 0.1:
-            risks.append(RiskFactor(
-                factor_id="RISK-SCH-01",
-                category=RiskCategory.SCHEDULE,
-                name="일정 촉박",
-                description="충분한 일정 버퍼가 없음",
-                probability=0.5,
-                impact=0.5,
-                mitigation="범위 조정 또는 일정 협상",
-                evidence=[f"버퍼: {buffer_weeks}주 / 전체: {planned_duration}주"],
-            ))
+            risks.append(
+                RiskFactor(
+                    factor_id="RISK-SCH-01",
+                    category=RiskCategory.SCHEDULE,
+                    name="일정 촉박",
+                    description="충분한 일정 버퍼가 없음",
+                    probability=0.5,
+                    impact=0.5,
+                    mitigation="범위 조정 또는 일정 협상",
+                    evidence=[f"버퍼: {buffer_weeks}주 / 전체: {planned_duration}주"],
+                )
+            )
 
         # 기술 리스크
         tech_complexity = context.get("tech_complexity", "MEDIUM")
         if tech_complexity == "HIGH":
-            risks.append(RiskFactor(
-                factor_id="RISK-TECH-01",
-                category=RiskCategory.TECHNICAL,
-                name="기술 복잡성",
-                description="높은 기술 난이도로 인한 리스크",
-                probability=0.4,
-                impact=0.6,
-                mitigation="PoC 선행 또는 전문가 투입",
-                evidence=[f"기술 복잡도: {tech_complexity}"],
-            ))
+            risks.append(
+                RiskFactor(
+                    factor_id="RISK-TECH-01",
+                    category=RiskCategory.TECHNICAL,
+                    name="기술 복잡성",
+                    description="높은 기술 난이도로 인한 리스크",
+                    probability=0.4,
+                    impact=0.6,
+                    mitigation="PoC 선행 또는 전문가 투입",
+                    evidence=[f"기술 복잡도: {tech_complexity}"],
+                )
+            )
 
         # 고객 리스크
         is_new_customer = not context.get("is_existing_customer", False)
         if is_new_customer:
-            risks.append(RiskFactor(
-                factor_id="RISK-CUST-01",
-                category=RiskCategory.CUSTOMER,
-                name="신규 고객",
-                description="신규 고객으로 요구사항 불확실성 존재",
-                probability=0.3,
-                impact=0.4,
-                mitigation="철저한 요구사항 정의 및 변경 관리 프로세스",
-                evidence=["신규 고객"],
-            ))
+            risks.append(
+                RiskFactor(
+                    factor_id="RISK-CUST-01",
+                    category=RiskCategory.CUSTOMER,
+                    name="신규 고객",
+                    description="신규 고객으로 요구사항 불확실성 존재",
+                    probability=0.3,
+                    impact=0.4,
+                    mitigation="철저한 요구사항 정의 및 변경 관리 프로세스",
+                    evidence=["신규 고객"],
+                )
+            )
 
         # 조직 리스크
         utilization = context.get("current_utilization", 0.8)
         if utilization > 0.9:
-            risks.append(RiskFactor(
-                factor_id="RISK-ORG-01",
-                category=RiskCategory.ORGANIZATIONAL,
-                name="조직 과부하",
-                description=f"현재 가동률 {utilization * 100:.1f}%로 과부하 상태",
-                probability=0.6,
-                impact=0.5,
-                mitigation="우선순위 조정 또는 증원",
-                evidence=[f"현재 가동률: {utilization * 100:.1f}%"],
-            ))
+            risks.append(
+                RiskFactor(
+                    factor_id="RISK-ORG-01",
+                    category=RiskCategory.ORGANIZATIONAL,
+                    name="조직 과부하",
+                    description=f"현재 가동률 {utilization * 100:.1f}%로 과부하 상태",
+                    probability=0.6,
+                    impact=0.5,
+                    mitigation="우선순위 조정 또는 증원",
+                    evidence=[f"현재 가동률: {utilization * 100:.1f}%"],
+                )
+            )
 
         return risks
 
-    def _calculate_factor_adjustment(
-        self,
-        success_factors: list[SuccessFactor]
-    ) -> float:
+    def _calculate_factor_adjustment(self, success_factors: list[SuccessFactor]) -> float:
         """성공 요인에 의한 조정값 계산"""
         if not success_factors:
             return 0.0
@@ -425,10 +421,7 @@ class SuccessProbabilityAgent:
 
         return adjustment
 
-    def _calculate_risk_adjustment(
-        self,
-        risk_factors: list[RiskFactor]
-    ) -> float:
+    def _calculate_risk_adjustment(self, risk_factors: list[RiskFactor]) -> float:
         """리스크에 의한 조정값 계산"""
         if not risk_factors:
             return 0.0
@@ -445,7 +438,7 @@ class SuccessProbabilityAgent:
         self,
         success_factors: list[SuccessFactor],
         risk_factors: list[RiskFactor],
-        context: dict[str, Any]
+        context: dict[str, Any],
     ) -> float:
         """예측 신뢰도 계산"""
         base_confidence = 0.7
@@ -459,7 +452,9 @@ class SuccessProbabilityAgent:
         historical_bonus = 0.1 if has_historical else 0
 
         # 리스크 불확실성
-        high_risk_count = sum(1 for rf in risk_factors if rf.level in [RiskLevel.HIGH, RiskLevel.CRITICAL])
+        high_risk_count = sum(
+            1 for rf in risk_factors if rf.level in [RiskLevel.HIGH, RiskLevel.CRITICAL]
+        )
         risk_penalty = high_risk_count * 0.05
 
         confidence = base_confidence + data_bonus + historical_bonus - risk_penalty
@@ -470,7 +465,7 @@ class SuccessProbabilityAgent:
         probability: float,
         overall_risk: float,
         success_factors: list[SuccessFactor],
-        risk_factors: list[RiskFactor]
+        risk_factors: list[RiskFactor],
     ) -> str:
         """추천 생성"""
         parts = []
@@ -492,7 +487,9 @@ class SuccessProbabilityAgent:
             parts.append(f"개선 필요 영역: {weak_names}")
 
         # 주요 리스크
-        critical_risks = [rf for rf in risk_factors if rf.level in [RiskLevel.HIGH, RiskLevel.CRITICAL]]
+        critical_risks = [
+            rf for rf in risk_factors if rf.level in [RiskLevel.HIGH, RiskLevel.CRITICAL]
+        ]
         if critical_risks:
             risk_names = ", ".join(rf.name for rf in critical_risks[:2])
             parts.append(f"주요 리스크: {risk_names}")

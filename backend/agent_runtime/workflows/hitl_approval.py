@@ -18,25 +18,28 @@ logger = logging.getLogger(__name__)
 
 class ApprovalStatus(Enum):
     """승인 상태"""
+
     PENDING = "PENDING"
     APPROVED = "APPROVED"
     REJECTED = "REJECTED"
-    MODIFIED = "MODIFIED"      # 수정 후 승인
-    ESCALATED = "ESCALATED"    # 상위 결재자로 에스컬레이션
-    EXPIRED = "EXPIRED"        # 타임아웃
+    MODIFIED = "MODIFIED"  # 수정 후 승인
+    ESCALATED = "ESCALATED"  # 상위 결재자로 에스컬레이션
+    EXPIRED = "EXPIRED"  # 타임아웃
     CANCELLED = "CANCELLED"
 
 
 class ApprovalLevel(Enum):
     """승인 레벨"""
-    TEAM_LEAD = "TEAM_LEAD"       # 팀장급
-    DEPARTMENT = "DEPARTMENT"     # 부서장급
-    DIVISION = "DIVISION"         # 본부장급
-    EXECUTIVE = "EXECUTIVE"       # 임원급
+
+    TEAM_LEAD = "TEAM_LEAD"  # 팀장급
+    DEPARTMENT = "DEPARTMENT"  # 부서장급
+    DIVISION = "DIVISION"  # 본부장급
+    EXECUTIVE = "EXECUTIVE"  # 임원급
 
 
 class DecisionType(Enum):
     """의사결정 유형"""
+
     CAPACITY = "CAPACITY"
     GO_NOGO = "GO_NOGO"
     HEADCOUNT = "HEADCOUNT"
@@ -47,6 +50,7 @@ class DecisionType(Enum):
 @dataclass
 class ApprovalRequest:
     """승인 요청"""
+
     request_id: str
     execution_id: str
     decision_type: DecisionType
@@ -67,6 +71,7 @@ class ApprovalRequest:
 @dataclass
 class ApprovalResponse:
     """승인 응답"""
+
     response_id: str
     request_id: str
     status: ApprovalStatus
@@ -83,6 +88,7 @@ class ApprovalResponse:
 @dataclass
 class DecisionLog:
     """의사결정 로그"""
+
     log_id: str
     execution_id: str
     decision_type: DecisionType
@@ -277,7 +283,9 @@ class HITLApprovalSystem:
 
         # 승인 레벨 검증
         if not self._validate_approval_level(approval_level, request.required_level):
-            raise ValueError(f"승인 권한 부족: {approval_level.value} < {request.required_level.value}")
+            raise ValueError(
+                f"승인 권한 부족: {approval_level.value} < {request.required_level.value}"
+            )
 
         response_id = f"RESP-{uuid.uuid4().hex[:12].upper()}"
 
@@ -345,13 +353,15 @@ class HITLApprovalSystem:
         request.required_level = next_level
         request.deadline = self._calculate_deadline()
         request.metadata["escalation_history"] = request.metadata.get("escalation_history", [])
-        request.metadata["escalation_history"].append({
-            "from_level": current_level.value,
-            "to_level": next_level.value,
-            "reason": escalation_reason,
-            "escalated_by": escalated_by,
-            "timestamp": datetime.now().isoformat(),
-        })
+        request.metadata["escalation_history"].append(
+            {
+                "from_level": current_level.value,
+                "to_level": next_level.value,
+                "reason": escalation_reason,
+                "escalated_by": escalated_by,
+                "timestamp": datetime.now().isoformat(),
+            }
+        )
 
         # 새 승인자에게 알림
         self._send_notification(request)
@@ -383,9 +393,12 @@ class HITLApprovalSystem:
 
         # 최종 결정 추출
         final_response = next(
-            (r for r in reversed(approval_responses)
-             if r.status in [ApprovalStatus.APPROVED, ApprovalStatus.MODIFIED]),
-            None
+            (
+                r
+                for r in reversed(approval_responses)
+                if r.status in [ApprovalStatus.APPROVED, ApprovalStatus.MODIFIED]
+            ),
+            None,
         )
 
         final_decision = {}
@@ -393,7 +406,9 @@ class HITLApprovalSystem:
             final_decision = {
                 "selected_option_id": final_response.selected_option_id,
                 "approver": final_response.approver_name,
-                "approval_level": final_response.approval_level.value if final_response.approval_level else None,
+                "approval_level": final_response.approval_level.value
+                if final_response.approval_level
+                else None,
                 "rationale": final_response.rationale,
                 "modifications": final_response.modifications,
                 "conditions": final_response.conditions,
@@ -444,7 +459,8 @@ class HITLApprovalSystem:
 
         if approver_level:
             requests = [
-                r for r in requests
+                r
+                for r in requests
                 if self._validate_approval_level(approver_level, r.required_level)
             ]
 
@@ -543,8 +559,7 @@ class HITLApprovalSystem:
     ) -> ApprovalLevel:
         """필요 승인 레벨 결정"""
         level_config = self.APPROVAL_LEVEL_MATRIX.get(
-            decision_type,
-            {"default": ApprovalLevel.TEAM_LEAD}
+            decision_type, {"default": ApprovalLevel.TEAM_LEAD}
         )
 
         # 영향도 기반 레벨 결정 (향후 확장용)
@@ -606,7 +621,9 @@ class HITLApprovalSystem:
             recommendation = context.get("options", {}).get("recommendation", "")
             rec_opt = next((o for o in options if o.get("option_id") == recommendation), None)
             if rec_opt:
-                base_summary += f"\n추천 대안: {rec_opt.get('name', '')} ({rec_opt.get('option_type', '')})"
+                base_summary += (
+                    f"\n추천 대안: {rec_opt.get('name', '')} ({rec_opt.get('option_type', '')})"
+                )
 
         return base_summary
 
@@ -635,33 +652,40 @@ class HITLApprovalSystem:
 
         kg_results = context.get("kg_results", {})
         if kg_results:
-            evidence.append({
-                "type": "KG_QUERY",
-                "source": "Knowledge Graph",
-                "data": kg_results,
-            })
+            evidence.append(
+                {
+                    "type": "KG_QUERY",
+                    "source": "Knowledge Graph",
+                    "data": kg_results,
+                }
+            )
 
         impact_analysis = context.get("impact_analysis", {})
         if impact_analysis:
-            evidence.append({
-                "type": "SIMULATION",
-                "source": "Impact Simulator",
-                "data": impact_analysis,
-            })
+            evidence.append(
+                {
+                    "type": "SIMULATION",
+                    "source": "Impact Simulator",
+                    "data": impact_analysis,
+                }
+            )
 
         probabilities = context.get("probabilities", {})
         if probabilities:
-            evidence.append({
-                "type": "PREDICTION",
-                "source": "Success Probability",
-                "data": probabilities,
-            })
+            evidence.append(
+                {
+                    "type": "PREDICTION",
+                    "source": "Success Probability",
+                    "data": probabilities,
+                }
+            )
 
         return evidence
 
     def _calculate_deadline(self) -> datetime:
         """승인 마감일 계산"""
         from datetime import timedelta
+
         return datetime.now() + timedelta(hours=self.approval_timeout_hours)
 
     def _send_notification(self, request: ApprovalRequest) -> None:
@@ -674,7 +698,7 @@ class HITLApprovalSystem:
                     "title": request.title,
                     "summary": request.summary,
                     "deadline": request.deadline.isoformat() if request.deadline else None,
-                }
+                },
             )
 
     def _count_by_level(self, responses: list[ApprovalResponse]) -> dict[str, int]:
@@ -744,9 +768,7 @@ class HITLApprovalSystem:
             "options_presented": log.options_presented,
             "recommendation": log.recommendation,
             "final_decision": log.final_decision,
-            "approval_chain": [
-                self.response_to_dict(r) for r in log.approval_chain
-            ],
+            "approval_chain": [self.response_to_dict(r) for r in log.approval_chain],
             "evidence_count": len(log.evidence_used),
             "validation_score": log.validation_score,
             "created_at": log.created_at.isoformat(),

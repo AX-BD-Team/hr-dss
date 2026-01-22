@@ -16,14 +16,16 @@ logger = logging.getLogger(__name__)
 
 class OptionType(Enum):
     """대안 유형"""
+
     CONSERVATIVE = "CONSERVATIVE"  # 보수적
-    BALANCED = "BALANCED"          # 균형
-    AGGRESSIVE = "AGGRESSIVE"      # 적극적
+    BALANCED = "BALANCED"  # 균형
+    AGGRESSIVE = "AGGRESSIVE"  # 적극적
 
 
 @dataclass
 class ResourceAllocation:
     """리소스 배분"""
+
     employee_id: str | None = None
     org_unit_id: str | None = None
     allocation_fte: float = 0.0
@@ -35,6 +37,7 @@ class ResourceAllocation:
 @dataclass
 class DecisionOption:
     """의사결정 대안"""
+
     option_id: str
     option_type: OptionType
     name: str
@@ -53,6 +56,7 @@ class DecisionOption:
 @dataclass
 class OptionSet:
     """대안 세트"""
+
     query_type: str
     context: dict[str, Any]
     options: list[DecisionOption]
@@ -74,10 +78,7 @@ class OptionGeneratorAgent:
         self.kg_client = kg_client
 
     def generate_options(
-        self,
-        query_type: str,
-        context: dict[str, Any],
-        constraints: dict[str, Any] | None = None
+        self, query_type: str, context: dict[str, Any], constraints: dict[str, Any] | None = None
     ) -> OptionSet:
         """
         질문 유형에 맞는 3가지 대안 생성
@@ -104,9 +105,7 @@ class OptionGeneratorAgent:
             return self._generate_generic_options(context, constraints)
 
     def _generate_capacity_options(
-        self,
-        context: dict[str, Any],
-        constraints: dict[str, Any]
+        self, context: dict[str, Any], constraints: dict[str, Any]
     ) -> OptionSet:
         """Capacity 병목 해결 대안 생성"""
 
@@ -212,9 +211,7 @@ class OptionGeneratorAgent:
         )
 
     def _generate_gonogo_options(
-        self,
-        context: dict[str, Any],
-        constraints: dict[str, Any]
+        self, context: dict[str, Any], constraints: dict[str, Any]
     ) -> OptionSet:
         """Go/No-go 의사결정 대안 생성"""
 
@@ -324,9 +321,7 @@ class OptionGeneratorAgent:
         )
 
     def _generate_headcount_options(
-        self,
-        context: dict[str, Any],
-        constraints: dict[str, Any]
+        self, context: dict[str, Any], constraints: dict[str, Any]
     ) -> OptionSet:
         """증원 분석 대안 생성"""
 
@@ -434,9 +429,7 @@ class OptionGeneratorAgent:
         )
 
     def _generate_competency_options(
-        self,
-        context: dict[str, Any],
-        constraints: dict[str, Any]
+        self, context: dict[str, Any], constraints: dict[str, Any]
     ) -> OptionSet:
         """역량 갭 해소 대안 생성"""
 
@@ -542,9 +535,7 @@ class OptionGeneratorAgent:
         )
 
     def _generate_generic_options(
-        self,
-        context: dict[str, Any],
-        constraints: dict[str, Any]
+        self, context: dict[str, Any], constraints: dict[str, Any]
     ) -> OptionSet:
         """일반 대안 생성"""
         options = [
@@ -589,7 +580,7 @@ class OptionGeneratorAgent:
         self,
         options: list[DecisionOption],
         query_type: str,
-        metrics: dict[str, float] | None = None
+        metrics: dict[str, float] | None = None,
     ) -> tuple[str, str]:
         """추천 대안 결정"""
         metrics = metrics or {}
@@ -608,10 +599,7 @@ class OptionGeneratorAgent:
         reason_parts = []
 
         for opt in options:
-            score = sum(
-                opt.scores.get(metric, 50) * weight
-                for metric, weight in weights.items()
-            )
+            score = sum(opt.scores.get(metric, 50) * weight for metric, weight in weights.items())
 
             # 컨텍스트 기반 조정
             if query_type == "GO_NOGO":

@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
     """측정 지표 유형"""
+
     UTILIZATION = "UTILIZATION"
     HEADCOUNT = "HEADCOUNT"
     COST = "COST"
@@ -29,6 +30,7 @@ class MetricType(Enum):
 @dataclass
 class MetricValue:
     """지표 값"""
+
     metric_type: MetricType
     name: str
     as_is_value: float
@@ -39,9 +41,7 @@ class MetricValue:
 
     def __post_init__(self):
         if self.as_is_value != 0:
-            self.change_percent = (
-                (self.to_be_value - self.as_is_value) / self.as_is_value * 100
-            )
+            self.change_percent = (self.to_be_value - self.as_is_value) / self.as_is_value * 100
         else:
             self.change_percent = 100 if self.to_be_value > 0 else 0
 
@@ -64,6 +64,7 @@ class MetricValue:
 @dataclass
 class TimeSeriesPoint:
     """시계열 데이터 포인트"""
+
     period: str
     as_is_value: float
     to_be_value: float
@@ -72,6 +73,7 @@ class TimeSeriesPoint:
 @dataclass
 class ImpactAnalysis:
     """영향도 분석 결과"""
+
     option_id: str
     option_name: str
     metrics: list[MetricValue]
@@ -85,6 +87,7 @@ class ImpactAnalysis:
 @dataclass
 class ScenarioComparison:
     """시나리오 비교 결과"""
+
     query_type: str
     baseline: dict[str, Any]
     analyses: list[ImpactAnalysis]
@@ -120,7 +123,7 @@ class ImpactSimulatorAgent:
         query_type: str,
         options: list[dict],
         baseline: dict[str, Any],
-        horizon_weeks: int = 12
+        horizon_weeks: int = 12,
     ) -> ScenarioComparison:
         """
         대안별 영향도 시뮬레이션
@@ -137,9 +140,7 @@ class ImpactSimulatorAgent:
         analyses = []
 
         for option in options:
-            analysis = self._simulate_option(
-                query_type, option, baseline, horizon_weeks
-            )
+            analysis = self._simulate_option(query_type, option, baseline, horizon_weeks)
             analyses.append(analysis)
 
         # 최적 옵션 결정
@@ -158,11 +159,7 @@ class ImpactSimulatorAgent:
         )
 
     def _simulate_option(
-        self,
-        query_type: str,
-        option: dict,
-        baseline: dict[str, Any],
-        horizon_weeks: int
+        self, query_type: str, option: dict, baseline: dict[str, Any], horizon_weeks: int
     ) -> ImpactAnalysis:
         """단일 대안 시뮬레이션"""
 
@@ -175,21 +172,13 @@ class ImpactSimulatorAgent:
         time_series = {}
 
         if query_type == "CAPACITY":
-            metrics, time_series = self._simulate_capacity_impact(
-                option, baseline, horizon_weeks
-            )
+            metrics, time_series = self._simulate_capacity_impact(option, baseline, horizon_weeks)
         elif query_type == "GO_NOGO":
-            metrics, time_series = self._simulate_gonogo_impact(
-                option, baseline, horizon_weeks
-            )
+            metrics, time_series = self._simulate_gonogo_impact(option, baseline, horizon_weeks)
         elif query_type == "HEADCOUNT":
-            metrics, time_series = self._simulate_headcount_impact(
-                option, baseline, horizon_weeks
-            )
+            metrics, time_series = self._simulate_headcount_impact(option, baseline, horizon_weeks)
         elif query_type == "COMPETENCY_GAP":
-            metrics, time_series = self._simulate_competency_impact(
-                option, baseline, horizon_weeks
-            )
+            metrics, time_series = self._simulate_competency_impact(option, baseline, horizon_weeks)
         else:
             metrics = self._simulate_generic_impact(option, baseline)
 
@@ -215,10 +204,7 @@ class ImpactSimulatorAgent:
         )
 
     def _simulate_capacity_impact(
-        self,
-        option: dict,
-        baseline: dict[str, Any],
-        horizon_weeks: int
+        self, option: dict, baseline: dict[str, Any], horizon_weeks: int
     ) -> tuple[list[MetricValue], dict]:
         """Capacity 영향도 시뮬레이션"""
 
@@ -279,10 +265,7 @@ class ImpactSimulatorAgent:
         return metrics, time_series
 
     def _simulate_gonogo_impact(
-        self,
-        option: dict,
-        baseline: dict[str, Any],
-        horizon_weeks: int
+        self, option: dict, baseline: dict[str, Any], horizon_weeks: int
     ) -> tuple[list[MetricValue], dict]:
         """Go/No-go 영향도 시뮬레이션"""
 
@@ -348,10 +331,7 @@ class ImpactSimulatorAgent:
         return metrics, time_series
 
     def _simulate_headcount_impact(
-        self,
-        option: dict,
-        baseline: dict[str, Any],
-        horizon_weeks: int
+        self, option: dict, baseline: dict[str, Any], horizon_weeks: int
     ) -> tuple[list[MetricValue], dict]:
         """증원 영향도 시뮬레이션"""
 
@@ -408,10 +388,7 @@ class ImpactSimulatorAgent:
         return metrics, time_series
 
     def _simulate_competency_impact(
-        self,
-        option: dict,
-        baseline: dict[str, Any],
-        horizon_weeks: int
+        self, option: dict, baseline: dict[str, Any], horizon_weeks: int
     ) -> tuple[list[MetricValue], dict]:
         """역량 갭 영향도 시뮬레이션"""
 
@@ -468,11 +445,7 @@ class ImpactSimulatorAgent:
 
         return metrics, time_series
 
-    def _simulate_generic_impact(
-        self,
-        option: dict,
-        baseline: dict[str, Any]
-    ) -> list[MetricValue]:
+    def _simulate_generic_impact(self, option: dict, baseline: dict[str, Any]) -> list[MetricValue]:
         """일반 영향도 시뮬레이션"""
         return [
             MetricValue(
@@ -485,11 +458,7 @@ class ImpactSimulatorAgent:
         ]
 
     def _generate_time_series(
-        self,
-        start_value: float,
-        end_value: float,
-        weeks: int,
-        option_type: str
+        self, start_value: float, end_value: float, weeks: int, option_type: str
     ) -> list[TimeSeriesPoint]:
         """시계열 데이터 생성"""
         points = []
@@ -508,11 +477,13 @@ class ImpactSimulatorAgent:
 
             to_be = start_value + (end_value - start_value) * progress
 
-            points.append(TimeSeriesPoint(
-                period=f"W{week:02d}",
-                as_is_value=start_value,
-                to_be_value=to_be,
-            ))
+            points.append(
+                TimeSeriesPoint(
+                    period=f"W{week:02d}",
+                    as_is_value=start_value,
+                    to_be_value=to_be,
+                )
+            )
 
         return points
 
@@ -541,9 +512,7 @@ class ImpactSimulatorAgent:
         return weighted_score / total_weight if total_weight > 0 else 50.0
 
     def _calculate_confidence_interval(
-        self,
-        metrics: list[MetricValue],
-        option_type: str
+        self, metrics: list[MetricValue], option_type: str
     ) -> tuple[float, float]:
         """신뢰구간 계산"""
         base_score = self._calculate_overall_score(metrics)
@@ -560,18 +529,14 @@ class ImpactSimulatorAgent:
 
         return (round(lower, 1), round(upper, 1))
 
-    def _determine_best_option(
-        self,
-        analyses: list[ImpactAnalysis]
-    ) -> tuple[str, str]:
+    def _determine_best_option(self, analyses: list[ImpactAnalysis]) -> tuple[str, str]:
         """최적 옵션 결정"""
         if not analyses:
             return "", "분석할 옵션이 없습니다."
 
         # 신뢰구간 하한을 고려한 점수로 정렬
         scored = [
-            (a, a.confidence_interval[0] * 0.3 + a.overall_impact_score * 0.7)
-            for a in analyses
+            (a, a.confidence_interval[0] * 0.3 + a.overall_impact_score * 0.7) for a in analyses
         ]
         scored.sort(key=lambda x: x[1], reverse=True)
 
@@ -584,10 +549,7 @@ class ImpactSimulatorAgent:
 
         return best.option_id, reason
 
-    def _generate_comparison_summary(
-        self,
-        analyses: list[ImpactAnalysis]
-    ) -> dict[str, Any]:
+    def _generate_comparison_summary(self, analyses: list[ImpactAnalysis]) -> dict[str, Any]:
         """비교 요약 생성"""
         summary = {
             "option_count": len(analyses),
@@ -700,7 +662,9 @@ if __name__ == "__main__":
         print(f"  종합 점수: {analysis.overall_impact_score:.1f}")
         print(f"  신뢰구간: {analysis.confidence_interval}")
         for m in analysis.metrics:
-            print(f"  - {m.name}: {m.as_is_value:.1f} → {m.to_be_value:.1f} ({m.change_percent:+.1f}%)")
+            print(
+                f"  - {m.name}: {m.as_is_value:.1f} → {m.to_be_value:.1f} ({m.change_percent:+.1f}%)"
+            )
 
     print(f"\n최적 옵션: {result.best_option_id}")
     print(f"이유: {result.best_option_reason}")

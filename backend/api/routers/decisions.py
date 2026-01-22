@@ -1,4 +1,5 @@
 """의사결정 API 라우터"""
+
 import uuid
 from datetime import UTC, datetime
 from typing import Any

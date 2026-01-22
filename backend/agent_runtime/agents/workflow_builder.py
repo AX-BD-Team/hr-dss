@@ -17,9 +17,10 @@ logger = logging.getLogger(__name__)
 
 class WorkflowStatus(Enum):
     """워크플로 상태"""
+
     PENDING = "PENDING"
     RUNNING = "RUNNING"
-    PAUSED = "PAUSED"          # HITL 대기
+    PAUSED = "PAUSED"  # HITL 대기
     COMPLETED = "COMPLETED"
     FAILED = "FAILED"
     CANCELLED = "CANCELLED"
@@ -27,6 +28,7 @@ class WorkflowStatus(Enum):
 
 class StepStatus(Enum):
     """단계 상태"""
+
     PENDING = "PENDING"
     RUNNING = "RUNNING"
     COMPLETED = "COMPLETED"
@@ -36,6 +38,7 @@ class StepStatus(Enum):
 
 class StepType(Enum):
     """단계 유형"""
+
     QUERY_DECOMPOSITION = "QUERY_DECOMPOSITION"
     KG_QUERY = "KG_QUERY"
     OPTION_GENERATION = "OPTION_GENERATION"
@@ -49,6 +52,7 @@ class StepType(Enum):
 @dataclass
 class StepResult:
     """단계 실행 결과"""
+
     step_id: str
     step_type: StepType
     status: StepStatus
@@ -62,6 +66,7 @@ class StepResult:
 @dataclass
 class WorkflowStep:
     """워크플로 단계"""
+
     step_id: str
     step_type: StepType
     name: str
@@ -76,6 +81,7 @@ class WorkflowStep:
 @dataclass
 class WorkflowDefinition:
     """워크플로 정의"""
+
     workflow_id: str
     name: str
     description: str
@@ -87,6 +93,7 @@ class WorkflowDefinition:
 @dataclass
 class WorkflowExecution:
     """워크플로 실행 인스턴스"""
+
     execution_id: str
     workflow_id: str
     status: WorkflowStatus
@@ -101,6 +108,7 @@ class WorkflowExecution:
 @dataclass
 class WorkflowContext:
     """워크플로 실행 컨텍스트"""
+
     user_query: str
     org_unit_id: str | None = None
     constraints: dict[str, Any] = field(default_factory=dict)
@@ -216,7 +224,7 @@ class WorkflowBuilderAgent:
         prev_step_id = None
 
         for i, step_type in enumerate(step_types):
-            step_id = f"STEP-{i+1:02d}-{step_type.value}"
+            step_id = f"STEP-{i + 1:02d}-{step_type.value}"
             step = WorkflowStep(
                 step_id=step_id,
                 step_type=step_type,
@@ -350,14 +358,22 @@ class WorkflowBuilderAgent:
         elif step.step_type == StepType.KG_QUERY:
             if self.kg_client:
                 # 실제 KG 쿼리 실행
-                query_type = context.decomposed_query.get("query_type", "CAPACITY") if context.decomposed_query else "CAPACITY"
+                query_type = (
+                    context.decomposed_query.get("query_type", "CAPACITY")
+                    if context.decomposed_query
+                    else "CAPACITY"
+                )
                 return self._execute_kg_query(query_type, context)
             return self._mock_kg_query(context)
 
         elif step.step_type == StepType.OPTION_GENERATION:
             agent = self.agents.get("option_generator")
             if agent:
-                query_type = context.decomposed_query.get("query_type", "CAPACITY") if context.decomposed_query else "CAPACITY"
+                query_type = (
+                    context.decomposed_query.get("query_type", "CAPACITY")
+                    if context.decomposed_query
+                    else "CAPACITY"
+                )
                 result = agent.generate_options(
                     query_type=query_type,
                     context=context.kg_results or {},
@@ -369,7 +385,11 @@ class WorkflowBuilderAgent:
         elif step.step_type == StepType.IMPACT_SIMULATION:
             agent = self.agents.get("impact_simulator")
             if agent and context.options:
-                query_type = context.decomposed_query.get("query_type", "CAPACITY") if context.decomposed_query else "CAPACITY"
+                query_type = (
+                    context.decomposed_query.get("query_type", "CAPACITY")
+                    if context.decomposed_query
+                    else "CAPACITY"
+                )
                 result = agent.simulate(
                     query_type=query_type,
                     options=context.options,
@@ -528,10 +548,7 @@ class WorkflowBuilderAgent:
         context.hitl_decision = hitl_result
 
         # 현재 HITL 단계 완료 처리
-        hitl_step = next(
-            (s for s in workflow.steps if s.step_type == StepType.HITL_APPROVAL),
-            None
-        )
+        hitl_step = next((s for s in workflow.steps if s.step_type == StepType.HITL_APPROVAL), None)
         if hitl_step:
             hitl_result_obj = StepResult(
                 step_id=hitl_step.step_id,
@@ -671,10 +688,12 @@ class WorkflowBuilderAgent:
         """컨텍스트에서 증거 수집"""
         evidence = []
         if context.kg_results:
-            evidence.append({
-                "source": "KG_QUERY",
-                "data": context.kg_results,
-            })
+            evidence.append(
+                {
+                    "source": "KG_QUERY",
+                    "data": context.kg_results,
+                }
+            )
         return evidence
 
     def _create_decision_log(self, context: WorkflowContext) -> dict:
@@ -683,8 +702,12 @@ class WorkflowBuilderAgent:
             "log_id": f"LOG-{datetime.now().strftime('%Y%m%d%H%M%S')}",
             "timestamp": datetime.now().isoformat(),
             "query": context.user_query,
-            "selected_option": context.hitl_decision.get("selected_option") if context.hitl_decision else None,
-            "decision_maker": context.hitl_decision.get("approver") if context.hitl_decision else None,
+            "selected_option": context.hitl_decision.get("selected_option")
+            if context.hitl_decision
+            else None,
+            "decision_maker": context.hitl_decision.get("approver")
+            if context.hitl_decision
+            else None,
             "rationale": context.hitl_decision.get("rationale") if context.hitl_decision else None,
         }
 
@@ -704,12 +727,10 @@ class WorkflowBuilderAgent:
             "status": execution.status.value,
             "current_step": execution.current_step_id,
             "steps_completed": sum(
-                1 for r in execution.step_results.values()
-                if r.status == StepStatus.COMPLETED
+                1 for r in execution.step_results.values() if r.status == StepStatus.COMPLETED
             ),
             "steps_failed": sum(
-                1 for r in execution.step_results.values()
-                if r.status == StepStatus.FAILED
+                1 for r in execution.step_results.values() if r.status == StepStatus.FAILED
             ),
             "started_at": execution.started_at.isoformat(),
             "completed_at": execution.completed_at.isoformat() if execution.completed_at else None,

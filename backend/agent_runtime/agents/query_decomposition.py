@@ -15,15 +15,17 @@ logger = logging.getLogger(__name__)
 
 class QueryType(Enum):
     """질문 유형"""
-    CAPACITY = "CAPACITY"           # A-1: 12주 Capacity 병목
-    GO_NOGO = "GO_NOGO"            # B-1: Go/No-go 의사결정
-    HEADCOUNT = "HEADCOUNT"        # C-1: 증원 분석
+
+    CAPACITY = "CAPACITY"  # A-1: 12주 Capacity 병목
+    GO_NOGO = "GO_NOGO"  # B-1: Go/No-go 의사결정
+    HEADCOUNT = "HEADCOUNT"  # C-1: 증원 분석
     COMPETENCY_GAP = "COMPETENCY_GAP"  # D-1: 역량 갭 분석
     UNKNOWN = "UNKNOWN"
 
 
 class DataSource(Enum):
     """데이터 소스"""
+
     EMPLOYEE = "EMPLOYEE"
     ORG_UNIT = "ORG_UNIT"
     PROJECT = "PROJECT"
@@ -37,6 +39,7 @@ class DataSource(Enum):
 @dataclass
 class SubQuery:
     """분해된 하위 질의"""
+
     sub_query_id: str
     description: str
     data_sources: list[DataSource]
@@ -50,6 +53,7 @@ class SubQuery:
 @dataclass
 class DecomposedQuery:
     """분해된 질의 결과"""
+
     original_query: str
     query_type: QueryType
     intent: str
@@ -66,20 +70,33 @@ class QueryDecompositionAgent:
     # 질문 유형별 패턴
     QUERY_PATTERNS = {
         QueryType.CAPACITY: [
-            "가동률", "capacity", "병목", "bottleneck", "12주",
-            "인력 부족", "리소스", "resource", "utilization"
+            "가동률",
+            "capacity",
+            "병목",
+            "bottleneck",
+            "12주",
+            "인력 부족",
+            "리소스",
+            "resource",
+            "utilization",
         ],
         QueryType.GO_NOGO: [
-            "go/no-go", "수주", "프로젝트 수락", "성공 확률",
-            "수행 가능", "리소스 매칭", "go no go"
+            "go/no-go",
+            "수주",
+            "프로젝트 수락",
+            "성공 확률",
+            "수행 가능",
+            "리소스 매칭",
+            "go no go",
         ],
-        QueryType.HEADCOUNT: [
-            "증원", "headcount", "인력 충원", "채용",
-            "인원 부족", "팀 확대"
-        ],
+        QueryType.HEADCOUNT: ["증원", "headcount", "인력 충원", "채용", "인원 부족", "팀 확대"],
         QueryType.COMPETENCY_GAP: [
-            "역량 갭", "competency gap", "스킬 부족",
-            "역량 개발", "교육 투자", "ROI"
+            "역량 갭",
+            "competency gap",
+            "스킬 부족",
+            "역량 개발",
+            "교육 투자",
+            "ROI",
         ],
     }
 
@@ -97,7 +114,13 @@ class QueryDecompositionAgent:
                 "id": "capacity_demand",
                 "description": "프로젝트/기회별 수요 조회",
                 "data_sources": [DataSource.PROJECT, DataSource.ASSIGNMENT, DataSource.DEMAND],
-                "required_fields": ["projectId", "quantityFTE", "probability", "startDate", "endDate"],
+                "required_fields": [
+                    "projectId",
+                    "quantityFTE",
+                    "probability",
+                    "startDate",
+                    "endDate",
+                ],
                 "aggregations": ["SUM(quantityFTE * probability) BY orgUnitId, timeBucket"],
             },
             {
@@ -122,13 +145,23 @@ class QueryDecompositionAgent:
                 "id": "opportunity_info",
                 "description": "기회 정보 조회",
                 "data_sources": [DataSource.OPPORTUNITY],
-                "required_fields": ["opportunityId", "name", "dealValue", "estimatedFTE", "requiredCompetencies"],
+                "required_fields": [
+                    "opportunityId",
+                    "name",
+                    "dealValue",
+                    "estimatedFTE",
+                    "requiredCompetencies",
+                ],
                 "aggregations": [],
             },
             {
                 "id": "resource_availability",
                 "description": "리소스 가용성 조회",
-                "data_sources": [DataSource.EMPLOYEE, DataSource.AVAILABILITY, DataSource.ASSIGNMENT],
+                "data_sources": [
+                    DataSource.EMPLOYEE,
+                    DataSource.AVAILABILITY,
+                    DataSource.ASSIGNMENT,
+                ],
                 "required_fields": ["employeeId", "availableFTE", "competencies"],
                 "aggregations": ["SUM(availableFTE) BY competency"],
             },
@@ -283,11 +316,7 @@ class QueryDecompositionAgent:
         }
         return intent_templates.get(query_type, "알 수 없는 의도")
 
-    def _extract_constraints(
-        self,
-        query: str,
-        context: dict | None
-    ) -> dict[str, Any]:
+    def _extract_constraints(self, query: str, context: dict | None) -> dict[str, Any]:
         """제약조건 추출"""
         constraints = {}
 
@@ -323,9 +352,7 @@ class QueryDecompositionAgent:
         return constraints
 
     def _generate_sub_queries(
-        self,
-        query_type: QueryType,
-        constraints: dict[str, Any]
+        self, query_type: QueryType, constraints: dict[str, Any]
     ) -> list[SubQuery]:
         """하위 질의 생성"""
         templates = self.QUERY_TEMPLATES.get(query_type, [])
@@ -349,10 +376,7 @@ class QueryDecompositionAgent:
 
         return sub_queries
 
-    def _determine_execution_order(
-        self,
-        sub_queries: list[SubQuery]
-    ) -> list[str]:
+    def _determine_execution_order(self, sub_queries: list[SubQuery]) -> list[str]:
         """실행 순서 결정 (의존성 기반 위상 정렬)"""
         # 의존성 그래프 생성
         graph = {sq.sub_query_id: sq.dependencies for sq in sub_queries}
@@ -374,11 +398,7 @@ class QueryDecompositionAgent:
 
         return order
 
-    def _calculate_confidence(
-        self,
-        query_type: QueryType,
-        constraints: dict[str, Any]
-    ) -> float:
+    def _calculate_confidence(self, query_type: QueryType, constraints: dict[str, Any]) -> float:
         """신뢰도 계산"""
         base_confidence = 0.5 if query_type == QueryType.UNKNOWN else 0.8
 
@@ -425,7 +445,7 @@ if __name__ == "__main__":
     ]
 
     for query in test_queries:
-        print(f"\n{'='*60}")
+        print(f"\n{'=' * 60}")
         print(f"Query: {query}")
         print("=" * 60)
 

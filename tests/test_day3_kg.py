@@ -105,7 +105,9 @@ class TestKGSchema:
 
         # 역량 관계 중 하나 이상 존재 확인
         has_competency_rel = any(rel in defined_rels for rel in competency_alternatives)
-        assert has_competency_rel, f"Missing competency relationship (expected one of {competency_alternatives})"
+        assert has_competency_rel, (
+            f"Missing competency relationship (expected one of {competency_alternatives})"
+        )
 
 
 @pytest.mark.day3

@@ -1,4 +1,5 @@
 """헬스 체크 라우터"""
+
 from datetime import UTC, datetime
 
 from fastapi import APIRouter

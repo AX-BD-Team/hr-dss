@@ -1,4 +1,5 @@
 """Knowledge Graph API 라우터"""
+
 from typing import Any
 
 from fastapi import APIRouter, HTTPException, Query

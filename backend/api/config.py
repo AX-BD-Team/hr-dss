@@ -1,4 +1,5 @@
 """API 설정"""
+
 from pydantic_settings import BaseSettings
 
 

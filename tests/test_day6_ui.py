@@ -275,9 +275,7 @@ class TestDay6Acceptance:
             "GraphViewer.tsx",
         ]
 
-        missing = [
-            comp for comp in required_components if not (COMPONENTS_DIR / comp).exists()
-        ]
+        missing = [comp for comp in required_components if not (COMPONENTS_DIR / comp).exists()]
 
         assert len(missing) == 0, f"Missing components: {missing}"
 

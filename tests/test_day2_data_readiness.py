@@ -22,7 +22,9 @@ class TestMockDataSchema:
         required = ["employeeId", "name", "orgUnitId", "jobRoleId"]
         for emp in persons_data.get("employees", []):
             for field in required:
-                assert field in emp, f"Missing field '{field}' in employee {emp.get('employeeId', 'unknown')}"
+                assert field in emp, (
+                    f"Missing field '{field}' in employee {emp.get('employeeId', 'unknown')}"
+                )
 
     def test_persons_id_format(self, persons_data):
         """TC-D2-01-01: employeeId 형식 검증 (EMP-XXXXXX)"""
@@ -41,14 +43,18 @@ class TestMockDataSchema:
         required = ["projectId", "name", "status", "startDate"]
         for proj in projects_data.get("projects", []):
             for field in required:
-                assert field in proj, f"Missing field '{field}' in project {proj.get('projectId', 'unknown')}"
+                assert field in proj, (
+                    f"Missing field '{field}' in project {proj.get('projectId', 'unknown')}"
+                )
 
     def test_projects_status_enum(self, projects_data):
         """TC-D2-01-02: projects status ENUM 검증"""
         valid_statuses = {"ACTIVE", "COMPLETED", "PLANNED", "ON_HOLD"}
         for proj in projects_data.get("projects", []):
             status = proj.get("status", "")
-            assert status in valid_statuses, f"Invalid status '{status}' in project {proj.get('projectId')}"
+            assert status in valid_statuses, (
+                f"Invalid status '{status}' in project {proj.get('projectId')}"
+            )
 
     def test_skills_count(self, skills_data):
         """TC-D2-01-03: skills 역량 데이터 수량 (>= 40)"""
@@ -60,7 +66,9 @@ class TestMockDataSchema:
         required = ["competencyId", "name", "category"]
         for comp in skills_data.get("competencies", []):
             for field in required:
-                assert field in comp, f"Missing field '{field}' in competency {comp.get('competencyId', 'unknown')}"
+                assert field in comp, (
+                    f"Missing field '{field}' in competency {comp.get('competencyId', 'unknown')}"
+                )
 
     def test_orgs_count(self, orgs_data):
         """TC-D2-01-04: orgs 데이터 수량 (>= 20)"""
@@ -72,7 +80,9 @@ class TestMockDataSchema:
         required = ["orgUnitId", "name"]
         for org in orgs_data.get("orgUnits", []):
             for field in required:
-                assert field in org, f"Missing field '{field}' in orgUnit {org.get('orgUnitId', 'unknown')}"
+                assert field in org, (
+                    f"Missing field '{field}' in orgUnit {org.get('orgUnitId', 'unknown')}"
+                )
 
     def test_opportunities_count(self, opportunities_data):
         """TC-D2-01-05: opportunities 데이터 수량 (>= 10)"""
@@ -84,7 +94,9 @@ class TestMockDataSchema:
         required = ["opportunityId", "name", "dealValue", "stage"]
         for opp in opportunities_data.get("opportunities", []):
             for field in required:
-                assert field in opp, f"Missing field '{field}' in opportunity {opp.get('opportunityId', 'unknown')}"
+                assert field in opp, (
+                    f"Missing field '{field}' in opportunity {opp.get('opportunityId', 'unknown')}"
+                )
 
     def test_assignments_count(self, assignments_data):
         """TC-D2-01-06: assignments 데이터 수량 (>= 30)"""
@@ -96,7 +108,9 @@ class TestMockDataSchema:
         required = ["assignmentId", "employeeId", "projectId", "allocationFTE"]
         for asn in assignments_data.get("assignments", []):
             for field in required:
-                assert field in asn, f"Missing field '{field}' in assignment {asn.get('assignmentId', 'unknown')}"
+                assert field in asn, (
+                    f"Missing field '{field}' in assignment {asn.get('assignmentId', 'unknown')}"
+                )
 
 
 @pytest.mark.day2

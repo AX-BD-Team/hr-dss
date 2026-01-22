@@ -57,6 +57,8 @@ node_modules/
 .turbo/
 .next/
 out/
+*.tsbuildinfo
+next-env.d.ts
 
 # Build
 dist/

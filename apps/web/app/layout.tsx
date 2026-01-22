@@ -24,6 +24,7 @@ export default function RootLayout({
                 <a href="/decisions" className="nav-link">의사결정</a>
                 <a href="/dashboard" className="nav-link">대시보드</a>
                 <a href="/graph" className="nav-link">KG 뷰어</a>
+                <a href="/docs" className="nav-link">Docs</a>
               </nav>
             </div>
           </header>

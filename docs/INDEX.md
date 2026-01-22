@@ -1,6 +1,6 @@
 # HR 의사결정 지원 시스템 - 문서 인덱스
 
-> 마지막 업데이트: 2025-01-30
+> 마지막 업데이트: 2025-01-22
 
 ---
 
@@ -76,6 +76,9 @@
 | Explanation Panel | `apps/web/components/ExplanationPanel.tsx` | ✅ 완료 |
 | Eval Dashboard (운영자용) | `apps/web/components/EvalDashboard.tsx` | ✅ 완료 |
 | Graph Viewer | `apps/web/components/GraphViewer.tsx` | ✅ 완료 |
+| Docs Viewer | `apps/web/app/docs/` | ✅ 완료 |
+| Markdown Viewer | `apps/web/components/MarkdownViewer.tsx` | ✅ 완료 |
+| Docs Sidebar | `apps/web/components/DocsSidebar.tsx` | ✅ 완료 |
 
 ### P8: 검증 + 결과 리포트 (1/30)
 
@@ -92,6 +95,15 @@
 |--------|------|------|
 | Phase 1 상세 계획 | [docs/specs/phase1-plan.md](./specs/phase1-plan.md) | ✅ 완료 |
 | Cloudflare 배포 계획 | [docs/specs/cloudflare-deployment-plan.md](./specs/cloudflare-deployment-plan.md) | ✅ 완료 |
+
+---
+
+## 배포 가이드
+
+| 가이드 | 설명 | 상태 |
+|--------|------|------|
+| [Phase 1: FastAPI 구현](./guides/phase1-fastapi-implementation.md) | Backend API 라우터 구현 가이드 | 🚧 진행중 |
+| [Phase 2: 인프라 설정](./guides/phase2-infrastructure-setup.md) | Cloudflare, Railway, Neo4j 설정 가이드 | 🚧 진행중 |
 
 ---
 

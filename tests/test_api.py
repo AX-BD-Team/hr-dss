@@ -1,5 +1,7 @@
 """API 테스트"""
 
+from unittest.mock import patch
+
 from fastapi.testclient import TestClient
 
 from backend.api.main import app
@@ -165,8 +167,12 @@ class TestGraphEndpoints:
         data = response.json()
         assert "node_types" in data
 
-    def test_execute_query(self):
+    @patch("backend.api.routers.graph.Neo4jService.execute_query")
+    def test_execute_query(self, mock_execute):
         """쿼리 실행 테스트"""
+        # Neo4j mock 설정
+        mock_execute.return_value = [{"n": {"id": "test-1", "name": "Test Node"}}]
+
         response = client.post(
             "/api/v1/graph/query",
             json={"cypher": "MATCH (n) RETURN n LIMIT 10"},
@@ -183,8 +189,12 @@ class TestGraphEndpoints:
         )
         assert response.status_code == 400
 
-    def test_search_graph(self):
+    @patch("backend.api.routers.graph.Neo4jService.search")
+    def test_search_graph(self, mock_search):
         """그래프 검색 테스트"""
+        # Neo4j mock 설정
+        mock_search.return_value = []
+
         response = client.get("/api/v1/graph/search", params={"q": "test"})
         assert response.status_code == 200
         data = response.json()

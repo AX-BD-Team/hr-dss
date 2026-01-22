@@ -29,7 +29,11 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 30
 
     # CORS
-    allowed_origins: list[str] = ["http://localhost:3000"]
+    allowed_origins: list[str] = [
+        "http://localhost:3000",
+        "https://hr.minu.best",
+        "https://hr-dss-web.pages.dev",
+    ]
 
     model_config = {
         "env_file": ".env",

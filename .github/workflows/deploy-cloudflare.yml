@@ -96,7 +96,7 @@ jobs:
           command: deploy --env production
 
   # ===================================
-  # Backend - Railway
+  # Backend - Railway (GitHub 연동으로 자동 배포)
   # ===================================
   deploy-backend:
     name: Deploy Backend (Railway)
@@ -105,17 +105,10 @@ jobs:
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install Railway CLI
-        run: npm install -g @railway/cli
-
-      - name: Deploy to Railway
-        run: railway up --detach
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }}
+      - name: Railway Auto-Deploy Notice
+        run: |
+          echo "Railway는 GitHub 연동으로 자동 배포됩니다."
+          echo "배포 상태: https://railway.app/project/${{ secrets.RAILWAY_PROJECT_ID }}"
 
   # ===================================
   # 배포 완료 알림

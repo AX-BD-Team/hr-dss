@@ -17,7 +17,7 @@ try:
     NEO4J_AVAILABLE = True
 except ImportError:
     NEO4J_AVAILABLE = False
-    AsyncDriver = Any
+    AsyncDriver = Any  # type: ignore[misc,assignment]
 
 security = HTTPBearer(auto_error=False)
 

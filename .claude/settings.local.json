@@ -38,7 +38,29 @@
       "Bash(__NEW_LINE_37680f9a78ad12db__ echo \"\")",
       "Bash(gh run:*)",
       "Bash(railway:*)",
-      "Bash(pnpm format:*)"
+      "Bash(pnpm format:*)",
+      "Bash(gh secret set:*)",
+      "Bash(gh secret:*)",
+      "Bash(gh workflow run:*)",
+      "Bash(docker build:*)",
+      "WebFetch(domain:hr-dss-web.pages.dev)",
+      "WebFetch(domain:hr-dss-api-gateway.sinclair-account.workers.dev)",
+      "WebFetch(domain:api-backend.hr.minu.best)",
+      "WebFetch(domain:hr-dssweb-production.up.railway.app)",
+      "WebFetch(domain:hr.minu.best)",
+      "Bash(__NEW_LINE_e30a56cd3d50fdc3__ echo -e \"\\\\n\\\\n=== /api/v1/graph/stats ===\")",
+      "Bash(__NEW_LINE_e30a56cd3d50fdc3__ echo -e \"\\\\n\\\\n=== /api/v1/graph/nodes ===\")",
+      "Bash(__NEW_LINE_e30a56cd3d50fdc3__ echo -e \"\\\\n\\\\n=== /api/v1/graph/search?q=test ===\")",
+      "Bash(tree:*)",
+      "Bash(du:*)",
+      "Bash(find:*)",
+      "Bash(ping:*)",
+      "Bash(ls:*)",
+      "Bash(taskkill:*)",
+      "Bash(pkill:*)",
+      "Bash(gh api:*)",
+      "Bash(ruff format:*)",
+      "Bash(npx prettier:*)"
     ]
   }
 }

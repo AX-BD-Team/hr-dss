@@ -57,13 +57,15 @@ RUN pip install --upgrade pip && \
 # 애플리케이션 코드 복사
 COPY backend/ ./backend/
 COPY data/ ./data/
+COPY entrypoint.sh ./entrypoint.sh
 
-# 비루트 사용자 생성
-RUN useradd --create-home --shell /bin/bash appuser && \
+# 비루트 사용자 생성 및 권한 설정
+RUN chmod +x ./entrypoint.sh && \
+    useradd --create-home --shell /bin/bash appuser && \
     chown -R appuser:appuser /app
 USER appuser
 
 # 프로덕션 서버 실행 (Railway는 $PORT 환경변수 사용)
 EXPOSE 8000
 ENV PORT=8000
-CMD ["/bin/sh", "-c", "uvicorn backend.api.main:app --host 0.0.0.0 --port ${PORT} --workers 4"]
+ENTRYPOINT ["./entrypoint.sh"]

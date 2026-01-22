@@ -22,8 +22,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # ----------------------------
 FROM base AS builder
 
-# 의존성 파일 복사 및 설치
-COPY pyproject.toml ./
+# 의존성 파일 복사 및 설치 (README.md는 hatchling 빌드에 필요)
+COPY pyproject.toml README.md ./
 RUN pip install --upgrade pip && \
     pip install hatchling && \
     pip install .
@@ -33,8 +33,8 @@ RUN pip install --upgrade pip && \
 # ----------------------------
 FROM base AS development
 
-# 개발 의존성 포함 설치
-COPY pyproject.toml ./
+# 개발 의존성 포함 설치 (README.md는 hatchling 빌드에 필요)
+COPY pyproject.toml README.md ./
 RUN pip install --upgrade pip && \
     pip install -e ".[dev]"
 
@@ -49,8 +49,8 @@ CMD ["uvicorn", "backend.api.main:app", "--host", "0.0.0.0", "--port", "8000", "
 # ----------------------------
 FROM base AS production
 
-# 런타임 전용 의존성 설치
-COPY pyproject.toml ./
+# 런타임 전용 의존성 설치 (README.md는 hatchling 빌드에 필요)
+COPY pyproject.toml README.md ./
 RUN pip install --upgrade pip && \
     pip install .
 

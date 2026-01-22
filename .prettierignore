@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+.venv/
+
+# Build outputs
+.next/
+out/
+dist/
+build/
+
+# Lock files
+pnpm-lock.yaml
+package-lock.json
+
+# Claude Code config (markdown 포맷 유지)
+.claude/
+
+# Data files
+data/
+
+# Coverage
+coverage/
+.coverage
+htmlcov/
+
+# Cache
+.pytest_cache/
+__pycache__/
+.mypy_cache/
+.ruff_cache/
+
+# IDE
+.idea/
+.vscode/
+
+# Generated
+*.min.js
+*.min.css

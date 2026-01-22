@@ -9,11 +9,11 @@
 
 현재 테스트 현황: **139 passed, 0 skipped** ✅
 
-| 구분 | 스킵 수 | 원인 | 상태 |
-|------|---------|------|------|
-| Day 3 (KG) | ~~12~~ 0 | ~~Neo4j 미연결~~ Mock 기반으로 전환 | ✅ 완료 |
-| Day 5 (HITL) | ~~9~~ 0 | ~~API 불일치~~ | ✅ 완료 |
-| Day 7 (AC) | 0 | 목표값 검증 (통과) | ✅ 완료 |
+| 구분         | 스킵 수  | 원인                                | 상태    |
+| ------------ | -------- | ----------------------------------- | ------- |
+| Day 3 (KG)   | ~~12~~ 0 | ~~Neo4j 미연결~~ Mock 기반으로 전환 | ✅ 완료 |
+| Day 5 (HITL) | ~~9~~ 0  | ~~API 불일치~~                      | ✅ 완료 |
+| Day 7 (AC)   | 0        | 목표값 검증 (통과)                  | ✅ 완료 |
 
 ---
 
@@ -35,13 +35,13 @@
 
 **불일치 항목:**
 
-| 테스트 기대 | 실제 구현 | 조치 |
-|-------------|-----------|------|
-| `HITLApprovalManager` | `HITLApprovalSystem` | Alias 추가 |
-| `manager.create_approval_request(decision_type, context)` | `system.create_approval_request(execution_id, decision_type, context, requester_id)` | 파라미터 조정 |
-| `manager.process_approval(request_id, decision, approver_id, comment)` | `system.submit_response(request_id, status, approver_id, ...)` | 래퍼 메서드 추가 |
-| `manager.escalate_request(request_id, escalated_by, reason)` | `system.escalate_request(request_id, escalation_reason, escalated_by)` | 파라미터 순서 조정 |
-| `request.status` | `ApprovalStatus` enum | 일치 확인 |
+| 테스트 기대                                                            | 실제 구현                                                                            | 조치               |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------------------ |
+| `HITLApprovalManager`                                                  | `HITLApprovalSystem`                                                                 | Alias 추가         |
+| `manager.create_approval_request(decision_type, context)`              | `system.create_approval_request(execution_id, decision_type, context, requester_id)` | 파라미터 조정      |
+| `manager.process_approval(request_id, decision, approver_id, comment)` | `system.submit_response(request_id, status, approver_id, ...)`                       | 래퍼 메서드 추가   |
+| `manager.escalate_request(request_id, escalated_by, reason)`           | `system.escalate_request(request_id, escalation_reason, escalated_by)`               | 파라미터 순서 조정 |
+| `request.status`                                                       | `ApprovalStatus` enum                                                                | 일치 확인          |
 
 ### 작업 항목
 
@@ -250,13 +250,13 @@ def measure_response_time():
 
 ## 작업 우선순위 및 일정
 
-| 순서 | Phase | 작업 | 예상 시간 | 의존성 |
-|------|-------|------|----------|--------|
-| 1 | P1 | Day 5 HITL API 수정 | 2h | 없음 |
-| 2 | P2 | Neo4j AuraDB 설정 | 1h | 없음 |
-| 3 | P2 | 데이터 로더 실행 | 2h | 2 |
-| 4 | P2 | Day 3 테스트 통과 확인 | 1h | 3 |
-| 5 | P3 | AC 실측 스크립트 작성 | 2h | 없음 |
+| 순서 | Phase | 작업                   | 예상 시간 | 의존성 |
+| ---- | ----- | ---------------------- | --------- | ------ |
+| 1    | P1    | Day 5 HITL API 수정    | 2h        | 없음   |
+| 2    | P2    | Neo4j AuraDB 설정      | 1h        | 없음   |
+| 3    | P2    | 데이터 로더 실행       | 2h        | 2      |
+| 4    | P2    | Day 3 테스트 통과 확인 | 1h        | 3      |
+| 5    | P3    | AC 실측 스크립트 작성  | 2h        | 없음   |
 
 **총 예상 시간: 8시간**
 
@@ -286,12 +286,12 @@ pytest tests/ -v
 
 ## 성공 지표
 
-| 지표 | 이전 | 현재 | 목표 |
-|------|------|------|------|
+| 지표               | 이전          | 현재                  | 목표           |
+| ------------------ | ------------- | --------------------- | -------------- |
 | 전체 테스트 통과율 | 127/139 (91%) | **139/139 (100%)** ✅ | 139/139 (100%) |
-| Day 3 통과 | 2/14 (14%) | **14/14 (100%)** ✅ | 14/14 (100%) |
-| Day 5 통과 | 8/17 (47%) | **20/20 (100%)** ✅ | 20/20 (100%) |
-| Day 7 통과 | 30/33 (91%) | **33/33 (100%)** ✅ | 33/33 (100%) |
+| Day 3 통과         | 2/14 (14%)    | **14/14 (100%)** ✅   | 14/14 (100%)   |
+| Day 5 통과         | 8/17 (47%)    | **20/20 (100%)** ✅   | 20/20 (100%)   |
+| Day 7 통과         | 30/33 (91%)   | **33/33 (100%)** ✅   | 33/33 (100%)   |
 
 > **모든 테스트 통과!** Day 3 Neo4j 테스트는 Mock 기반으로 전환하여 외부 의존성 없이 실행됩니다.
 

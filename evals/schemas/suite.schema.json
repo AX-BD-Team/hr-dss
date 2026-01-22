@@ -96,7 +96,7 @@
             },
             "required_tasks": {
               "type": "array",
-              "items": {"type": "string"},
+              "items": { "type": "string" },
               "description": "필수 통과 Task ID 목록"
             },
             "allow_regressions": {
@@ -130,19 +130,19 @@
           "properties": {
             "on_failure": {
               "type": "array",
-              "items": {"type": "string"},
+              "items": { "type": "string" },
               "description": "실패 시 알림 대상"
             },
             "on_regression": {
               "type": "array",
-              "items": {"type": "string"},
+              "items": { "type": "string" },
               "description": "회귀 발생 시 알림 대상"
             }
           }
         },
         "tags": {
           "type": "array",
-          "items": {"type": "string"},
+          "items": { "type": "string" },
           "description": "분류 태그"
         }
       },

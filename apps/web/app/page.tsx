@@ -1,11 +1,13 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export default function HomePage() {
-  const [systemStatus, setSystemStatus] = React.useState<'loading' | 'healthy' | 'error'>('loading');
+  const [systemStatus, setSystemStatus] = React.useState<
+    "loading" | "healthy" | "error"
+  >("loading");
 
   React.useEffect(() => {
     // API 상태 확인 (타임아웃 3초)
@@ -13,8 +15,10 @@ export default function HomePage() {
     const timeoutId = setTimeout(() => controller.abort(), 3000);
 
     fetch(`${API_URL}/health`, { signal: controller.signal })
-      .then((res) => res.ok ? setSystemStatus('healthy') : setSystemStatus('error'))
-      .catch(() => setSystemStatus('error'))
+      .then((res) =>
+        res.ok ? setSystemStatus("healthy") : setSystemStatus("error"),
+      )
+      .catch(() => setSystemStatus("error"))
       .finally(() => clearTimeout(timeoutId));
   }, []);
 
@@ -41,20 +45,20 @@ export default function HomePage() {
           <div className="status-indicator">
             <span
               className={`badge ${
-                systemStatus === 'healthy'
-                  ? 'badge-success'
-                  : systemStatus === 'error'
-                  ? 'badge-warning'
-                  : 'badge-info'
+                systemStatus === "healthy"
+                  ? "badge-success"
+                  : systemStatus === "error"
+                    ? "badge-warning"
+                    : "badge-info"
               }`}
             >
-              {systemStatus === 'healthy'
-                ? '정상 운영 중'
-                : systemStatus === 'error'
-                ? '백엔드 미연결'
-                : '확인 중...'}
+              {systemStatus === "healthy"
+                ? "정상 운영 중"
+                : systemStatus === "error"
+                  ? "백엔드 미연결"
+                  : "확인 중..."}
             </span>
-            {systemStatus === 'error' && (
+            {systemStatus === "error" && (
               <span className="status-hint">
                 (프론트엔드 전용 모드로 실행 중)
               </span>

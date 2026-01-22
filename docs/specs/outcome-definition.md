@@ -16,12 +16,12 @@
 
 프로젝트의 성공/실패는 다음 기준으로 판정합니다:
 
-| 기준 | 가중치 | 성공 조건 | 측정 방법 | 데이터 소스 |
-|------|--------|----------|----------|-------------|
-| **납기 준수** | 40% | 실제 종료일 ≤ 계획 종료일 + 허용오차 | `actualEndDate - plannedEndDate` | TMS |
-| **마진 목표 달성** | 30% | 실제 마진 ≥ 목표 마진 × 0.9 | `actualMargin / targetMargin` | 정산 데이터 |
-| **품질 목표 달성** | 20% | 클레임 건수 = 0, 재작업률 < 5% | 클레임/재작업 건수 | QA 시스템 |
-| **고객 만족** | 10% | CSAT ≥ 4.0 (5점 만점) | 고객 설문 | CRM |
+| 기준               | 가중치 | 성공 조건                            | 측정 방법                        | 데이터 소스 |
+| ------------------ | ------ | ------------------------------------ | -------------------------------- | ----------- |
+| **납기 준수**      | 40%    | 실제 종료일 ≤ 계획 종료일 + 허용오차 | `actualEndDate - plannedEndDate` | TMS         |
+| **마진 목표 달성** | 30%    | 실제 마진 ≥ 목표 마진 × 0.9          | `actualMargin / targetMargin`    | 정산 데이터 |
+| **품질 목표 달성** | 20%    | 클레임 건수 = 0, 재작업률 < 5%       | 클레임/재작업 건수               | QA 시스템   |
+| **고객 만족**      | 10%    | CSAT ≥ 4.0 (5점 만점)                | 고객 설문                        | CRM         |
 
 ### 2.2 종합 성공 점수 계산
 
@@ -47,13 +47,13 @@ def calculate_success_score(project: dict) -> float:
 
 ### 2.3 성공 등급 분류
 
-| 등급 | 점수 범위 | 설명 | 라벨 |
-|------|----------|------|------|
-| **A (Excellent)** | 90-100 | 모든 목표 초과 달성 | SUCCESS |
-| **B (Good)** | 75-89 | 대부분 목표 달성 | SUCCESS |
-| **C (Acceptable)** | 60-74 | 최소 요건 충족 | PARTIAL |
-| **D (Poor)** | 40-59 | 일부 목표 미달 | PARTIAL |
-| **F (Failure)** | 0-39 | 심각한 미달 | FAILURE |
+| 등급               | 점수 범위 | 설명                | 라벨    |
+| ------------------ | --------- | ------------------- | ------- |
+| **A (Excellent)**  | 90-100    | 모든 목표 초과 달성 | SUCCESS |
+| **B (Good)**       | 75-89     | 대부분 목표 달성    | SUCCESS |
+| **C (Acceptable)** | 60-74     | 최소 요건 충족      | PARTIAL |
+| **D (Poor)**       | 40-59     | 일부 목표 미달      | PARTIAL |
+| **F (Failure)**    | 0-39      | 심각한 미달         | FAILURE |
 
 ---
 
@@ -61,14 +61,14 @@ def calculate_success_score(project: dict) -> float:
 
 ### 3.1 납기 준수 (Schedule Adherence)
 
-| 상태 | 조건 | 점수 |
-|------|------|------|
-| Early | `actual <= planned - 7days` | 100 |
-| On-time | `planned - 7days < actual <= planned` | 95 |
-| Minor Delay | `planned < actual <= planned + 14days` | 75 |
-| Moderate Delay | `planned + 14days < actual <= planned + 30days` | 50 |
-| Major Delay | `actual > planned + 30days` | 20 |
-| Not Completed | 프로젝트 미완료 | 0 |
+| 상태           | 조건                                            | 점수 |
+| -------------- | ----------------------------------------------- | ---- |
+| Early          | `actual <= planned - 7days`                     | 100  |
+| On-time        | `planned - 7days < actual <= planned`           | 95   |
+| Minor Delay    | `planned < actual <= planned + 14days`          | 75   |
+| Moderate Delay | `planned + 14days < actual <= planned + 30days` | 50   |
+| Major Delay    | `actual > planned + 30days`                     | 20   |
+| Not Completed  | 프로젝트 미완료                                 | 0    |
 
 ```python
 def calculate_schedule_score(project: dict) -> float:
@@ -94,13 +94,13 @@ def calculate_schedule_score(project: dict) -> float:
 
 ### 3.2 마진 달성 (Margin Achievement)
 
-| 상태 | 조건 | 점수 |
-|------|------|------|
-| Exceeded | `actual >= target × 1.1` | 100 |
-| Met | `target × 0.9 <= actual < target × 1.1` | 90 |
-| Near Miss | `target × 0.7 <= actual < target × 0.9` | 60 |
-| Below Target | `target × 0.5 <= actual < target × 0.7` | 30 |
-| Critical | `actual < target × 0.5` | 0 |
+| 상태         | 조건                                    | 점수 |
+| ------------ | --------------------------------------- | ---- |
+| Exceeded     | `actual >= target × 1.1`                | 100  |
+| Met          | `target × 0.9 <= actual < target × 1.1` | 90   |
+| Near Miss    | `target × 0.7 <= actual < target × 0.9` | 60   |
+| Below Target | `target × 0.5 <= actual < target × 0.7` | 30   |
+| Critical     | `actual < target × 0.5`                 | 0    |
 
 ```python
 def calculate_margin_score(project: dict) -> float:
@@ -126,23 +126,23 @@ def calculate_margin_score(project: dict) -> float:
 
 ### 3.3 품질 (Quality)
 
-| 상태 | 조건 | 점수 |
-|------|------|------|
-| Excellent | 클레임 0건 + 재작업률 0% | 100 |
-| Good | 클레임 0건 + 재작업률 < 5% | 85 |
-| Acceptable | 클레임 1-2건 또는 재작업률 5-10% | 60 |
-| Poor | 클레임 3건 이상 또는 재작업률 10-20% | 30 |
-| Critical | 클레임 5건 이상 또는 재작업률 > 20% | 0 |
+| 상태       | 조건                                 | 점수 |
+| ---------- | ------------------------------------ | ---- |
+| Excellent  | 클레임 0건 + 재작업률 0%             | 100  |
+| Good       | 클레임 0건 + 재작업률 < 5%           | 85   |
+| Acceptable | 클레임 1-2건 또는 재작업률 5-10%     | 60   |
+| Poor       | 클레임 3건 이상 또는 재작업률 10-20% | 30   |
+| Critical   | 클레임 5건 이상 또는 재작업률 > 20%  | 0    |
 
 ### 3.4 고객 만족 (Customer Satisfaction)
 
-| 상태 | 조건 | 점수 |
-|------|------|------|
-| Excellent | CSAT ≥ 4.5 | 100 |
-| Good | 4.0 ≤ CSAT < 4.5 | 85 |
-| Acceptable | 3.5 ≤ CSAT < 4.0 | 60 |
-| Poor | 3.0 ≤ CSAT < 3.5 | 30 |
-| Critical | CSAT < 3.0 | 0 |
+| 상태       | 조건             | 점수 |
+| ---------- | ---------------- | ---- |
+| Excellent  | CSAT ≥ 4.5       | 100  |
+| Good       | 4.0 ≤ CSAT < 4.5 | 85   |
+| Acceptable | 3.5 ≤ CSAT < 4.0 | 60   |
+| Poor       | 3.0 ≤ CSAT < 3.5 | 30   |
+| Critical   | CSAT < 3.0       | 0    |
 
 ---
 
@@ -150,34 +150,34 @@ def calculate_margin_score(project: dict) -> float:
 
 ### 4.1 Go/No-go 의사결정용
 
-| Outcome | 설명 | 예측 시점 | 사용 질문 |
-|---------|------|----------|----------|
-| **SUCCESS_PROBABILITY** | 프로젝트 성공 확률 | 수주 전 | B-1 |
-| **EXPECTED_MARGIN** | 예상 마진율 | 수주 전 | B-1 |
-| **RESOURCE_FIT** | 리소스 매칭 적합도 | 수주 전 | B-1 |
-| **RISK_LEVEL** | 종합 리스크 수준 | 수주 전 | B-1 |
+| Outcome                 | 설명               | 예측 시점 | 사용 질문 |
+| ----------------------- | ------------------ | --------- | --------- |
+| **SUCCESS_PROBABILITY** | 프로젝트 성공 확률 | 수주 전   | B-1       |
+| **EXPECTED_MARGIN**     | 예상 마진율        | 수주 전   | B-1       |
+| **RESOURCE_FIT**        | 리소스 매칭 적합도 | 수주 전   | B-1       |
+| **RISK_LEVEL**          | 종합 리스크 수준   | 수주 전   | B-1       |
 
 ### 4.2 Capacity 예측용
 
-| Outcome | 설명 | 예측 시점 | 사용 질문 |
-|---------|------|----------|----------|
-| **UTILIZATION** | 가동률 | 향후 12주 | A-1 |
-| **BOTTLENECK_PROBABILITY** | 병목 발생 확률 | 향후 12주 | A-1 |
-| **DEMAND_ACCURACY** | 수요 예측 정확도 | 사후 검증 | A-1 |
+| Outcome                    | 설명             | 예측 시점 | 사용 질문 |
+| -------------------------- | ---------------- | --------- | --------- |
+| **UTILIZATION**            | 가동률           | 향후 12주 | A-1       |
+| **BOTTLENECK_PROBABILITY** | 병목 발생 확률   | 향후 12주 | A-1       |
+| **DEMAND_ACCURACY**        | 수요 예측 정확도 | 사후 검증 | A-1       |
 
 ### 4.3 증원 분석용
 
-| Outcome | 설명 | 예측 시점 | 사용 질문 |
-|---------|------|----------|----------|
-| **HEADCOUNT_JUSTIFIED** | 증원 정당성 | 요청 시점 | C-1 |
-| **ROOT_CAUSE_ACCURACY** | 원인 분석 정확도 | 사후 검증 | C-1 |
+| Outcome                 | 설명             | 예측 시점 | 사용 질문 |
+| ----------------------- | ---------------- | --------- | --------- |
+| **HEADCOUNT_JUSTIFIED** | 증원 정당성      | 요청 시점 | C-1       |
+| **ROOT_CAUSE_ACCURACY** | 원인 분석 정확도 | 사후 검증 | C-1       |
 
 ### 4.4 역량 갭 분석용
 
-| Outcome | 설명 | 예측 시점 | 사용 질문 |
-|---------|------|----------|----------|
-| **GAP_CLOSURE_RATE** | 갭 해소율 | 투자 후 1년 | D-1 |
-| **ROI_ACHIEVED** | ROI 달성 여부 | 투자 후 1년 | D-1 |
+| Outcome              | 설명          | 예측 시점   | 사용 질문 |
+| -------------------- | ------------- | ----------- | --------- |
+| **GAP_CLOSURE_RATE** | 갭 해소율     | 투자 후 1년 | D-1       |
+| **ROI_ACHIEVED**     | ROI 달성 여부 | 투자 후 1년 | D-1       |
 
 ---
 
@@ -231,11 +231,11 @@ def calculate_margin_score(project: dict) -> float:
 
 ### 5.3 라벨 품질 기준
 
-| 기준 | 목표 | 측정 방법 |
-|------|------|----------|
-| 완전성 | > 95% | 필수 필드 존재율 |
+| 기준   | 목표  | 측정 방법                   |
+| ------ | ----- | --------------------------- |
+| 완전성 | > 95% | 필수 필드 존재율            |
 | 일관성 | > 90% | 동일 케이스 재라벨링 일치율 |
-| 정확성 | > 85% | 전문가 검증 일치율 |
+| 정확성 | > 85% | 전문가 검증 일치율          |
 
 ---
 
@@ -308,12 +308,12 @@ def heuristic_utilization(org_unit: str, time_bucket: str) -> float:
 
 ### 7.1 예측 vs 실제 비교
 
-| 지표 | 계산 방법 | 목표 |
-|------|----------|------|
-| MAPE | `mean(abs(predicted - actual) / actual)` | < 20% |
-| 분류 정확도 | `correct_predictions / total_predictions` | > 80% |
-| Precision | `true_positive / (true_positive + false_positive)` | > 75% |
-| Recall | `true_positive / (true_positive + false_negative)` | > 75% |
+| 지표        | 계산 방법                                          | 목표  |
+| ----------- | -------------------------------------------------- | ----- |
+| MAPE        | `mean(abs(predicted - actual) / actual)`           | < 20% |
+| 분류 정확도 | `correct_predictions / total_predictions`          | > 80% |
+| Precision   | `true_positive / (true_positive + false_positive)` | > 75% |
+| Recall      | `true_positive / (true_positive + false_negative)` | > 75% |
 
 ### 7.2 피드백 루프
 
@@ -330,10 +330,10 @@ def heuristic_utilization(org_unit: str, time_bucket: str) -> float:
 
 ## 8. 버전 이력
 
-| 버전 | 날짜 | 변경 내용 |
-|------|------|----------|
-| 1.0 | 2025-01-24 | 초기 버전 작성 |
+| 버전 | 날짜       | 변경 내용      |
+| ---- | ---------- | -------------- |
+| 1.0  | 2025-01-24 | 초기 버전 작성 |
 
 ---
 
-*이 문서는 PoC 진행 중 Outcome 정의가 변경될 수 있습니다.*
+_이 문서는 PoC 진행 중 Outcome 정의가 변경될 수 있습니다._

@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 export interface DocItem {
   slug: string;
@@ -22,45 +22,105 @@ export interface DocsSidebarProps {
 // 문서 구조 정의
 export const docsStructure: DocCategory[] = [
   {
-    name: '개요',
-    icon: '📋',
+    name: "개요",
+    icon: "📋",
     items: [
-      { slug: 'INDEX', title: '문서 인덱스', path: 'INDEX.md' },
-      { slug: 'user-guide', title: '사용자 가이드', path: 'user-guide.md' },
-      { slug: 'api-docs', title: 'API 문서', path: 'api-docs.md' },
+      { slug: "INDEX", title: "문서 인덱스", path: "INDEX.md" },
+      { slug: "user-guide", title: "사용자 가이드", path: "user-guide.md" },
+      { slug: "api-docs", title: "API 문서", path: "api-docs.md" },
     ],
   },
   {
-    name: '명세 (Specs)',
-    icon: '📝',
+    name: "명세 (Specs)",
+    icon: "📝",
     items: [
-      { slug: 'specs/poc-charter', title: 'PoC Charter', path: 'specs/poc-charter.md' },
-      { slug: 'specs/question-set', title: 'Question Set', path: 'specs/question-set.md' },
-      { slug: 'specs/decision-criteria', title: 'Decision Criteria', path: 'specs/decision-criteria.md' },
-      { slug: 'specs/kpi-acceptance', title: 'KPI & Acceptance', path: 'specs/kpi-acceptance.md' },
-      { slug: 'specs/data-catalog', title: 'Data Catalog', path: 'specs/data-catalog.md' },
-      { slug: 'specs/join-key-standard', title: 'Join Key Standard', path: 'specs/join-key-standard.md' },
-      { slug: 'specs/data-classification', title: 'Data Classification', path: 'specs/data-classification.md' },
-      { slug: 'specs/outcome-definition', title: 'Outcome Definition', path: 'specs/outcome-definition.md' },
-      { slug: 'specs/demand-data-spec', title: 'Demand Data Spec', path: 'specs/demand-data-spec.md' },
-      { slug: 'specs/phase1-plan', title: 'Phase 1 계획', path: 'specs/phase1-plan.md' },
-      { slug: 'specs/cloudflare-deployment-plan', title: 'Cloudflare 배포 계획', path: 'specs/cloudflare-deployment-plan.md' },
+      {
+        slug: "specs/poc-charter",
+        title: "PoC Charter",
+        path: "specs/poc-charter.md",
+      },
+      {
+        slug: "specs/question-set",
+        title: "Question Set",
+        path: "specs/question-set.md",
+      },
+      {
+        slug: "specs/decision-criteria",
+        title: "Decision Criteria",
+        path: "specs/decision-criteria.md",
+      },
+      {
+        slug: "specs/kpi-acceptance",
+        title: "KPI & Acceptance",
+        path: "specs/kpi-acceptance.md",
+      },
+      {
+        slug: "specs/data-catalog",
+        title: "Data Catalog",
+        path: "specs/data-catalog.md",
+      },
+      {
+        slug: "specs/join-key-standard",
+        title: "Join Key Standard",
+        path: "specs/join-key-standard.md",
+      },
+      {
+        slug: "specs/data-classification",
+        title: "Data Classification",
+        path: "specs/data-classification.md",
+      },
+      {
+        slug: "specs/outcome-definition",
+        title: "Outcome Definition",
+        path: "specs/outcome-definition.md",
+      },
+      {
+        slug: "specs/demand-data-spec",
+        title: "Demand Data Spec",
+        path: "specs/demand-data-spec.md",
+      },
+      {
+        slug: "specs/phase1-plan",
+        title: "Phase 1 계획",
+        path: "specs/phase1-plan.md",
+      },
+      {
+        slug: "specs/cloudflare-deployment-plan",
+        title: "Cloudflare 배포 계획",
+        path: "specs/cloudflare-deployment-plan.md",
+      },
     ],
   },
   {
-    name: '리포트 (Reports)',
-    icon: '📊',
+    name: "리포트 (Reports)",
+    icon: "📊",
     items: [
-      { slug: 'reports/poc-final-report', title: 'PoC 최종 보고서', path: 'reports/poc-final-report.md' },
-      { slug: 'reports/comparison-report', title: '비교 분석 리포트', path: 'reports/comparison-report.md' },
+      {
+        slug: "reports/poc-final-report",
+        title: "PoC 최종 보고서",
+        path: "reports/poc-final-report.md",
+      },
+      {
+        slug: "reports/comparison-report",
+        title: "비교 분석 리포트",
+        path: "reports/comparison-report.md",
+      },
     ],
   },
   {
-    name: '가이드 (Guides)',
-    icon: '📚',
+    name: "가이드 (Guides)",
+    icon: "📚",
     items: [
-      { slug: 'guides/phase1-fastapi-implementation', title: 'FastAPI 구현 가이드', path: 'guides/phase1-fastapi-implementation.md' },
-      { slug: 'guides/phase2-infrastructure-setup', title: '인프라 설정 가이드', path: 'guides/phase2-infrastructure-setup.md' },
+      {
+        slug: "guides/phase1-fastapi-implementation",
+        title: "FastAPI 구현 가이드",
+        path: "guides/phase1-fastapi-implementation.md",
+      },
+      {
+        slug: "guides/phase2-infrastructure-setup",
+        title: "인프라 설정 가이드",
+        path: "guides/phase2-infrastructure-setup.md",
+      },
     ],
   },
 ];
@@ -70,7 +130,7 @@ export const DocsSidebar: React.FC<DocsSidebarProps> = ({
   currentSlug,
 }) => {
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
-    new Set(categories.map((c) => c.name))
+    new Set(categories.map((c) => c.name)),
   );
 
   const toggleCategory = (categoryName: string) => {
@@ -101,7 +161,7 @@ export const DocsSidebar: React.FC<DocsSidebarProps> = ({
               <span className="docs-category-name">{category.name}</span>
               <span
                 className={`docs-category-arrow ${
-                  expandedCategories.has(category.name) ? 'expanded' : ''
+                  expandedCategories.has(category.name) ? "expanded" : ""
                 }`}
               >
                 ▶
@@ -114,7 +174,7 @@ export const DocsSidebar: React.FC<DocsSidebarProps> = ({
                     <a
                       href={`/docs/${item.slug}`}
                       className={`docs-item-link ${
-                        currentSlug === item.slug ? 'active' : ''
+                        currentSlug === item.slug ? "active" : ""
                       }`}
                     >
                       {item.title}

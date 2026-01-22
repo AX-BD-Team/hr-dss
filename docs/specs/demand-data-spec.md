@@ -14,12 +14,12 @@
 
 ### 2.1 Demand 소스 분류
 
-| 유형 | 설명 | 확정도 | 데이터 소스 |
-|------|------|--------|-------------|
-| **Confirmed** | 확정 프로젝트 수요 | 100% | TMS (Project) |
-| **Pipeline** | 파이프라인 기회 | 가변 (10-90%) | CRM (Opportunity) |
-| **Forecast** | 예측 수요 | 추정치 | 영업 예측 |
-| **Internal** | 내부 투자 (R&D, 교육) | 계획 기반 | 내부 계획 |
+| 유형          | 설명                  | 확정도        | 데이터 소스       |
+| ------------- | --------------------- | ------------- | ----------------- |
+| **Confirmed** | 확정 프로젝트 수요    | 100%          | TMS (Project)     |
+| **Pipeline**  | 파이프라인 기회       | 가변 (10-90%) | CRM (Opportunity) |
+| **Forecast**  | 예측 수요             | 추정치        | 영업 예측         |
+| **Internal**  | 내부 투자 (R&D, 교육) | 계획 기반     | 내부 계획         |
 
 ### 2.2 Demand Signal 유형
 
@@ -65,28 +65,28 @@ DemandSignalTypes:
 ```typescript
 interface ResourceDemand {
   // 식별자
-  demandId: string;           // 형식: DEM-{YYYY}-{4digits}
+  demandId: string; // 형식: DEM-{YYYY}-{4digits}
 
   // 소스 정보
-  sourceType: 'PROJECT' | 'OPPORTUNITY' | 'FORECAST' | 'INTERNAL';
-  sourceId: string;           // projectId 또는 opportunityId
+  sourceType: "PROJECT" | "OPPORTUNITY" | "FORECAST" | "INTERNAL";
+  sourceId: string; // projectId 또는 opportunityId
 
   // 수요 상세
   requestedOrgUnitId: string; // 요청 조직
   requiredCompetencies: CompetencyRequirement[];
 
   // 수량 및 기간
-  quantityFTE: number;        // 필요 FTE
-  startDate: string;          // 시작일
-  endDate: string;            // 종료일
+  quantityFTE: number; // 필요 FTE
+  startDate: string; // 시작일
+  endDate: string; // 종료일
 
   // 확률 및 우선순위
-  probability: number;        // 0-1 (확정=1.0)
-  priority: 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
+  probability: number; // 0-1 (확정=1.0)
+  priority: "CRITICAL" | "HIGH" | "MEDIUM" | "LOW";
 
   // 상태
-  status: 'OPEN' | 'PARTIALLY_FILLED' | 'FILLED' | 'CANCELLED';
-  filledFTE: number;          // 충족된 FTE
+  status: "OPEN" | "PARTIALLY_FILLED" | "FILLED" | "CANCELLED";
+  filledFTE: number; // 충족된 FTE
 
   // 제약조건
   constraints: DemandConstraints;
@@ -99,18 +99,18 @@ interface ResourceDemand {
 
 interface CompetencyRequirement {
   competencyId: string;
-  minimumLevel: number;       // 1-5
-  weight: number;             // 중요도 가중치
-  isRequired: boolean;        // 필수 여부
+  minimumLevel: number; // 1-5
+  weight: number; // 중요도 가중치
+  isRequired: boolean; // 필수 여부
 }
 
 interface DemandConstraints {
-  minGrade?: string;          // 최소 등급
-  maxGrade?: string;          // 최대 등급
-  preferredOrgUnits?: string[];  // 선호 조직
-  excludeEmployees?: string[];   // 제외 인력
-  locationRequired?: string;     // 위치 요건
-  securityClearance?: string;    // 보안 등급
+  minGrade?: string; // 최소 등급
+  maxGrade?: string; // 최대 등급
+  preferredOrgUnits?: string[]; // 선호 조직
+  excludeEmployees?: string[]; // 제외 인력
+  locationRequired?: string; // 위치 요건
+  securityClearance?: string; // 보안 등급
 }
 ```
 
@@ -118,15 +118,15 @@ interface DemandConstraints {
 
 ```typescript
 interface DemandSignal {
-  signalId: string;           // 형식: SIG-{YYYY}-{6digits}
+  signalId: string; // 형식: SIG-{YYYY}-{6digits}
 
   // 시그널 정보
-  signalType: string;         // DemandSignalTypes 참조
+  signalType: string; // DemandSignalTypes 참조
   sourceType: string;
   sourceId: string;
 
   // 영향
-  impactType: 'INCREASE' | 'DECREASE' | 'SHIFT';
+  impactType: "INCREASE" | "DECREASE" | "SHIFT";
   affectedDemandId?: string;
   estimatedFTEChange: number;
 
@@ -136,10 +136,10 @@ interface DemandSignal {
   effectiveTo?: string;
 
   // 확신도
-  confidence: number;         // 0-1
+  confidence: number; // 0-1
 
   // 상태
-  status: 'DETECTED' | 'CONFIRMED' | 'PROCESSED' | 'EXPIRED';
+  status: "DETECTED" | "CONFIRMED" | "PROCESSED" | "EXPIRED";
 }
 ```
 
@@ -147,14 +147,14 @@ interface DemandSignal {
 
 ```typescript
 interface DemandForecast {
-  forecastId: string;         // 형식: FCT-{YYYY}-{4digits}
+  forecastId: string; // 형식: FCT-{YYYY}-{4digits}
 
   // 예측 대상
   targetOrgUnitId: string;
   competencyDomain?: string;
 
   // 예측 기간
-  forecastPeriod: string;     // YYYY-Wxx 또는 YYYY-MM
+  forecastPeriod: string; // YYYY-Wxx 또는 YYYY-MM
   periodStart: string;
   periodEnd: string;
 
@@ -165,9 +165,9 @@ interface DemandForecast {
 
   // 구성 요소
   components: {
-    confirmed: number;        // 확정 수요
-    pipeline: number;         // 파이프라인 (확률 가중)
-    forecast: number;         // 예측 수요
+    confirmed: number; // 확정 수요
+    pipeline: number; // 파이프라인 (확률 가중)
+    forecast: number; // 예측 수요
   };
 
   // 정확도 (사후 검증)
@@ -375,11 +375,11 @@ def calculate_competency_match(
 
 ### 6.1 TimeBucket 정의
 
-| 버킷 유형 | 기간 | 용도 |
-|----------|------|------|
-| **WEEK** | 7일 | 단기 운영 계획 |
-| **MONTH** | 월 | 중기 용량 계획 |
-| **QUARTER** | 분기 | 전략적 계획 |
+| 버킷 유형   | 기간 | 용도           |
+| ----------- | ---- | -------------- |
+| **WEEK**    | 7일  | 단기 운영 계획 |
+| **MONTH**   | 월   | 중기 용량 계획 |
+| **QUARTER** | 분기 | 전략적 계획    |
 
 ### 6.2 버킷별 집계
 
@@ -445,12 +445,12 @@ def aggregate_by_time_bucket(
 
 ### 7.2 갱신 주기
 
-| 데이터 소스 | 갱신 주기 | 트리거 |
-|------------|----------|--------|
-| Project (TMS) | 실시간 | 프로젝트 변경 이벤트 |
-| Opportunity (CRM) | 일 1회 | 배치 동기화 |
-| Forecast | 주 1회 | 예측 모델 재실행 |
-| Signal | 실시간 | 이벤트 감지 |
+| 데이터 소스       | 갱신 주기 | 트리거               |
+| ----------------- | --------- | -------------------- |
+| Project (TMS)     | 실시간    | 프로젝트 변경 이벤트 |
+| Opportunity (CRM) | 일 1회    | 배치 동기화          |
+| Forecast          | 주 1회    | 예측 모델 재실행     |
+| Signal            | 실시간    | 이벤트 감지          |
 
 ---
 
@@ -502,10 +502,10 @@ GET /api/v1/forecasts
 
 ## 9. 버전 이력
 
-| 버전 | 날짜 | 변경 내용 |
-|------|------|----------|
-| 1.0 | 2025-01-24 | 초기 버전 작성 |
+| 버전 | 날짜       | 변경 내용      |
+| ---- | ---------- | -------------- |
+| 1.0  | 2025-01-24 | 초기 버전 작성 |
 
 ---
 
-*이 문서는 PoC 진행 중 수요 데이터 구조가 변경될 수 있습니다.*
+_이 문서는 PoC 진행 중 수요 데이터 구조가 변경될 수 있습니다._

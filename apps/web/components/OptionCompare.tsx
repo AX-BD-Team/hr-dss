@@ -108,7 +108,15 @@ const ScoreBar: React.FC<{
   color?: string;
 }> = ({ label, value, maxValue = 100, inverse = false, color }) => {
   const normalizedValue = (value / maxValue) * 100;
-  const barColor = color || (inverse ? (value > 50 ? "#F44336" : "#4CAF50") : (value > 50 ? "#4CAF50" : "#FF9800"));
+  const barColor =
+    color ||
+    (inverse
+      ? value > 50
+        ? "#F44336"
+        : "#4CAF50"
+      : value > 50
+        ? "#4CAF50"
+        : "#FF9800");
 
   return (
     <div style={{ marginBottom: "8px" }}>
@@ -195,12 +203,25 @@ const RadarChart: React.FC<{
         const x = center + radius * Math.cos(angle);
         const y = center + radius * Math.sin(angle);
         return (
-          <line key={i} x1={center} y1={center} x2={x} y2={y} stroke="#e0e0e0" strokeWidth="1" />
+          <line
+            key={i}
+            x1={center}
+            y1={center}
+            x2={x}
+            y2={y}
+            stroke="#e0e0e0"
+            strokeWidth="1"
+          />
         );
       })}
 
       {/* Data polygon */}
-      <polygon points={points} fill={`${color}40`} stroke={color} strokeWidth="2" />
+      <polygon
+        points={points}
+        fill={`${color}40`}
+        stroke={color}
+        strokeWidth="2"
+      />
 
       {/* Labels */}
       {labels.map((key, i) => {
@@ -232,13 +253,27 @@ const OptionCard: React.FC<{
   onSelect: () => void;
   expanded: boolean;
   onToggleExpand: () => void;
-}> = ({ option, isRecommended, isSelected, onSelect, expanded, onToggleExpand }) => {
+}> = ({
+  option,
+  isRecommended,
+  isSelected,
+  onSelect,
+  expanded,
+  onToggleExpand,
+}) => {
   const typeStyle = TYPE_COLORS[option.optionType];
   const totalScore = useMemo(() => {
-    const weights = { impact: 0.35, feasibility: 0.25, risk: -0.2, cost: -0.1, time: -0.1 };
+    const weights = {
+      impact: 0.35,
+      feasibility: 0.25,
+      risk: -0.2,
+      cost: -0.1,
+      time: -0.1,
+    };
     return Object.entries(option.scores).reduce(
-      (sum, [key, value]) => sum + value * (weights[key as keyof typeof weights] || 0),
-      0
+      (sum, [key, value]) =>
+        sum + value * (weights[key as keyof typeof weights] || 0),
+      0,
     );
   }, [option.scores]);
 
@@ -247,11 +282,15 @@ const OptionCard: React.FC<{
       style={{
         flex: 1,
         minWidth: "280px",
-        border: isSelected ? `3px solid ${typeStyle.border}` : "1px solid #e0e0e0",
+        border: isSelected
+          ? `3px solid ${typeStyle.border}`
+          : "1px solid #e0e0e0",
         borderRadius: "12px",
         overflow: "hidden",
         background: "white",
-        boxShadow: isSelected ? "0 4px 12px rgba(0,0,0,0.15)" : "0 1px 4px rgba(0,0,0,0.05)",
+        boxShadow: isSelected
+          ? "0 4px 12px rgba(0,0,0,0.15)"
+          : "0 1px 4px rgba(0,0,0,0.05)",
         transition: "all 0.2s ease",
       }}
     >
@@ -298,7 +337,13 @@ const OptionCard: React.FC<{
             </span>
           )}
         </div>
-        <div style={{ fontWeight: "bold", fontSize: "18px", color: typeStyle.text }}>
+        <div
+          style={{
+            fontWeight: "bold",
+            fontSize: "18px",
+            color: typeStyle.text,
+          }}
+        >
           {option.name}
         </div>
         <div style={{ fontSize: "13px", color: "#666", marginTop: "4px" }}>
@@ -318,9 +363,15 @@ const OptionCard: React.FC<{
         >
           <div>
             <div style={{ fontSize: "12px", color: "#666" }}>종합 점수</div>
-            <div style={{ fontSize: "28px", fontWeight: "bold" }}>{totalScore.toFixed(0)}</div>
+            <div style={{ fontSize: "28px", fontWeight: "bold" }}>
+              {totalScore.toFixed(0)}
+            </div>
           </div>
-          <RadarChart data={option.scores} color={typeStyle.border} size={100} />
+          <RadarChart
+            data={option.scores}
+            color={typeStyle.border}
+            size={100}
+          />
         </div>
 
         {/* Key Metrics */}
@@ -410,7 +461,9 @@ const OptionCard: React.FC<{
               style={{
                 fontWeight: "bold",
                 color:
-                  option.estimatedBenefit > option.estimatedCost ? "#4CAF50" : "#F44336",
+                  option.estimatedBenefit > option.estimatedCost
+                    ? "#4CAF50"
+                    : "#F44336",
               }}
             >
               {option.estimatedCost > 0
@@ -431,7 +484,9 @@ const OptionCard: React.FC<{
           }}
         >
           <div style={{ fontSize: "11px", color: "#666" }}>구현 기간</div>
-          <div style={{ fontSize: "16px", fontWeight: "bold" }}>{option.implementationTime}</div>
+          <div style={{ fontSize: "16px", fontWeight: "bold" }}>
+            {option.implementationTime}
+          </div>
         </div>
 
         {/* Expand/Collapse */}
@@ -456,7 +511,11 @@ const OptionCard: React.FC<{
             {/* Actions */}
             <div style={{ marginBottom: "16px" }}>
               <div
-                style={{ fontSize: "13px", fontWeight: "bold", marginBottom: "8px" }}
+                style={{
+                  fontSize: "13px",
+                  fontWeight: "bold",
+                  marginBottom: "8px",
+                }}
               >
                 실행 항목
               </div>
@@ -484,7 +543,11 @@ const OptionCard: React.FC<{
             {option.prerequisites.length > 0 && (
               <div style={{ marginBottom: "16px" }}>
                 <div
-                  style={{ fontSize: "13px", fontWeight: "bold", marginBottom: "8px" }}
+                  style={{
+                    fontSize: "13px",
+                    fontWeight: "bold",
+                    marginBottom: "8px",
+                  }}
                 >
                   전제조건
                 </div>
@@ -509,7 +572,11 @@ const OptionCard: React.FC<{
             {option.tradeOffs.length > 0 && (
               <div style={{ marginBottom: "16px" }}>
                 <div
-                  style={{ fontSize: "13px", fontWeight: "bold", marginBottom: "8px" }}
+                  style={{
+                    fontSize: "13px",
+                    fontWeight: "bold",
+                    marginBottom: "8px",
+                  }}
                 >
                   트레이드오프
                 </div>
@@ -533,7 +600,11 @@ const OptionCard: React.FC<{
             {/* Detailed Scores */}
             <div>
               <div
-                style={{ fontSize: "13px", fontWeight: "bold", marginBottom: "8px" }}
+                style={{
+                  fontSize: "13px",
+                  fontWeight: "bold",
+                  marginBottom: "8px",
+                }}
               >
                 상세 점수
               </div>
@@ -587,8 +658,12 @@ export const OptionCompare: React.FC<OptionCompareProps> = ({
   selectedOptionId,
   showApprovalButtons = true,
 }) => {
-  const [expandedOptions, setExpandedOptions] = useState<Set<string>>(new Set());
-  const [localSelectedId, setLocalSelectedId] = useState<string | undefined>(selectedOptionId);
+  const [expandedOptions, setExpandedOptions] = useState<Set<string>>(
+    new Set(),
+  );
+  const [localSelectedId, setLocalSelectedId] = useState<string | undefined>(
+    selectedOptionId,
+  );
 
   const handleSelect = (optionId: string) => {
     setLocalSelectedId(optionId);
@@ -696,7 +771,9 @@ export const OptionCompare: React.FC<OptionCompareProps> = ({
           <div>
             {selectedOption ? (
               <>
-                <div style={{ fontSize: "14px", color: "#666" }}>선택된 대안</div>
+                <div style={{ fontSize: "14px", color: "#666" }}>
+                  선택된 대안
+                </div>
                 <div style={{ fontWeight: "bold", fontSize: "18px" }}>
                   {selectedOption.name}
                 </div>

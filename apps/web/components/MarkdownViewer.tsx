@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React from 'react';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import rehypeHighlight from 'rehype-highlight';
+import React from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeHighlight from "rehype-highlight";
 
 export interface MarkdownViewerProps {
   content: string;
@@ -12,7 +12,7 @@ export interface MarkdownViewerProps {
 
 export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
   content,
-  className = '',
+  className = "",
 }) => {
   return (
     <div className={`markdown-viewer ${className}`}>
@@ -44,12 +44,12 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
           },
           // 링크 새 탭에서 열기 (외부 링크)
           a: ({ href, children }) => {
-            const isExternal = href?.startsWith('http');
+            const isExternal = href?.startsWith("http");
             return (
               <a
                 href={href}
-                target={isExternal ? '_blank' : undefined}
-                rel={isExternal ? 'noopener noreferrer' : undefined}
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
               >
                 {children}
               </a>
@@ -57,15 +57,15 @@ export const MarkdownViewer: React.FC<MarkdownViewerProps> = ({
           },
           // 헤딩에 앵커 추가
           h1: ({ children }) => {
-            const id = String(children).toLowerCase().replace(/\s+/g, '-');
+            const id = String(children).toLowerCase().replace(/\s+/g, "-");
             return <h1 id={id}>{children}</h1>;
           },
           h2: ({ children }) => {
-            const id = String(children).toLowerCase().replace(/\s+/g, '-');
+            const id = String(children).toLowerCase().replace(/\s+/g, "-");
             return <h2 id={id}>{children}</h2>;
           },
           h3: ({ children }) => {
-            const id = String(children).toLowerCase().replace(/\s+/g, '-');
+            const id = String(children).toLowerCase().replace(/\s+/g, "-");
             return <h3 id={id}>{children}</h3>;
           },
         }}

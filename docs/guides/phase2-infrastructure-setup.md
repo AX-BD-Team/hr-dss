@@ -8,6 +8,7 @@
 ## 1. 개요
 
 ### 1.1 목표
+
 클라우드 인프라를 설정하여 HR-DSS를 `hr.minu.best` 도메인으로 배포
 
 ### 1.2 설정 순서
@@ -28,12 +29,12 @@
 
 ### 1.3 필요한 계정
 
-| 서비스 | URL | 용도 |
-|--------|-----|------|
+| 서비스     | URL                 | 용도                |
+| ---------- | ------------------- | ------------------- |
 | Cloudflare | dash.cloudflare.com | Pages, Workers, DNS |
-| GitHub | github.com | CI/CD, Secrets |
-| Railway | railway.app | Backend 호스팅 |
-| Neo4j Aura | console.neo4j.io | Knowledge Graph |
+| GitHub     | github.com          | CI/CD, Secrets      |
+| Railway    | railway.app         | Backend 호스팅      |
+| Neo4j Aura | console.neo4j.io    | Knowledge Graph     |
 
 ---
 
@@ -51,11 +52,11 @@
 2. **Custom token** 선택
 3. 권한 설정:
 
-| Permission | Zone | Access |
-|------------|------|--------|
-| Account - Cloudflare Pages | All accounts | Edit |
-| Account - Workers Scripts | All accounts | Edit |
-| Zone - DNS | All zones | Edit |
+| Permission                 | Zone         | Access |
+| -------------------------- | ------------ | ------ |
+| Account - Cloudflare Pages | All accounts | Edit   |
+| Account - Workers Scripts  | All accounts | Edit   |
+| Zone - DNS                 | All zones    | Edit   |
 
 4. **Continue to summary** → **Create Token**
 5. 토큰 복사 (⚠️ 한 번만 표시됨)
@@ -80,17 +81,18 @@ Account ID 예시: abcd1234567890efghij1234567890kl
 3. Repository: `AX-BD-Team/hr-dss` 선택
 4. 설정:
 
-| 항목 | 값 |
-|------|-----|
-| Project name | `hr-dss-web` |
-| Production branch | `master` |
-| Framework preset | Next.js (Static HTML Export) |
-| Build command | `cd apps/web && pnpm install && pnpm build` |
-| Build output directory | `apps/web/out` |
-| Root directory | `/` |
-| Node version | `20` |
+| 항목                   | 값                                          |
+| ---------------------- | ------------------------------------------- |
+| Project name           | `hr-dss-web`                                |
+| Production branch      | `master`                                    |
+| Framework preset       | Next.js (Static HTML Export)                |
+| Build command          | `cd apps/web && pnpm install && pnpm build` |
+| Build output directory | `apps/web/out`                              |
+| Root directory         | `/`                                         |
+| Node version           | `20`                                        |
 
 5. Environment variables (Production):
+
 ```
 NEXT_PUBLIC_API_URL = https://api.hr.minu.best
 NEXT_PUBLIC_ENVIRONMENT = production
@@ -120,11 +122,11 @@ GitHub Repository → Settings → Secrets and variables → Actions → New rep
 
 ### 3.2 필요한 Secrets
 
-| Secret Name | 값 | 설명 |
-|-------------|-----|------|
-| `CLOUDFLARE_API_TOKEN` | Step 2.2에서 생성한 토큰 | Cloudflare API 인증 |
-| `CLOUDFLARE_ACCOUNT_ID` | Step 2.3에서 확인한 ID | Cloudflare 계정 식별 |
-| `RAILWAY_TOKEN` | Step 4에서 생성 | Railway 배포 인증 |
+| Secret Name             | 값                       | 설명                 |
+| ----------------------- | ------------------------ | -------------------- |
+| `CLOUDFLARE_API_TOKEN`  | Step 2.2에서 생성한 토큰 | Cloudflare API 인증  |
+| `CLOUDFLARE_ACCOUNT_ID` | Step 2.3에서 확인한 ID   | Cloudflare 계정 식별 |
+| `RAILWAY_TOKEN`         | Step 4에서 생성          | Railway 배포 인증    |
 
 ### 3.3 설정 방법
 
@@ -150,11 +152,11 @@ GitHub Repository → Settings → Secrets and variables → Actions → New rep
 1. 생성된 서비스 클릭
 2. **Settings** 탭:
 
-| 항목 | 값 |
-|------|-----|
-| Root Directory | `/` |
-| Build Command | (자동 - Dockerfile 사용) |
-| Start Command | `uvicorn backend.api.main:app --host 0.0.0.0 --port $PORT` |
+| 항목           | 값                                                         |
+| -------------- | ---------------------------------------------------------- |
+| Root Directory | `/`                                                        |
+| Build Command  | (자동 - Dockerfile 사용)                                   |
+| Start Command  | `uvicorn backend.api.main:app --host 0.0.0.0 --port $PORT` |
 
 ### 4.3 환경 변수 설정
 
@@ -186,6 +188,7 @@ ALLOWED_ORIGINS=https://hr.minu.best,https://staging.hr.minu.best
 ### 4.5 Public Domain 설정 (선택)
 
 Railway에서 직접 도메인 노출 시:
+
 1. 서비스 → **Settings** → **Networking**
 2. **Generate Domain** 클릭
 3. 생성된 URL: `hr-dss-production.up.railway.app`
@@ -202,10 +205,10 @@ Railway에서 직접 도메인 노출 시:
 2. **Create Instance** 클릭
 3. 설정:
 
-| 항목 | 값 |
-|------|-----|
-| Instance name | `hr-dss-production` |
-| Region | `asia-southeast1` (Singapore) |
+| 항목          | 값                                            |
+| ------------- | --------------------------------------------- |
+| Instance name | `hr-dss-production`                           |
+| Region        | `asia-southeast1` (Singapore)                 |
 | Instance type | **AuraDB Free** (PoC용) 또는 **Professional** |
 
 4. **Create** 클릭
@@ -249,11 +252,11 @@ postgresql://user:pass@ep-xxx.us-east-1.aws.neon.tech/hr_dss?sslmode=require
 
 Cloudflare Dashboard → `minu.best` → **DNS** → **Add record**
 
-| Type | Name | Content | Proxy |
-|------|------|---------|-------|
-| CNAME | `hr` | `hr-dss-web.pages.dev` | ✓ Proxied |
-| CNAME | `api.hr` | `hr-dss-api-gateway.workers.dev` | ✓ Proxied |
-| CNAME | `staging.hr` | `hr-dss-web.pages.dev` | ✓ Proxied |
+| Type  | Name             | Content                                  | Proxy     |
+| ----- | ---------------- | ---------------------------------------- | --------- |
+| CNAME | `hr`             | `hr-dss-web.pages.dev`                   | ✓ Proxied |
+| CNAME | `api.hr`         | `hr-dss-api-gateway.workers.dev`         | ✓ Proxied |
+| CNAME | `staging.hr`     | `hr-dss-web.pages.dev`                   | ✓ Proxied |
 | CNAME | `staging-api.hr` | `hr-dss-api-gateway-staging.workers.dev` | ✓ Proxied |
 
 > ⚠️ Pages/Workers 배포 후 실제 `*.pages.dev` / `*.workers.dev` 주소로 업데이트
@@ -264,12 +267,12 @@ Cloudflare Dashboard → `minu.best` → **DNS** → **Add record**
 2. **Overview** → **Full (strict)** 선택
 3. **Edge Certificates** → 설정 확인:
 
-| 항목 | 값 |
-|------|-----|
-| Always Use HTTPS | ✓ On |
-| Minimum TLS Version | TLS 1.2 |
-| TLS 1.3 | ✓ On |
-| HSTS | ✓ Enable (권장) |
+| 항목                | 값              |
+| ------------------- | --------------- |
+| Always Use HTTPS    | ✓ On            |
+| Minimum TLS Version | TLS 1.2         |
+| TLS 1.3             | ✓ On            |
+| HSTS                | ✓ Enable (권장) |
 
 ---
 
@@ -291,12 +294,14 @@ curl https://api.hr.minu.best/api
 ### 7.2 예상 응답
 
 **Frontend** (`https://hr.minu.best`):
+
 ```
 HTTP/2 200
 content-type: text/html
 ```
 
 **API Gateway** (`https://api.hr.minu.best/health`):
+
 ```json
 {
   "status": "healthy",
@@ -306,6 +311,7 @@ content-type: text/html
 ```
 
 **Backend API** (`https://api.hr.minu.best/api`):
+
 ```json
 {
   "name": "HR-DSS API",
@@ -319,6 +325,7 @@ content-type: text/html
 ## 8. 체크리스트
 
 ### 8.1 Cloudflare
+
 - [ ] 계정 로그인 확인
 - [ ] `minu.best` 도메인 등록 확인
 - [ ] API Token 생성
@@ -327,22 +334,26 @@ content-type: text/html
 - [ ] Workers 첫 배포
 
 ### 8.2 GitHub
+
 - [ ] `CLOUDFLARE_API_TOKEN` 설정
 - [ ] `CLOUDFLARE_ACCOUNT_ID` 설정
 - [ ] `RAILWAY_TOKEN` 설정
 
 ### 8.3 Railway
+
 - [ ] 프로젝트 생성
 - [ ] GitHub 연결
 - [ ] 환경 변수 설정
 - [ ] Token 생성
 
 ### 8.4 데이터베이스
+
 - [ ] Neo4j Aura 인스턴스 생성
 - [ ] 연결 정보 Railway에 등록
 - [ ] (선택) Neon PostgreSQL 설정
 
 ### 8.5 DNS
+
 - [ ] `hr` CNAME 레코드 추가
 - [ ] `api.hr` CNAME 레코드 추가
 - [ ] SSL/TLS Full (strict) 설정
@@ -356,6 +367,7 @@ content-type: text/html
 
 **증상**: Build failed
 **해결**:
+
 1. Build command 확인: `cd apps/web && pnpm install && pnpm build`
 2. Node version 20 설정 확인
 3. `next.config.js`의 `output: 'export'` 확인
@@ -364,6 +376,7 @@ content-type: text/html
 
 **증상**: wrangler deploy 에러
 **해결**:
+
 ```bash
 wrangler login  # 재로그인
 wrangler deploy --env production
@@ -373,6 +386,7 @@ wrangler deploy --env production
 
 **증상**: Build/Start failed
 **해결**:
+
 1. Dockerfile 경로 확인
 2. Start command 확인: `uvicorn backend.api.main:app --host 0.0.0.0 --port $PORT`
 3. `backend/api/main.py` 파일 존재 확인 (Phase 1 완료 필요)
@@ -381,6 +395,7 @@ wrangler deploy --env production
 
 **증상**: ERR_NAME_NOT_RESOLVED
 **해결**:
+
 1. DNS 전파 대기 (최대 24-48시간)
 2. `dig hr.minu.best` 로 확인
 3. Cloudflare Proxy 상태 확인 (주황색 구름)
@@ -390,6 +405,7 @@ wrangler deploy --env production
 ## 10. 다음 단계
 
 인프라 설정 완료 후:
+
 1. Phase 1 코드 완성 확인
 2. Phase 3: 배포 및 검증 진행
 3. E2E 테스트 실행

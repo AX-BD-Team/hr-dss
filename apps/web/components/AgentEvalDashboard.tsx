@@ -175,7 +175,9 @@ const MetricCard: React.FC<{
         </span>
       </div>
 
-      <div style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "4px" }}>
+      <div
+        style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "4px" }}
+      >
         {displayValue}
       </div>
 
@@ -209,8 +211,8 @@ const MetricCard: React.FC<{
                       ? STATUS_COLORS.PASS
                       : STATUS_COLORS.WARNING
                     : point.value <= metric.target
-                    ? STATUS_COLORS.PASS
-                    : STATUS_COLORS.WARNING,
+                      ? STATUS_COLORS.PASS
+                      : STATUS_COLORS.WARNING,
                 borderRadius: "2px",
               }}
               title={`${point.date}: ${isPercentage ? (point.value * 100).toFixed(1) + "%" : point.value}`}
@@ -230,11 +232,31 @@ const AgentCard: React.FC<{
   const overallScore = useMemo(() => {
     const metrics = agent.metrics;
     const scores = [
-      metrics.completeness.status === "PASS" ? 1 : metrics.completeness.status === "WARNING" ? 0.5 : 0,
-      metrics.evidenceCoverage.status === "PASS" ? 1 : metrics.evidenceCoverage.status === "WARNING" ? 0.5 : 0,
-      metrics.hallucinationRate.status === "PASS" ? 1 : metrics.hallucinationRate.status === "WARNING" ? 0.5 : 0,
-      metrics.reproducibility.status === "PASS" ? 1 : metrics.reproducibility.status === "WARNING" ? 0.5 : 0,
-      metrics.responseTime.status === "PASS" ? 1 : metrics.responseTime.status === "WARNING" ? 0.5 : 0,
+      metrics.completeness.status === "PASS"
+        ? 1
+        : metrics.completeness.status === "WARNING"
+          ? 0.5
+          : 0,
+      metrics.evidenceCoverage.status === "PASS"
+        ? 1
+        : metrics.evidenceCoverage.status === "WARNING"
+          ? 0.5
+          : 0,
+      metrics.hallucinationRate.status === "PASS"
+        ? 1
+        : metrics.hallucinationRate.status === "WARNING"
+          ? 0.5
+          : 0,
+      metrics.reproducibility.status === "PASS"
+        ? 1
+        : metrics.reproducibility.status === "WARNING"
+          ? 0.5
+          : 0,
+      metrics.responseTime.status === "PASS"
+        ? 1
+        : metrics.responseTime.status === "WARNING"
+          ? 0.5
+          : 0,
     ];
     return (scores.reduce((a, b) => a + b, 0) / scores.length) * 100;
   }, [agent.metrics]);
@@ -263,9 +285,7 @@ const AgentCard: React.FC<{
           <div style={{ fontWeight: "bold", fontSize: "16px" }}>
             {agent.agentName}
           </div>
-          <div style={{ fontSize: "12px", color: "#666" }}>
-            {agent.agentId}
-          </div>
+          <div style={{ fontSize: "12px", color: "#666" }}>{agent.agentId}</div>
         </div>
         <div style={{ textAlign: "right" }}>
           <div style={{ fontSize: "12px", color: "#666" }}>종합 점수</div>
@@ -314,7 +334,9 @@ const AgentCard: React.FC<{
         <span>
           트렌드: {TREND_ICONS[agent.trend]} {agent.trend}
         </span>
-        <span>업데이트: {new Date(agent.lastUpdated).toLocaleDateString()}</span>
+        <span>
+          업데이트: {new Date(agent.lastUpdated).toLocaleDateString()}
+        </span>
       </div>
     </div>
   );
@@ -361,8 +383,8 @@ const EvaluationResultRow: React.FC<{
                 result.overallScore >= 80
                   ? STATUS_COLORS.PASS
                   : result.overallScore >= 60
-                  ? STATUS_COLORS.WARNING
-                  : STATUS_COLORS.FAIL,
+                    ? STATUS_COLORS.WARNING
+                    : STATUS_COLORS.FAIL,
               color: "white",
               fontWeight: "bold",
             }}
@@ -388,18 +410,25 @@ const EvaluationResultRow: React.FC<{
                   <th style={{ padding: "8px", textAlign: "center" }}>상태</th>
                   <th style={{ padding: "8px", textAlign: "center" }}>품질</th>
                   <th style={{ padding: "8px", textAlign: "center" }}>근거</th>
-                  <th style={{ padding: "8px", textAlign: "center" }}>미검증</th>
+                  <th style={{ padding: "8px", textAlign: "center" }}>
+                    미검증
+                  </th>
                   <th style={{ padding: "8px", textAlign: "center" }}>시간</th>
                 </tr>
               </thead>
               <tbody>
                 {result.agentResults.map((ar) => (
-                  <tr key={ar.agentId} style={{ borderBottom: "1px solid #e0e0e0" }}>
+                  <tr
+                    key={ar.agentId}
+                    style={{ borderBottom: "1px solid #e0e0e0" }}
+                  >
                     <td style={{ padding: "8px" }}>{ar.agentName}</td>
                     <td style={{ padding: "8px", textAlign: "center" }}>
                       <span
                         style={{
-                          color: ar.success ? STATUS_COLORS.PASS : STATUS_COLORS.FAIL,
+                          color: ar.success
+                            ? STATUS_COLORS.PASS
+                            : STATUS_COLORS.FAIL,
                         }}
                       >
                         {ar.success ? "[PASS]" : "[FAIL]"}
@@ -440,13 +469,15 @@ const EvaluationResultRow: React.FC<{
                       issue.severity === "HIGH"
                         ? STATUS_COLORS.FAIL
                         : issue.severity === "MEDIUM"
-                        ? STATUS_COLORS.WARNING
-                        : "#2196F3"
+                          ? STATUS_COLORS.WARNING
+                          : "#2196F3"
                     }`,
                     background: "#f9f9f9",
                   }}
                 >
-                  <div style={{ display: "flex", gap: "8px", marginBottom: "4px" }}>
+                  <div
+                    style={{ display: "flex", gap: "8px", marginBottom: "4px" }}
+                  >
                     <span
                       style={{
                         fontSize: "11px",
@@ -456,8 +487,8 @@ const EvaluationResultRow: React.FC<{
                           issue.severity === "HIGH"
                             ? STATUS_COLORS.FAIL
                             : issue.severity === "MEDIUM"
-                            ? STATUS_COLORS.WARNING
-                            : "#2196F3",
+                              ? STATUS_COLORS.WARNING
+                              : "#2196F3",
                         color: "white",
                       }}
                     >
@@ -497,7 +528,7 @@ export const AgentEvalDashboard: React.FC<AgentEvalDashboardProps> = ({
 
   const selectedAgent = useMemo(
     () => agents.find((a) => a.agentId === selectedAgentId),
-    [agents, selectedAgentId]
+    [agents, selectedAgentId],
   );
 
   const handleAgentSelect = (agentId: string) => {
@@ -511,7 +542,7 @@ export const AgentEvalDashboard: React.FC<AgentEvalDashboardProps> = ({
     const totalAgents = agents.length;
     const passingAgents = agents.filter(
       (a) =>
-        Object.values(a.metrics).filter((m) => m.status === "PASS").length >= 4
+        Object.values(a.metrics).filter((m) => m.status === "PASS").length >= 4,
     ).length;
     const avgCompleteness =
       agents.reduce((sum, a) => sum + a.metrics.completeness.value, 0) /
@@ -544,7 +575,9 @@ export const AgentEvalDashboard: React.FC<AgentEvalDashboardProps> = ({
         }}
       >
         <div>
-          <h1 style={{ margin: 0, fontSize: "24px" }}>Agent Evaluation Dashboard</h1>
+          <h1 style={{ margin: 0, fontSize: "24px" }}>
+            Agent Evaluation Dashboard
+          </h1>
           <p style={{ margin: "4px 0 0", color: "#666" }}>
             AI Agent 성능 모니터링 및 평가
           </p>
@@ -554,7 +587,8 @@ export const AgentEvalDashboard: React.FC<AgentEvalDashboardProps> = ({
             onClick={() => setView("overview")}
             style={{
               padding: "8px 16px",
-              border: view === "overview" ? "2px solid #2196F3" : "1px solid #ccc",
+              border:
+                view === "overview" ? "2px solid #2196F3" : "1px solid #ccc",
               borderRadius: "4px",
               background: view === "overview" ? "#E3F2FD" : "white",
               cursor: "pointer",
@@ -566,7 +600,8 @@ export const AgentEvalDashboard: React.FC<AgentEvalDashboardProps> = ({
             onClick={() => setView("details")}
             style={{
               padding: "8px 16px",
-              border: view === "details" ? "2px solid #2196F3" : "1px solid #ccc",
+              border:
+                view === "details" ? "2px solid #2196F3" : "1px solid #ccc",
               borderRadius: "4px",
               background: view === "details" ? "#E3F2FD" : "white",
               cursor: "pointer",
@@ -622,7 +657,13 @@ export const AgentEvalDashboard: React.FC<AgentEvalDashboardProps> = ({
           }}
         >
           <div style={{ fontSize: "12px", color: "#666" }}>정상 Agent</div>
-          <div style={{ fontSize: "32px", fontWeight: "bold", color: STATUS_COLORS.PASS }}>
+          <div
+            style={{
+              fontSize: "32px",
+              fontWeight: "bold",
+              color: STATUS_COLORS.PASS,
+            }}
+          >
             {summaryStats.passingAgents}
           </div>
         </div>
@@ -647,7 +688,9 @@ export const AgentEvalDashboard: React.FC<AgentEvalDashboardProps> = ({
             textAlign: "center",
           }}
         >
-          <div style={{ fontSize: "12px", color: "#666" }}>평균 근거 연결률</div>
+          <div style={{ fontSize: "12px", color: "#666" }}>
+            평균 근거 연결률
+          </div>
           <div style={{ fontSize: "32px", fontWeight: "bold" }}>
             {(summaryStats.avgEvidenceCoverage * 100).toFixed(0)}%
           </div>
@@ -657,9 +700,7 @@ export const AgentEvalDashboard: React.FC<AgentEvalDashboardProps> = ({
             padding: "16px",
             borderRadius: "8px",
             background:
-              summaryStats.avgHallucinationRate <= 0.05
-                ? "#E8F5E9"
-                : "#FFEBEE",
+              summaryStats.avgHallucinationRate <= 0.05 ? "#E8F5E9" : "#FFEBEE",
             textAlign: "center",
           }}
         >
@@ -683,7 +724,9 @@ export const AgentEvalDashboard: React.FC<AgentEvalDashboardProps> = ({
         <>
           {/* Agent Grid */}
           <div style={{ marginBottom: "32px" }}>
-            <h2 style={{ fontSize: "18px", marginBottom: "16px" }}>Agent 현황</h2>
+            <h2 style={{ fontSize: "18px", marginBottom: "16px" }}>
+              Agent 현황
+            </h2>
             <div
               style={{
                 display: "grid",
@@ -708,20 +751,22 @@ export const AgentEvalDashboard: React.FC<AgentEvalDashboardProps> = ({
               최근 평가 결과
             </h2>
             {recentEvaluations.length > 0 ? (
-              recentEvaluations.slice(0, 5).map((result) => (
-                <EvaluationResultRow
-                  key={result.evaluationId}
-                  result={result}
-                  expanded={expandedEvalId === result.evaluationId}
-                  onToggle={() =>
-                    setExpandedEvalId(
-                      expandedEvalId === result.evaluationId
-                        ? null
-                        : result.evaluationId
-                    )
-                  }
-                />
-              ))
+              recentEvaluations
+                .slice(0, 5)
+                .map((result) => (
+                  <EvaluationResultRow
+                    key={result.evaluationId}
+                    result={result}
+                    expanded={expandedEvalId === result.evaluationId}
+                    onToggle={() =>
+                      setExpandedEvalId(
+                        expandedEvalId === result.evaluationId
+                          ? null
+                          : result.evaluationId,
+                      )
+                    }
+                  />
+                ))
             ) : (
               <div
                 style={{
@@ -754,8 +799,13 @@ export const AgentEvalDashboard: React.FC<AgentEvalDashboardProps> = ({
                   <h2 style={{ margin: 0 }}>{selectedAgent.agentName}</h2>
                   <p style={{ margin: "4px 0 0", color: "#666" }}>
                     {selectedAgent.agentId} | 평가 기간:{" "}
-                    {new Date(selectedAgent.evaluationPeriod.start).toLocaleDateString()} -{" "}
-                    {new Date(selectedAgent.evaluationPeriod.end).toLocaleDateString()}
+                    {new Date(
+                      selectedAgent.evaluationPeriod.start,
+                    ).toLocaleDateString()}{" "}
+                    -{" "}
+                    {new Date(
+                      selectedAgent.evaluationPeriod.end,
+                    ).toLocaleDateString()}
                   </p>
                 </div>
                 <div style={{ display: "flex", gap: "8px" }}>
@@ -770,7 +820,8 @@ export const AgentEvalDashboard: React.FC<AgentEvalDashboardProps> = ({
                             ? "2px solid #2196F3"
                             : "1px solid #ccc",
                         borderRadius: "4px",
-                        background: a.agentId === selectedAgentId ? "#E3F2FD" : "white",
+                        background:
+                          a.agentId === selectedAgentId ? "#E3F2FD" : "white",
                         fontSize: "12px",
                         cursor: "pointer",
                       }}
@@ -831,7 +882,10 @@ export const generateMockAgentMetrics = (): AgentMetrics[] => {
     { id: "validator", name: "Validator" },
   ];
 
-  const generateHistory = (baseValue: number, variance: number): MetricHistoryPoint[] => {
+  const generateHistory = (
+    baseValue: number,
+    variance: number,
+  ): MetricHistoryPoint[] => {
     const history: MetricHistoryPoint[] = [];
     const now = new Date();
     for (let i = 9; i >= 0; i--) {
@@ -839,7 +893,10 @@ export const generateMockAgentMetrics = (): AgentMetrics[] => {
       date.setDate(date.getDate() - i);
       history.push({
         date: date.toISOString().split("T")[0],
-        value: Math.max(0, Math.min(1, baseValue + (Math.random() - 0.5) * variance)),
+        value: Math.max(
+          0,
+          Math.min(1, baseValue + (Math.random() - 0.5) * variance),
+        ),
       });
     }
     return history;
@@ -886,10 +943,15 @@ export const generateMockAgentMetrics = (): AgentMetrics[] => {
         target: 30,
         unit: "s",
         status: "PASS",
-        history: generateHistory(0.6, 0.3).map((p) => ({ ...p, value: p.value * 30 })),
+        history: generateHistory(0.6, 0.3).map((p) => ({
+          ...p,
+          value: p.value * 30,
+        })),
       },
     },
-    trend: ["IMPROVING", "STABLE", "DECLINING"][Math.floor(Math.random() * 3)] as AgentMetrics["trend"],
+    trend: ["IMPROVING", "STABLE", "DECLINING"][
+      Math.floor(Math.random() * 3)
+    ] as AgentMetrics["trend"],
     lastUpdated: new Date().toISOString(),
   }));
 };

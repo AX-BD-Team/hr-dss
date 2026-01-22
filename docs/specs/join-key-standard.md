@@ -14,24 +14,24 @@
 
 ### 2.1 Key 명명 규칙
 
-| 규칙 | 형식 | 예시 |
-|------|------|------|
-| PK 접미사 | `{entityName}Id` | `employeeId`, `projectId` |
-| FK 접미사 | `{referenceEntity}Id` | `orgUnitId`, `pmEmployeeId` |
-| 복합 Key | `{entity1}{entity2}Id` | `employeeProjectId` |
+| 규칙      | 형식                   | 예시                        |
+| --------- | ---------------------- | --------------------------- |
+| PK 접미사 | `{entityName}Id`       | `employeeId`, `projectId`   |
+| FK 접미사 | `{referenceEntity}Id`  | `orgUnitId`, `pmEmployeeId` |
+| 복합 Key  | `{entity1}{entity2}Id` | `employeeProjectId`         |
 
 ### 2.2 Key 형식
 
-| 엔터티 | Key 형식 | 예시 | 원천 |
-|--------|----------|------|------|
-| Employee | `EMP-{6자리숫자}` | `EMP-000001` | HR Master |
-| OrgUnit | `ORG-{4자리숫자}` | `ORG-0001` | HR Master |
-| JobRole | `JOB-{3자리숫자}` | `JOB-001` | HR Master |
-| Project | `PRJ-{YYYY}-{4자리}` | `PRJ-2025-0001` | TMS |
-| WorkPackage | `WP-{PRJ}-{2자리}` | `WP-PRJ-2025-0001-01` | TMS |
-| Opportunity | `OPP-{YYYY}-{4자리}` | `OPP-2025-0001` | BizForce |
-| Assignment | `ASN-{8자리숫자}` | `ASN-00000001` | TMS |
-| Competency | `CMP-{3자리숫자}` | `CMP-001` | Competency |
+| 엔터티      | Key 형식             | 예시                  | 원천       |
+| ----------- | -------------------- | --------------------- | ---------- |
+| Employee    | `EMP-{6자리숫자}`    | `EMP-000001`          | HR Master  |
+| OrgUnit     | `ORG-{4자리숫자}`    | `ORG-0001`            | HR Master  |
+| JobRole     | `JOB-{3자리숫자}`    | `JOB-001`             | HR Master  |
+| Project     | `PRJ-{YYYY}-{4자리}` | `PRJ-2025-0001`       | TMS        |
+| WorkPackage | `WP-{PRJ}-{2자리}`   | `WP-PRJ-2025-0001-01` | TMS        |
+| Opportunity | `OPP-{YYYY}-{4자리}` | `OPP-2025-0001`       | BizForce   |
+| Assignment  | `ASN-{8자리숫자}`    | `ASN-00000001`        | TMS        |
+| Competency  | `CMP-{3자리숫자}`    | `CMP-001`             | Competency |
 
 ---
 
@@ -39,22 +39,22 @@
 
 ### 3.1 시스템 간 Key 매핑
 
-| 원천 시스템 | 원천 Key | 표준 Key | 변환 규칙 |
-|------------|----------|----------|----------|
-| **HR Master** | | | |
-| HR Master | `사번` | `employeeId` | `EMP-{사번 6자리 패딩}` |
-| HR Master | `조직코드` | `orgUnitId` | `ORG-{조직코드 4자리}` |
-| HR Master | `직무코드` | `jobRoleId` | `JOB-{직무코드 3자리}` |
-| **TMS** | | | |
-| TMS | `프로젝트ID` | `projectId` | `PRJ-{연도}-{4자리 시퀀스}` |
-| TMS | `사번` | `employeeId` | `EMP-{사번 6자리 패딩}` |
-| TMS | `배치ID` | `assignmentId` | `ASN-{8자리 시퀀스}` |
-| **BizForce** | | | |
-| BizForce | `기회ID` | `opportunityId` | `OPP-{연도}-{4자리 시퀀스}` |
-| BizForce | `담당자사번` | `employeeId` | `EMP-{사번 6자리 패딩}` |
-| **Competency** | | | |
-| Competency | `역량코드` | `competencyId` | `CMP-{3자리 코드}` |
-| Competency | `사번` | `employeeId` | `EMP-{사번 6자리 패딩}` |
+| 원천 시스템    | 원천 Key     | 표준 Key        | 변환 규칙                   |
+| -------------- | ------------ | --------------- | --------------------------- |
+| **HR Master**  |              |                 |                             |
+| HR Master      | `사번`       | `employeeId`    | `EMP-{사번 6자리 패딩}`     |
+| HR Master      | `조직코드`   | `orgUnitId`     | `ORG-{조직코드 4자리}`      |
+| HR Master      | `직무코드`   | `jobRoleId`     | `JOB-{직무코드 3자리}`      |
+| **TMS**        |              |                 |                             |
+| TMS            | `프로젝트ID` | `projectId`     | `PRJ-{연도}-{4자리 시퀀스}` |
+| TMS            | `사번`       | `employeeId`    | `EMP-{사번 6자리 패딩}`     |
+| TMS            | `배치ID`     | `assignmentId`  | `ASN-{8자리 시퀀스}`        |
+| **BizForce**   |              |                 |                             |
+| BizForce       | `기회ID`     | `opportunityId` | `OPP-{연도}-{4자리 시퀀스}` |
+| BizForce       | `담당자사번` | `employeeId`    | `EMP-{사번 6자리 패딩}`     |
+| **Competency** |              |                 |                             |
+| Competency     | `역량코드`   | `competencyId`  | `CMP-{3자리 코드}`          |
+| Competency     | `사번`       | `employeeId`    | `EMP-{사번 6자리 패딩}`     |
 
 ### 3.2 Key 변환 함수
 
@@ -86,34 +86,34 @@ def convert_org_id(source_id: str) -> str:
 
 ### 4.1 주요 관계 정의
 
-| 관계 | From Node | To Node | Join Key | 설명 |
-|------|-----------|---------|----------|------|
-| `BELONGS_TO` | Employee | OrgUnit | `employeeId` → `orgUnitId` | 직원-조직 소속 |
-| `HAS_JOBROLE` | Employee | JobRole | `employeeId` → `jobRoleId` | 직원-직무 |
-| `ASSIGNED_TO` | Employee | Project | `employeeId` → `projectId` | 직원-프로젝트 배치 |
-| `ASSIGNED_TO` | Employee | WorkPackage | `employeeId` → `workPackageId` | 직원-WP 배치 |
-| `HAS_WORKPACKAGE` | Project | WorkPackage | `projectId` → `workPackageId` | 프로젝트-WP |
-| `HAS_SIGNAL` | Opportunity | DemandSignal | `opportunityId` → `signalId` | 기회-수요신호 |
-| `IMPLIES_DEMAND` | DemandSignal | ResourceDemand | `signalId` → `demandId` | 신호-리소스수요 |
-| `HAS_EVIDENCE` | Employee | CompetencyEvidence | `employeeId` → `evidenceId` | 직원-역량증거 |
-| `FOR_COMPETENCY` | CompetencyEvidence | Competency | `evidenceId` → `competencyId` | 증거-역량 |
-| `PRIMARY_FOR` | Employee | Responsibility | `employeeId` → `responsibilityId` | 직원-책임(주담당) |
-| `BACKUP_FOR` | Employee | Responsibility | `employeeId` → `responsibilityId` | 직원-책임(대무) |
+| 관계              | From Node          | To Node            | Join Key                          | 설명               |
+| ----------------- | ------------------ | ------------------ | --------------------------------- | ------------------ |
+| `BELONGS_TO`      | Employee           | OrgUnit            | `employeeId` → `orgUnitId`        | 직원-조직 소속     |
+| `HAS_JOBROLE`     | Employee           | JobRole            | `employeeId` → `jobRoleId`        | 직원-직무          |
+| `ASSIGNED_TO`     | Employee           | Project            | `employeeId` → `projectId`        | 직원-프로젝트 배치 |
+| `ASSIGNED_TO`     | Employee           | WorkPackage        | `employeeId` → `workPackageId`    | 직원-WP 배치       |
+| `HAS_WORKPACKAGE` | Project            | WorkPackage        | `projectId` → `workPackageId`     | 프로젝트-WP        |
+| `HAS_SIGNAL`      | Opportunity        | DemandSignal       | `opportunityId` → `signalId`      | 기회-수요신호      |
+| `IMPLIES_DEMAND`  | DemandSignal       | ResourceDemand     | `signalId` → `demandId`           | 신호-리소스수요    |
+| `HAS_EVIDENCE`    | Employee           | CompetencyEvidence | `employeeId` → `evidenceId`       | 직원-역량증거      |
+| `FOR_COMPETENCY`  | CompetencyEvidence | Competency         | `evidenceId` → `competencyId`     | 증거-역량          |
+| `PRIMARY_FOR`     | Employee           | Responsibility     | `employeeId` → `responsibilityId` | 직원-책임(주담당)  |
+| `BACKUP_FOR`      | Employee           | Responsibility     | `employeeId` → `responsibilityId` | 직원-책임(대무)    |
 
 ### 4.2 관계 속성
 
-| 관계 | 속성 | 타입 | 설명 |
-|------|------|------|------|
-| `BELONGS_TO` | `startDate` | date | 소속 시작일 |
-| `BELONGS_TO` | `endDate` | date | 소속 종료일 |
-| `ASSIGNED_TO` | `allocationFTE` | number | 투입 FTE |
-| `ASSIGNED_TO` | `startDate` | date | 배치 시작일 |
-| `ASSIGNED_TO` | `endDate` | date | 배치 종료일 |
-| `ASSIGNED_TO` | `role` | string | 역할 |
-| `HAS_JOBROLE` | `startDate` | date | 직무 시작일 |
-| `HAS_JOBROLE` | `endDate` | date | 직무 종료일 |
-| `PRIMARY_FOR` | `startDate` | date | 담당 시작일 |
-| `PRIMARY_FOR` | `endDate` | date | 담당 종료일 |
+| 관계          | 속성            | 타입   | 설명        |
+| ------------- | --------------- | ------ | ----------- |
+| `BELONGS_TO`  | `startDate`     | date   | 소속 시작일 |
+| `BELONGS_TO`  | `endDate`       | date   | 소속 종료일 |
+| `ASSIGNED_TO` | `allocationFTE` | number | 투입 FTE    |
+| `ASSIGNED_TO` | `startDate`     | date   | 배치 시작일 |
+| `ASSIGNED_TO` | `endDate`       | date   | 배치 종료일 |
+| `ASSIGNED_TO` | `role`          | string | 역할        |
+| `HAS_JOBROLE` | `startDate`     | date   | 직무 시작일 |
+| `HAS_JOBROLE` | `endDate`       | date   | 직무 종료일 |
+| `PRIMARY_FOR` | `startDate`     | date   | 담당 시작일 |
+| `PRIMARY_FOR` | `endDate`       | date   | 담당 종료일 |
 
 ---
 
@@ -129,6 +129,7 @@ RETURN e.employeeId, e.name, a.allocationFTE, c.name as competency, ev.level
 ```
 
 **Join Path:**
+
 ```
 HR Master (Employee)
     --[employeeId]--> TMS (Assignment)
@@ -153,6 +154,7 @@ RETURN o.name, rd.quantityFTE, dr.name, collect(e.name) as availableEmployees
 ```
 
 **Join Path:**
+
 ```
 BizForce (Opportunity)
     --[opportunityId]--> BizForce (DemandSignal)
@@ -202,11 +204,11 @@ RETURN e.employeeId
 
 ### 6.2 매칭률 KPI
 
-| 지표 | 설명 | 목표 | 측정 쿼리 |
-|------|------|------|----------|
-| Employee-Org 매칭률 | 조직에 연결된 직원 비율 | > 99% | 위 쿼리 참조 |
-| Employee-Project 매칭률 | 프로젝트에 배치된 직원 비율 | > 80% | 유사 쿼리 |
-| Opportunity-Demand 매칭률 | 수요 신호가 있는 기회 비율 | > 90% | 유사 쿼리 |
+| 지표                      | 설명                        | 목표  | 측정 쿼리    |
+| ------------------------- | --------------------------- | ----- | ------------ |
+| Employee-Org 매칭률       | 조직에 연결된 직원 비율     | > 99% | 위 쿼리 참조 |
+| Employee-Project 매칭률   | 프로젝트에 배치된 직원 비율 | > 80% | 유사 쿼리    |
+| Opportunity-Demand 매칭률 | 수요 신호가 있는 기회 비율  | > 90% | 유사 쿼리    |
 
 ---
 
@@ -235,21 +237,21 @@ def validate_key(key_type: str, value: str) -> bool:
 
 ### 7.2 참조 무결성 검사
 
-| 검사 | From | To | 액션 |
-|------|------|-----|------|
-| Employee → OrgUnit | `Employee.orgUnitId` | `OrgUnit.orgUnitId` | 필수, 오류 시 거부 |
-| Assignment → Employee | `Assignment.employeeId` | `Employee.employeeId` | 필수, 오류 시 거부 |
-| Assignment → Project | `Assignment.projectId` | `Project.projectId` | 필수, 오류 시 거부 |
+| 검사                  | From                    | To                          | 액션               |
+| --------------------- | ----------------------- | --------------------------- | ------------------ |
+| Employee → OrgUnit    | `Employee.orgUnitId`    | `OrgUnit.orgUnitId`         | 필수, 오류 시 거부 |
+| Assignment → Employee | `Assignment.employeeId` | `Employee.employeeId`       | 필수, 오류 시 거부 |
+| Assignment → Project  | `Assignment.projectId`  | `Project.projectId`         | 필수, 오류 시 거부 |
 | Project → Opportunity | `Project.opportunityId` | `Opportunity.opportunityId` | 선택, 오류 시 경고 |
 
 ---
 
 ## 8. 버전 이력
 
-| 버전 | 날짜 | 변경 내용 |
-|------|------|----------|
-| 1.0 | 2025-01-23 | 초기 버전 작성 |
+| 버전 | 날짜       | 변경 내용      |
+| ---- | ---------- | -------------- |
+| 1.0  | 2025-01-23 | 초기 버전 작성 |
 
 ---
 
-*이 문서는 PoC 진행 중 Key 표준이 변경될 수 있습니다.*
+_이 문서는 PoC 진행 중 Key 표준이 변경될 수 있습니다._

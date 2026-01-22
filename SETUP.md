@@ -19,14 +19,14 @@ git init
 
 아래 플레이스홀더를 프로젝트에 맞게 교체하세요:
 
-| 플레이스홀더 | 설명 | 예시 |
-|-------------|------|------|
-| `{{PROJECT_NAME}}` | 프로젝트 이름 | `ax-discovery-portal` |
-| `{{PROJECT_DESCRIPTION}}` | 프로젝트 설명 | `멀티에이전트 기반 사업기회 포착 엔진` |
-| `{{project-name}}` | 패키지 이름 (kebab-case) | `ax-discovery-portal` |
-| `{{project-cli}}` | CLI 명령어 | `ax-portal` |
-| `{{author-name}}` | 저자/팀 이름 | `AX BD Team` |
-| `{{org}}` | GitHub 조직 | `AX-BD-Team` |
+| 플레이스홀더              | 설명                     | 예시                                   |
+| ------------------------- | ------------------------ | -------------------------------------- |
+| `{{PROJECT_NAME}}`        | 프로젝트 이름            | `ax-discovery-portal`                  |
+| `{{PROJECT_DESCRIPTION}}` | 프로젝트 설명            | `멀티에이전트 기반 사업기회 포착 엔진` |
+| `{{project-name}}`        | 패키지 이름 (kebab-case) | `ax-discovery-portal`                  |
+| `{{project-cli}}`         | CLI 명령어               | `ax-portal`                            |
+| `{{author-name}}`         | 저자/팀 이름             | `AX BD Team`                           |
+| `{{org}}`                 | GitHub 조직              | `AX-BD-Team`                           |
 
 ```bash
 # 일괄 교체 (sed 사용)

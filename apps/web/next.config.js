@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Cloudflare Pages 호환성
-  output: 'export',
+  output: "export",
 
   // 이미지 최적화 (Cloudflare에서는 비활성화)
   images: {
@@ -10,12 +10,14 @@ const nextConfig = {
 
   // 환경 변수
   env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
-    NEXT_PUBLIC_ENVIRONMENT: process.env.NEXT_PUBLIC_ENVIRONMENT || 'development',
+    NEXT_PUBLIC_API_URL:
+      process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000",
+    NEXT_PUBLIC_ENVIRONMENT:
+      process.env.NEXT_PUBLIC_ENVIRONMENT || "development",
   },
 
   // 정적 파일 경로
-  assetPrefix: process.env.ASSET_PREFIX || '',
+  assetPrefix: process.env.ASSET_PREFIX || "",
 
   // 트레일링 슬래시
   trailingSlash: false,

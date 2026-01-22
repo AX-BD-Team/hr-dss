@@ -158,8 +158,8 @@ const ScoreGauge: React.FC<{
     status === "HEALTHY" || status === "PASS"
       ? STATUS_COLORS.PASS
       : status === "WARNING"
-      ? STATUS_COLORS.WARNING
-      : STATUS_COLORS.FAIL;
+        ? STATUS_COLORS.WARNING
+        : STATUS_COLORS.FAIL;
 
   return (
     <div style={{ position: "relative", width: size, height: size }}>
@@ -215,8 +215,10 @@ const MetricCard: React.FC<{
   unit?: string;
   children?: React.ReactNode;
 }> = ({ title, description, value, target, status, unit = "%", children }) => {
-  const displayValue = unit === "%" ? `${(value * 100).toFixed(1)}%` : value.toFixed(1);
-  const displayTarget = unit === "%" ? `${(target * 100).toFixed(0)}%` : target.toString();
+  const displayValue =
+    unit === "%" ? `${(value * 100).toFixed(1)}%` : value.toFixed(1);
+  const displayTarget =
+    unit === "%" ? `${(target * 100).toFixed(0)}%` : target.toString();
 
   return (
     <div
@@ -245,7 +247,8 @@ const MetricCard: React.FC<{
           style={{
             padding: "4px 8px",
             borderRadius: "4px",
-            background: STATUS_COLORS[status as keyof typeof STATUS_COLORS] || "#ccc",
+            background:
+              STATUS_COLORS[status as keyof typeof STATUS_COLORS] || "#ccc",
             color: "white",
             fontSize: "12px",
             fontWeight: "bold",
@@ -256,8 +259,12 @@ const MetricCard: React.FC<{
       </div>
 
       <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
-        <span style={{ fontSize: "36px", fontWeight: "bold" }}>{displayValue}</span>
-        <span style={{ fontSize: "14px", color: "#666" }}>/ 목표: {displayTarget}</span>
+        <span style={{ fontSize: "36px", fontWeight: "bold" }}>
+          {displayValue}
+        </span>
+        <span style={{ fontSize: "14px", color: "#666" }}>
+          / 목표: {displayTarget}
+        </span>
       </div>
 
       {children}
@@ -314,7 +321,13 @@ const IssueList: React.FC<{
   onItemClick?: (id: string, type: string) => void;
   emptyMessage?: string;
   maxItems?: number;
-}> = ({ title, items, onItemClick, emptyMessage = "이슈 없음", maxItems = 5 }) => {
+}> = ({
+  title,
+  items,
+  onItemClick,
+  emptyMessage = "이슈 없음",
+  maxItems = 5,
+}) => {
   const [showAll, setShowAll] = useState(false);
   const displayItems = showAll ? items : items.slice(0, maxItems);
 
@@ -353,7 +366,8 @@ const IssueList: React.FC<{
                   style={{
                     padding: "2px 6px",
                     borderRadius: "2px",
-                    background: NODE_TYPE_COLORS[item.type] || NODE_TYPE_COLORS.default,
+                    background:
+                      NODE_TYPE_COLORS[item.type] || NODE_TYPE_COLORS.default,
                     color: "white",
                     fontSize: "10px",
                     marginRight: "8px",
@@ -364,7 +378,9 @@ const IssueList: React.FC<{
                 {item.label}
               </div>
               {item.detail && (
-                <span style={{ color: "#999", fontSize: "11px" }}>{item.detail}</span>
+                <span style={{ color: "#999", fontSize: "11px" }}>
+                  {item.detail}
+                </span>
               )}
             </div>
           ))}
@@ -477,8 +493,11 @@ export const OntologyScoreCard: React.FC<OntologyScoreCardProps> = ({
           size={140}
         />
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: "14px", color: "#666", marginBottom: "16px" }}>
-            평가 기간: {new Date(metrics.evaluationPeriod.start).toLocaleDateString()} -{" "}
+          <div
+            style={{ fontSize: "14px", color: "#666", marginBottom: "16px" }}
+          >
+            평가 기간:{" "}
+            {new Date(metrics.evaluationPeriod.start).toLocaleDateString()} -{" "}
             {new Date(metrics.evaluationPeriod.end).toLocaleDateString()}
           </div>
           <div
@@ -488,25 +507,55 @@ export const OntologyScoreCard: React.FC<OntologyScoreCardProps> = ({
               gap: "16px",
             }}
           >
-            <div style={{ textAlign: "center", padding: "12px", background: "#f5f5f5", borderRadius: "8px" }}>
+            <div
+              style={{
+                textAlign: "center",
+                padding: "12px",
+                background: "#f5f5f5",
+                borderRadius: "8px",
+              }}
+            >
               <div style={{ fontSize: "24px", fontWeight: "bold" }}>
                 {(metrics.metrics.entityCoverage.value * 100).toFixed(0)}%
               </div>
-              <div style={{ fontSize: "12px", color: "#666" }}>엔터티 커버리지</div>
+              <div style={{ fontSize: "12px", color: "#666" }}>
+                엔터티 커버리지
+              </div>
             </div>
-            <div style={{ textAlign: "center", padding: "12px", background: "#f5f5f5", borderRadius: "8px" }}>
+            <div
+              style={{
+                textAlign: "center",
+                padding: "12px",
+                background: "#f5f5f5",
+                borderRadius: "8px",
+              }}
+            >
               <div style={{ fontSize: "24px", fontWeight: "bold" }}>
                 {(metrics.metrics.linkRate.value * 100).toFixed(0)}%
               </div>
               <div style={{ fontSize: "12px", color: "#666" }}>링크율</div>
             </div>
-            <div style={{ textAlign: "center", padding: "12px", background: "#f5f5f5", borderRadius: "8px" }}>
+            <div
+              style={{
+                textAlign: "center",
+                padding: "12px",
+                background: "#f5f5f5",
+                borderRadius: "8px",
+              }}
+            >
               <div style={{ fontSize: "24px", fontWeight: "bold" }}>
                 {(metrics.metrics.duplicateConflict.value * 100).toFixed(1)}%
               </div>
               <div style={{ fontSize: "12px", color: "#666" }}>중복/충돌률</div>
             </div>
-            <div style={{ textAlign: "center", padding: "12px", background: "#f5f5f5", borderRadius: "8px" }}>
+            <div
+              style={{
+                textAlign: "center",
+                padding: "12px",
+                background: "#f5f5f5",
+                borderRadius: "8px",
+              }}
+            >
               <div style={{ fontSize: "24px", fontWeight: "bold" }}>
                 {(metrics.metrics.freshness.value * 100).toFixed(0)}%
               </div>
@@ -571,7 +620,9 @@ export const OntologyScoreCard: React.FC<OntologyScoreCardProps> = ({
                 key={type}
                 type={type}
                 count={count}
-                total={Math.max(...Object.values(metrics.relationshipStats.byType))}
+                total={Math.max(
+                  ...Object.values(metrics.relationshipStats.byType),
+                )}
                 color="#607D8B"
               />
             ))}
@@ -603,7 +654,9 @@ export const OntologyScoreCard: React.FC<OntologyScoreCardProps> = ({
                   padding: "8px 16px",
                   border: "none",
                   borderBottom:
-                    activeTab === tab.key ? "2px solid #2196F3" : "2px solid transparent",
+                    activeTab === tab.key
+                      ? "2px solid #2196F3"
+                      : "2px solid transparent",
                   background: "none",
                   color: activeTab === tab.key ? "#2196F3" : "#666",
                   fontWeight: activeTab === tab.key ? "bold" : "normal",
@@ -625,14 +678,30 @@ export const OntologyScoreCard: React.FC<OntologyScoreCardProps> = ({
               status={metrics.metrics.entityCoverage.status}
             >
               <div style={{ marginTop: "16px" }}>
-                <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}>
+                <table
+                  style={{
+                    width: "100%",
+                    borderCollapse: "collapse",
+                    fontSize: "13px",
+                  }}
+                >
                   <thead>
                     <tr style={{ background: "#f5f5f5" }}>
-                      <th style={{ padding: "8px", textAlign: "left" }}>엔터티 타입</th>
-                      <th style={{ padding: "8px", textAlign: "center" }}>필수</th>
-                      <th style={{ padding: "8px", textAlign: "center" }}>존재</th>
-                      <th style={{ padding: "8px", textAlign: "right" }}>개수</th>
-                      <th style={{ padding: "8px", textAlign: "right" }}>최소 기대</th>
+                      <th style={{ padding: "8px", textAlign: "left" }}>
+                        엔터티 타입
+                      </th>
+                      <th style={{ padding: "8px", textAlign: "center" }}>
+                        필수
+                      </th>
+                      <th style={{ padding: "8px", textAlign: "center" }}>
+                        존재
+                      </th>
+                      <th style={{ padding: "8px", textAlign: "right" }}>
+                        개수
+                      </th>
+                      <th style={{ padding: "8px", textAlign: "right" }}>
+                        최소 기대
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -641,7 +710,10 @@ export const OntologyScoreCard: React.FC<OntologyScoreCardProps> = ({
                         key={detail.entityType}
                         style={{
                           borderBottom: "1px solid #e0e0e0",
-                          background: detail.required && !detail.exists ? "#FFEBEE" : "white",
+                          background:
+                            detail.required && !detail.exists
+                              ? "#FFEBEE"
+                              : "white",
                         }}
                       >
                         <td style={{ padding: "8px" }}>{detail.entityType}</td>
@@ -649,12 +721,22 @@ export const OntologyScoreCard: React.FC<OntologyScoreCardProps> = ({
                           {detail.required ? "[O]" : "[-]"}
                         </td>
                         <td style={{ padding: "8px", textAlign: "center" }}>
-                          <span style={{ color: detail.exists ? STATUS_COLORS.PASS : STATUS_COLORS.FAIL }}>
+                          <span
+                            style={{
+                              color: detail.exists
+                                ? STATUS_COLORS.PASS
+                                : STATUS_COLORS.FAIL,
+                            }}
+                          >
                             {detail.exists ? "[O]" : "[X]"}
                           </span>
                         </td>
-                        <td style={{ padding: "8px", textAlign: "right" }}>{detail.count}</td>
-                        <td style={{ padding: "8px", textAlign: "right" }}>{detail.expectedMin}</td>
+                        <td style={{ padding: "8px", textAlign: "right" }}>
+                          {detail.count}
+                        </td>
+                        <td style={{ padding: "8px", textAlign: "right" }}>
+                          {detail.expectedMin}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -678,7 +760,8 @@ export const OntologyScoreCard: React.FC<OntologyScoreCardProps> = ({
                   color: "#666",
                 }}
               >
-                연결된 노드: {metrics.metrics.linkRate.linkedNodes.toLocaleString()} /{" "}
+                연결된 노드:{" "}
+                {metrics.metrics.linkRate.linkedNodes.toLocaleString()} /{" "}
                 {metrics.metrics.linkRate.totalNodes.toLocaleString()}
               </div>
               <IssueList
@@ -704,22 +787,26 @@ export const OntologyScoreCard: React.FC<OntologyScoreCardProps> = ({
             >
               <IssueList
                 title="중복 항목"
-                items={metrics.metrics.duplicateConflict.duplicates.map((dup) => ({
-                  id: dup.nodeIds[0],
-                  type: dup.nodeType,
-                  label: dup.key,
-                  detail: `${dup.count}건 중복`,
-                }))}
+                items={metrics.metrics.duplicateConflict.duplicates.map(
+                  (dup) => ({
+                    id: dup.nodeIds[0],
+                    type: dup.nodeType,
+                    label: dup.key,
+                    detail: `${dup.count}건 중복`,
+                  }),
+                )}
                 onItemClick={onNodeClick}
                 emptyMessage="중복 항목 없음"
               />
               <IssueList
                 title="충돌 항목"
-                items={metrics.metrics.duplicateConflict.conflicts.map((conf) => ({
-                  id: conf.nodeId,
-                  type: conf.nodeType,
-                  label: `${conf.field}: ${conf.values.join(" vs ")}`,
-                }))}
+                items={metrics.metrics.duplicateConflict.conflicts.map(
+                  (conf) => ({
+                    id: conf.nodeId,
+                    type: conf.nodeType,
+                    label: `${conf.field}: ${conf.values.join(" vs ")}`,
+                  }),
+                )}
                 onItemClick={onNodeClick}
                 emptyMessage="충돌 항목 없음"
               />
@@ -743,20 +830,26 @@ export const OntologyScoreCard: React.FC<OntologyScoreCardProps> = ({
                 }}
               >
                 <div>
-                  평균 경과일: <strong>{metrics.metrics.freshness.avgAge.toFixed(1)}일</strong>
+                  평균 경과일:{" "}
+                  <strong>
+                    {metrics.metrics.freshness.avgAge.toFixed(1)}일
+                  </strong>
                 </div>
                 <div>
-                  최대 경과일: <strong>{metrics.metrics.freshness.maxAge}일</strong>
+                  최대 경과일:{" "}
+                  <strong>{metrics.metrics.freshness.maxAge}일</strong>
                 </div>
               </div>
               <IssueList
                 title="오래된 엔터티"
-                items={metrics.metrics.freshness.staleEntities.map((entity) => ({
-                  id: entity.nodeId,
-                  type: entity.nodeType,
-                  label: entity.nodeId,
-                  detail: `${entity.ageInDays}일 전`,
-                }))}
+                items={metrics.metrics.freshness.staleEntities.map(
+                  (entity) => ({
+                    id: entity.nodeId,
+                    type: entity.nodeType,
+                    label: entity.nodeId,
+                    detail: `${entity.ageInDays}일 전`,
+                  }),
+                )}
                 onItemClick={onNodeClick}
                 emptyMessage="오래된 엔터티 없음"
               />
@@ -856,7 +949,9 @@ export const generateMockOntologyMetrics = (): OntologyMetrics => {
           {
             nodeId: "EMP-001",
             nodeType: "Employee",
-            lastUpdated: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+            lastUpdated: new Date(
+              Date.now() - 7 * 24 * 60 * 60 * 1000,
+            ).toISOString(),
             ageInDays: 7,
           },
         ],

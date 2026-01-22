@@ -23,14 +23,14 @@ evals/
 
 ## 핵심 개념
 
-| 개념 | 설명 |
-|------|------|
-| **Task** | 단일 테스트 케이스 (입력 + 성공 기준) |
-| **Trial** | Task의 1회 실행 시도 (비결정성 → 복수 실행) |
-| **Suite** | Task 묶음 (regression vs capability) |
-| **Grader** | 채점 로직 (deterministic / LLM / human) |
-| **Transcript** | 실행 기록 (도구 호출, 중간 상태) |
-| **Outcome** | 최종 결과 상태 (검증 대상) |
+| 개념           | 설명                                        |
+| -------------- | ------------------------------------------- |
+| **Task**       | 단일 테스트 케이스 (입력 + 성공 기준)       |
+| **Trial**      | Task의 1회 실행 시도 (비결정성 → 복수 실행) |
+| **Suite**      | Task 묶음 (regression vs capability)        |
+| **Grader**     | 채점 로직 (deterministic / LLM / human)     |
+| **Transcript** | 실행 기록 (도구 호출, 중간 상태)            |
+| **Outcome**    | 최종 결과 상태 (검증 대상)                  |
 
 ## 빠른 시작
 
@@ -87,36 +87,36 @@ python -m backend.evals gate --suite workflow_regression
 
 ### Deterministic (결정적)
 
-| 유형 | 용도 |
-|------|------|
-| `deterministic_tests` | pytest, jest 등 테스트 실행 |
-| `static_analysis` | ruff, mypy, eslint 등 정적 분석 |
-| `string_match` | 문자열 포함/일치 검사 |
-| `regex_match` | 정규식 패턴 매칭 |
-| `state_check` | DB/파일/API 상태 검증 |
-| `tool_call_check` | 특정 도구 호출 여부 검증 |
-| `transcript_metrics` | 턴 수, 토큰 수 등 메트릭 검증 |
+| 유형                  | 용도                            |
+| --------------------- | ------------------------------- |
+| `deterministic_tests` | pytest, jest 등 테스트 실행     |
+| `static_analysis`     | ruff, mypy, eslint 등 정적 분석 |
+| `string_match`        | 문자열 포함/일치 검사           |
+| `regex_match`         | 정규식 패턴 매칭                |
+| `state_check`         | DB/파일/API 상태 검증           |
+| `tool_call_check`     | 특정 도구 호출 여부 검증        |
+| `transcript_metrics`  | 턴 수, 토큰 수 등 메트릭 검증   |
 
 ### LLM-as-Judge
 
-| 유형 | 용도 |
-|------|------|
-| `llm_rubric` | 루브릭 기반 다차원 평가 |
-| `llm_assertion` | 자연어 assertion 검증 |
-| `llm_pairwise` | 두 결과 비교 평가 |
-| `llm_reference` | 레퍼런스와 비교 |
+| 유형            | 용도                    |
+| --------------- | ----------------------- |
+| `llm_rubric`    | 루브릭 기반 다차원 평가 |
+| `llm_assertion` | 자연어 assertion 검증   |
+| `llm_pairwise`  | 두 결과 비교 평가       |
+| `llm_reference` | 레퍼런스와 비교         |
 
 ### Human Review
 
-| 유형 | 용도 |
-|------|------|
+| 유형           | 용도                           |
+| -------------- | ------------------------------ |
 | `human_review` | SME 스팟체크, 합치도(IAA) 관리 |
 
 ## 비결정성 처리
 
 ```yaml
 trials:
-  k: 5  # 5회 실행
+  k: 5 # 5회 실행
 ```
 
 - **pass@k**: k번 중 1번만 성공해도 통과 (한 번의 성공이 가치)

@@ -120,8 +120,12 @@ const HealthCard: React.FC<{
         borderTop: `4px solid ${color}`,
         transition: "transform 0.2s",
       }}
-      onMouseOver={(e) => onClick && (e.currentTarget.style.transform = "translateY(-2px)")}
-      onMouseOut={(e) => onClick && (e.currentTarget.style.transform = "translateY(0)")}
+      onMouseOver={(e) =>
+        onClick && (e.currentTarget.style.transform = "translateY(-2px)")
+      }
+      onMouseOut={(e) =>
+        onClick && (e.currentTarget.style.transform = "translateY(0)")
+      }
     >
       <div
         style={{
@@ -174,7 +178,9 @@ const HealthCard: React.FC<{
         >
           {health.status}
         </span>
-        <span style={{ fontSize: "12px", color: "#666" }}>{health.message}</span>
+        <span style={{ fontSize: "12px", color: "#666" }}>
+          {health.message}
+        </span>
       </div>
     </div>
   );
@@ -207,10 +213,14 @@ const StatCard: React.FC<{
         textAlign: "center",
       }}
     >
-      <div style={{ fontSize: "12px", color: "#666", marginBottom: "8px" }}>{label}</div>
+      <div style={{ fontSize: "12px", color: "#666", marginBottom: "8px" }}>
+        {label}
+      </div>
       <div style={{ fontSize: "28px", fontWeight: "bold" }}>
         {typeof value === "number" ? value.toLocaleString() : value}
-        {unit && <span style={{ fontSize: "14px", color: "#666" }}>{unit}</span>}
+        {unit && (
+          <span style={{ fontSize: "14px", color: "#666" }}>{unit}</span>
+        )}
       </div>
       {trend && trendValue && (
         <div
@@ -291,7 +301,9 @@ const AlertList: React.FC<{
               {new Date(alert.timestamp).toLocaleTimeString()}
             </span>
           </div>
-          <div style={{ fontWeight: "500", fontSize: "13px", marginBottom: "4px" }}>
+          <div
+            style={{ fontWeight: "500", fontSize: "13px", marginBottom: "4px" }}
+          >
             {alert.title}
           </div>
           <div style={{ fontSize: "12px", color: "#666", marginBottom: "8px" }}>
@@ -351,8 +363,8 @@ const ActivityFeed: React.FC<{
                 activity.status === "SUCCESS"
                   ? "#E8F5E9"
                   : activity.status === "PENDING"
-                  ? "#E3F2FD"
-                  : "#FFEBEE",
+                    ? "#E3F2FD"
+                    : "#FFEBEE",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -375,7 +387,8 @@ const ActivityFeed: React.FC<{
               {activity.description}
             </div>
             <div style={{ fontSize: "11px", color: "#999" }}>
-              {activity.user} | {new Date(activity.timestamp).toLocaleTimeString()}
+              {activity.user} |{" "}
+              {new Date(activity.timestamp).toLocaleTimeString()}
             </div>
           </div>
           <div
@@ -469,11 +482,13 @@ export const EvalDashboard: React.FC<EvalDashboardProps> = ({
   onRefresh,
   onResolveAlert,
 }) => {
-  const [selectedTimeRange, setSelectedTimeRange] = useState<"1h" | "24h" | "7d">("24h");
+  const [selectedTimeRange, setSelectedTimeRange] = useState<
+    "1h" | "24h" | "7d"
+  >("24h");
 
   const criticalAlerts = useMemo(
     () => alerts.filter((a) => a.severity === "HIGH" && !a.isResolved),
-    [alerts]
+    [alerts],
   );
 
   return (
@@ -503,7 +518,9 @@ export const EvalDashboard: React.FC<EvalDashboardProps> = ({
           {/* Time Range Selector */}
           <select
             value={selectedTimeRange}
-            onChange={(e) => setSelectedTimeRange(e.target.value as typeof selectedTimeRange)}
+            onChange={(e) =>
+              setSelectedTimeRange(e.target.value as typeof selectedTimeRange)
+            }
             style={{
               padding: "8px 12px",
               border: "1px solid #ccc",
@@ -584,11 +601,7 @@ export const EvalDashboard: React.FC<EvalDashboardProps> = ({
           marginBottom: "24px",
         }}
       >
-        <HealthCard
-          title="전체 시스템"
-          health={health.overall}
-          icon="[S]"
-        />
+        <HealthCard title="전체 시스템" health={health.overall} icon="[S]" />
         <HealthCard
           title="AI Agent"
           health={health.agents}
@@ -719,7 +732,11 @@ export const EvalDashboard: React.FC<EvalDashboardProps> = ({
             </span>
           </div>
           <div style={{ padding: "12px" }}>
-            <AlertList alerts={alerts} onResolve={onResolveAlert} maxItems={4} />
+            <AlertList
+              alerts={alerts}
+              onResolve={onResolveAlert}
+              maxItems={4}
+            />
           </div>
         </div>
       </div>
@@ -760,10 +777,18 @@ export const generateMockEvalDashboardData = (): {
 } => {
   return {
     health: {
-      overall: { status: "HEALTHY", score: 94, message: "모든 시스템 정상 운영 중" },
+      overall: {
+        status: "HEALTHY",
+        score: 94,
+        message: "모든 시스템 정상 운영 중",
+      },
       agents: { status: "HEALTHY", score: 96, message: "5/5 에이전트 정상" },
       ontology: { status: "HEALTHY", score: 92, message: "KG 품질 양호" },
-      dataQuality: { status: "WARNING", score: 88, message: "일부 데이터 갱신 필요" },
+      dataQuality: {
+        status: "WARNING",
+        score: 88,
+        message: "일부 데이터 갱신 필요",
+      },
       lastUpdated: new Date().toISOString(),
     },
     stats: {

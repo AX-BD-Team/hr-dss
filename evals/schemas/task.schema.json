@@ -18,7 +18,13 @@
         },
         "type": {
           "type": "string",
-          "enum": ["coding", "workflow", "conversational", "research", "computer_use"],
+          "enum": [
+            "coding",
+            "workflow",
+            "conversational",
+            "research",
+            "computer_use"
+          ],
           "description": "Task 유형"
         },
         "desc": {
@@ -68,7 +74,7 @@
         },
         "tags": {
           "type": "array",
-          "items": {"type": "string"}
+          "items": { "type": "string" }
         }
       },
       "additionalProperties": false
@@ -80,7 +86,14 @@
       "properties": {
         "domain": {
           "type": "string",
-          "enum": ["security", "performance", "functionality", "ux", "integration", "data_quality"]
+          "enum": [
+            "security",
+            "performance",
+            "functionality",
+            "ux",
+            "integration",
+            "data_quality"
+          ]
         },
         "difficulty": {
           "type": "string",
@@ -125,15 +138,15 @@
             "type": "object",
             "required": ["path"],
             "properties": {
-              "path": {"type": "string"},
-              "content": {"type": "string"},
-              "content_file": {"type": "string"}
+              "path": { "type": "string" },
+              "content": { "type": "string" },
+              "content_file": { "type": "string" }
             }
           }
         },
         "environment_variables": {
           "type": "object",
-          "additionalProperties": {"type": "string"}
+          "additionalProperties": { "type": "string" }
         }
       }
     },
@@ -151,11 +164,20 @@
             "properties": {
               "type": {
                 "type": "string",
-                "enum": ["file_exists", "file_contains", "file_not_contains", "command_succeeds", "command_output_contains", "db_row_exists", "api_returns", "state_equals"]
+                "enum": [
+                  "file_exists",
+                  "file_contains",
+                  "file_not_contains",
+                  "command_succeeds",
+                  "command_output_contains",
+                  "db_row_exists",
+                  "api_returns",
+                  "state_equals"
+                ]
               },
-              "target": {"type": "string"},
+              "target": { "type": "string" },
               "value": {},
-              "description": {"type": "string"}
+              "description": { "type": "string" }
             }
           }
         },
@@ -164,10 +186,10 @@
           "items": {
             "type": "object",
             "properties": {
-              "type": {"type": "string"},
-              "target": {"type": "string"},
+              "type": { "type": "string" },
+              "target": { "type": "string" },
               "value": {},
-              "description": {"type": "string"}
+              "description": { "type": "string" }
             }
           }
         }
@@ -184,7 +206,7 @@
         },
         "seeds": {
           "type": "array",
-          "items": {"type": "integer"}
+          "items": { "type": "integer" }
         },
         "parallel": {
           "type": "boolean",
@@ -238,11 +260,11 @@
         },
         "tools_allowed": {
           "type": "array",
-          "items": {"type": "string"}
+          "items": { "type": "string" }
         },
         "tools_denied": {
           "type": "array",
-          "items": {"type": "string"}
+          "items": { "type": "string" }
         },
         "max_turns": {
           "type": "integer",
@@ -315,7 +337,7 @@
         },
         "required_graders": {
           "type": "array",
-          "items": {"type": "string"}
+          "items": { "type": "string" }
         }
       }
     },

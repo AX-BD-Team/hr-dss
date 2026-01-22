@@ -32,14 +32,14 @@
 
 ### 1.2 Agent 개요
 
-| Agent | 역할 | 입력 | 출력 |
-|-------|------|------|------|
-| QueryDecomposition | 질문 분해 | 자연어 질문 | 하위 질의 목록 |
-| OptionGenerator | 대안 생성 | 분석 컨텍스트 | 3가지 대안 |
-| ImpactSimulator | 영향 시뮬레이션 | 대안 + 베이스라인 | As-Is vs To-Be |
-| SuccessProbability | 성공 확률 계산 | 기회/프로젝트 정보 | 성공 확률 + 리스크 |
-| Validator | 근거 검증 | 응답 텍스트 | 검증 결과 |
-| WorkflowBuilder | 워크플로 조율 | 질문 유형 | 실행 결과 |
+| Agent              | 역할            | 입력               | 출력               |
+| ------------------ | --------------- | ------------------ | ------------------ |
+| QueryDecomposition | 질문 분해       | 자연어 질문        | 하위 질의 목록     |
+| OptionGenerator    | 대안 생성       | 분석 컨텍스트      | 3가지 대안         |
+| ImpactSimulator    | 영향 시뮬레이션 | 대안 + 베이스라인  | As-Is vs To-Be     |
+| SuccessProbability | 성공 확률 계산  | 기회/프로젝트 정보 | 성공 확률 + 리스크 |
+| Validator          | 근거 검증       | 응답 텍스트        | 검증 결과          |
+| WorkflowBuilder    | 워크플로 조율   | 질문 유형          | 실행 결과          |
 
 ---
 
@@ -63,10 +63,10 @@ agent = QueryDecompositionAgent(llm_client=None)
 
 **`decompose(query: str, context: dict | None = None) -> DecomposedQuery`**
 
-| 파라미터 | 타입 | 필수 | 설명 |
-|----------|------|------|------|
-| `query` | str | ✅ | 사용자 질문 (자연어) |
-| `context` | dict | ❌ | 추가 컨텍스트 (org_unit_id, start_date 등) |
+| 파라미터  | 타입 | 필수 | 설명                                       |
+| --------- | ---- | ---- | ------------------------------------------ |
+| `query`   | str  | ✅   | 사용자 질문 (자연어)                       |
+| `context` | dict | ❌   | 추가 컨텍스트 (org_unit_id, start_date 등) |
 
 **반환값: `DecomposedQuery`**
 
@@ -84,12 +84,12 @@ class DecomposedQuery:
 
 #### 지원 질문 유형
 
-| 유형 | 키워드 | 예시 |
-|------|--------|------|
-| CAPACITY | 가동률, 병목, 12주 | "향후 12주간 AI팀의 가동률 병목은?" |
-| GO_NOGO | go/no-go, 수주, 성공 확률 | "이 프로젝트를 수주해도 될까요?" |
-| HEADCOUNT | 증원, 채용, 인원 부족 | "개발자 2명 증원이 타당한가요?" |
-| COMPETENCY_GAP | 역량 갭, 스킬 부족 | "데이터 엔지니어링 역량 갭을 분석해줘" |
+| 유형           | 키워드                    | 예시                                   |
+| -------------- | ------------------------- | -------------------------------------- |
+| CAPACITY       | 가동률, 병목, 12주        | "향후 12주간 AI팀의 가동률 병목은?"    |
+| GO_NOGO        | go/no-go, 수주, 성공 확률 | "이 프로젝트를 수주해도 될까요?"       |
+| HEADCOUNT      | 증원, 채용, 인원 부족     | "개발자 2명 증원이 타당한가요?"        |
+| COMPETENCY_GAP | 역량 갭, 스킬 부족        | "데이터 엔지니어링 역량 갭을 분석해줘" |
 
 #### 사용 예시
 
@@ -124,11 +124,11 @@ agent = OptionGeneratorAgent(llm_client=None, kg_client=None)
 
 **`generate_options(query_type: str, context: dict, constraints: dict | None = None) -> OptionSet`**
 
-| 파라미터 | 타입 | 필수 | 설명 |
-|----------|------|------|------|
-| `query_type` | str | ✅ | 질문 유형 (CAPACITY, GO_NOGO 등) |
-| `context` | dict | ✅ | 분석 컨텍스트 (KG 쿼리 결과 등) |
-| `constraints` | dict | ❌ | 추가 제약조건 |
+| 파라미터      | 타입 | 필수 | 설명                             |
+| ------------- | ---- | ---- | -------------------------------- |
+| `query_type`  | str  | ✅   | 질문 유형 (CAPACITY, GO_NOGO 등) |
+| `context`     | dict | ✅   | 분석 컨텍스트 (KG 쿼리 결과 등)  |
+| `constraints` | dict | ❌   | 추가 제약조건                    |
 
 **반환값: `OptionSet`**
 
@@ -159,11 +159,11 @@ class DecisionOption:
 
 #### 대안 유형별 특성
 
-| 유형 | 설명 | 리스크 | 비용 | 효과 |
-|------|------|--------|------|------|
-| CONSERVATIVE | 보수적 접근 | 낮음 | 낮음 | 제한적 |
-| BALANCED | 균형 잡힌 접근 | 중간 | 중간 | 적정 |
-| AGGRESSIVE | 적극적 접근 | 높음 | 높음 | 최대 |
+| 유형         | 설명           | 리스크 | 비용 | 효과   |
+| ------------ | -------------- | ------ | ---- | ------ |
+| CONSERVATIVE | 보수적 접근    | 낮음   | 낮음 | 제한적 |
+| BALANCED     | 균형 잡힌 접근 | 중간   | 중간 | 적정   |
+| AGGRESSIVE   | 적극적 접근    | 높음   | 높음 | 최대   |
 
 #### 사용 예시
 
@@ -205,12 +205,12 @@ agent = ImpactSimulatorAgent(kg_client=None)
 
 **`simulate(query_type: str, options: list[dict], baseline: dict, horizon_weeks: int = 12) -> ScenarioComparison`**
 
-| 파라미터 | 타입 | 필수 | 설명 |
-|----------|------|------|------|
-| `query_type` | str | ✅ | 질문 유형 |
-| `options` | list[dict] | ✅ | 대안 목록 |
-| `baseline` | dict | ✅ | 현재 상태 (As-Is) |
-| `horizon_weeks` | int | ❌ | 시뮬레이션 기간 (기본 12주) |
+| 파라미터        | 타입       | 필수 | 설명                        |
+| --------------- | ---------- | ---- | --------------------------- |
+| `query_type`    | str        | ✅   | 질문 유형                   |
+| `options`       | list[dict] | ✅   | 대안 목록                   |
+| `baseline`      | dict       | ✅   | 현재 상태 (As-Is)           |
+| `horizon_weeks` | int        | ❌   | 시뮬레이션 기간 (기본 12주) |
 
 **반환값: `ScenarioComparison`**
 
@@ -248,15 +248,15 @@ class MetricValue:
 
 #### 지원 지표 (MetricType)
 
-| 지표 | 설명 | 긍정 방향 | 가중치 |
-|------|------|----------|--------|
-| UTILIZATION | 가동률 | - | 0.20 |
-| COST | 비용 | 감소 | 0.15 |
-| REVENUE | 매출 | 증가 | 0.20 |
-| MARGIN | 마진율 | 증가 | 0.15 |
-| RISK | 리스크 | 감소 | 0.15 |
-| TIME | 소요 기간 | 감소 | 0.10 |
-| QUALITY | 품질 | 증가 | 0.05 |
+| 지표        | 설명      | 긍정 방향 | 가중치 |
+| ----------- | --------- | --------- | ------ |
+| UTILIZATION | 가동률    | -         | 0.20   |
+| COST        | 비용      | 감소      | 0.15   |
+| REVENUE     | 매출      | 증가      | 0.20   |
+| MARGIN      | 마진율    | 증가      | 0.15   |
+| RISK        | 리스크    | 감소      | 0.15   |
+| TIME        | 소요 기간 | 감소      | 0.10   |
+| QUALITY     | 품질      | 증가      | 0.05   |
 
 #### 사용 예시
 
@@ -308,11 +308,11 @@ agent = SuccessProbabilityAgent(kg_client=None)
 
 **`calculate(opportunity: dict, resources: dict, historical_data: list | None = None) -> ProbabilityResult`**
 
-| 파라미터 | 타입 | 필수 | 설명 |
-|----------|------|------|------|
-| `opportunity` | dict | ✅ | 기회 정보 |
-| `resources` | dict | ✅ | 가용 리소스 정보 |
-| `historical_data` | list | ❌ | 과거 유사 프로젝트 데이터 |
+| 파라미터          | 타입 | 필수 | 설명                      |
+| ----------------- | ---- | ---- | ------------------------- |
+| `opportunity`     | dict | ✅   | 기회 정보                 |
+| `resources`       | dict | ✅   | 가용 리소스 정보          |
+| `historical_data` | list | ❌   | 과거 유사 프로젝트 데이터 |
 
 **반환값: `ProbabilityResult`**
 
@@ -336,13 +336,13 @@ class RiskFactor:
 
 #### 성공 확률 계산 요인
 
-| 요인 | 가중치 | 설명 |
-|------|--------|------|
-| resource_fit | 0.30 | 리소스 적합도 |
-| competency_match | 0.25 | 역량 매칭률 |
-| historical_success | 0.20 | 과거 성공률 |
-| timeline_feasibility | 0.15 | 일정 실현 가능성 |
-| risk_level | 0.10 | 리스크 수준 |
+| 요인                 | 가중치 | 설명             |
+| -------------------- | ------ | ---------------- |
+| resource_fit         | 0.30   | 리소스 적합도    |
+| competency_match     | 0.25   | 역량 매칭률      |
+| historical_success   | 0.20   | 과거 성공률      |
+| timeline_feasibility | 0.15   | 일정 실현 가능성 |
+| risk_level           | 0.10   | 리스크 수준      |
 
 ---
 
@@ -362,11 +362,11 @@ agent = ValidatorAgent(kg_client=None)
 
 **`validate(response_text: str, available_evidence: list | None = None, context: dict | None = None) -> ValidationResult`**
 
-| 파라미터 | 타입 | 필수 | 설명 |
-|----------|------|------|------|
-| `response_text` | str | ✅ | 검증할 응답 텍스트 |
-| `available_evidence` | list | ❌ | 사용 가능한 근거 목록 |
-| `context` | dict | ❌ | 추가 컨텍스트 |
+| 파라미터             | 타입 | 필수 | 설명                  |
+| -------------------- | ---- | ---- | --------------------- |
+| `response_text`      | str  | ✅   | 검증할 응답 텍스트    |
+| `available_evidence` | list | ❌   | 사용 가능한 근거 목록 |
+| `context`            | dict | ❌   | 추가 컨텍스트         |
 
 **반환값: `ValidationResult`**
 
@@ -386,12 +386,12 @@ class ValidationResult:
 
 #### 검증 상태
 
-| 상태 | 설명 | 환각 위험 |
-|------|------|----------|
-| VERIFIED | 근거 있음 (2개 이상) | 낮음 |
-| PARTIAL | 부분적 근거 (1개) | 중간 |
-| UNVERIFIED | 근거 없음 | 높음 |
-| ASSUMPTION | 가정으로 명시됨 | - |
+| 상태       | 설명                 | 환각 위험 |
+| ---------- | -------------------- | --------- |
+| VERIFIED   | 근거 있음 (2개 이상) | 낮음      |
+| PARTIAL    | 부분적 근거 (1개)    | 중간      |
+| UNVERIFIED | 근거 없음            | 높음      |
+| ASSUMPTION | 가정으로 명시됨      | -         |
 
 #### 사용 예시
 
@@ -475,16 +475,16 @@ class WorkflowExecution:
 
 #### 기본 워크플로 단계
 
-| 단계 | 설명 | Agent |
-|------|------|-------|
-| 1. QUERY_DECOMPOSITION | 질문 분해 | QueryDecomposition |
-| 2. KG_QUERY | Knowledge Graph 조회 | KG Client |
-| 3. OPTION_GENERATION | 대안 생성 | OptionGenerator |
-| 4. IMPACT_SIMULATION | 영향 시뮬레이션 | ImpactSimulator |
-| 5. PROBABILITY_CALCULATION | 성공 확률 계산 | SuccessProbability |
-| 6. VALIDATION | 근거 검증 | Validator |
-| 7. HITL_APPROVAL | 인간 검토/승인 | HITL System |
-| 8. FINALIZATION | 최종 결과 생성 | - |
+| 단계                       | 설명                 | Agent              |
+| -------------------------- | -------------------- | ------------------ |
+| 1. QUERY_DECOMPOSITION     | 질문 분해            | QueryDecomposition |
+| 2. KG_QUERY                | Knowledge Graph 조회 | KG Client          |
+| 3. OPTION_GENERATION       | 대안 생성            | OptionGenerator    |
+| 4. IMPACT_SIMULATION       | 영향 시뮬레이션      | ImpactSimulator    |
+| 5. PROBABILITY_CALCULATION | 성공 확률 계산       | SuccessProbability |
+| 6. VALIDATION              | 근거 검증            | Validator          |
+| 7. HITL_APPROVAL           | 인간 검토/승인       | HITL System        |
+| 8. FINALIZATION            | 최종 결과 생성       | -                  |
 
 ---
 
@@ -525,23 +525,23 @@ system = HITLApprovalSystem(
 
 #### 승인 레벨
 
-| 레벨 | 설명 | 기본 적용 |
-|------|------|----------|
-| TEAM_LEAD | 팀장급 | Capacity, Competency Gap |
-| DEPARTMENT | 부서장급 | Go/No-go, Headcount |
-| DIVISION | 본부장급 | 고가치/대규모 건 |
-| EXECUTIVE | 임원급 | 최종 에스컬레이션 |
+| 레벨       | 설명     | 기본 적용                |
+| ---------- | -------- | ------------------------ |
+| TEAM_LEAD  | 팀장급   | Capacity, Competency Gap |
+| DEPARTMENT | 부서장급 | Go/No-go, Headcount      |
+| DIVISION   | 본부장급 | 고가치/대규모 건         |
+| EXECUTIVE  | 임원급   | 최종 에스컬레이션        |
 
 #### 승인 상태
 
-| 상태 | 설명 |
-|------|------|
-| PENDING | 대기 중 |
-| APPROVED | 승인됨 |
-| REJECTED | 거절됨 |
-| MODIFIED | 수정 후 승인 |
+| 상태      | 설명           |
+| --------- | -------------- |
+| PENDING   | 대기 중        |
+| APPROVED  | 승인됨         |
+| REJECTED  | 거절됨         |
+| MODIFIED  | 수정 후 승인   |
 | ESCALATED | 에스컬레이션됨 |
-| EXPIRED | 타임아웃 |
+| EXPIRED   | 타임아웃       |
 
 #### 사용 예시
 
@@ -583,46 +583,46 @@ log = system.create_decision_log(
 
 ### 4.1 Knowledge Graph 노드 타입
 
-| 노드 타입 | 설명 | 주요 속성 |
-|-----------|------|----------|
-| Employee | 직원 | employeeId, name, grade, status |
-| OrgUnit | 조직 | orgUnitId, name, parentId, level |
-| Project | 프로젝트 | projectId, name, status, budget |
-| WorkPackage | 작업 패키지 | wpId, projectId, status |
-| Opportunity | 영업 기회 | opportunityId, dealValue, stage |
-| Assignment | 배치 | assignmentId, employeeId, projectId |
-| Competency | 역량 | competencyId, name, category |
-| PersonCompetency | 직원 역량 | employeeId, competencyId, level |
-| RequiredCompetency | 필요 역량 | projectId, competencyId, minimumLevel |
-| Demand | 수요 | demandId, orgUnitId, quantityFTE |
-| Availability | 가용성 | availabilityId, employeeId, availableFTE |
+| 노드 타입          | 설명        | 주요 속성                                |
+| ------------------ | ----------- | ---------------------------------------- |
+| Employee           | 직원        | employeeId, name, grade, status          |
+| OrgUnit            | 조직        | orgUnitId, name, parentId, level         |
+| Project            | 프로젝트    | projectId, name, status, budget          |
+| WorkPackage        | 작업 패키지 | wpId, projectId, status                  |
+| Opportunity        | 영업 기회   | opportunityId, dealValue, stage          |
+| Assignment         | 배치        | assignmentId, employeeId, projectId      |
+| Competency         | 역량        | competencyId, name, category             |
+| PersonCompetency   | 직원 역량   | employeeId, competencyId, level          |
+| RequiredCompetency | 필요 역량   | projectId, competencyId, minimumLevel    |
+| Demand             | 수요        | demandId, orgUnitId, quantityFTE         |
+| Availability       | 가용성      | availabilityId, employeeId, availableFTE |
 
 ### 4.2 주요 관계 타입
 
-| 관계 | 시작 노드 | 종료 노드 | 설명 |
-|------|----------|----------|------|
-| BELONGS_TO | Employee | OrgUnit | 소속 관계 |
-| WORKS_ON | Employee | Project | 프로젝트 참여 |
-| ASSIGNED_TO | Assignment | Employee | 배치 대상 |
-| HAS_COMPETENCY | Employee | Competency | 역량 보유 |
-| REQUIRES | Project | Competency | 필요 역량 |
-| OWNS | OrgUnit | Opportunity | 기회 소유 |
-| PARENT_OF | OrgUnit | OrgUnit | 상위 조직 |
+| 관계           | 시작 노드  | 종료 노드   | 설명          |
+| -------------- | ---------- | ----------- | ------------- |
+| BELONGS_TO     | Employee   | OrgUnit     | 소속 관계     |
+| WORKS_ON       | Employee   | Project     | 프로젝트 참여 |
+| ASSIGNED_TO    | Assignment | Employee    | 배치 대상     |
+| HAS_COMPETENCY | Employee   | Competency  | 역량 보유     |
+| REQUIRES       | Project    | Competency  | 필요 역량     |
+| OWNS           | OrgUnit    | Opportunity | 기회 소유     |
+| PARENT_OF      | OrgUnit    | OrgUnit     | 상위 조직     |
 
 ---
 
 ## 5. 에러 코드
 
-| 코드 | 설명 | 대응 방안 |
-|------|------|----------|
-| E001 | 질문 유형 분류 실패 | 더 구체적인 키워드 포함 |
-| E002 | KG 쿼리 실패 | 데이터 존재 여부 확인 |
-| E003 | 대안 생성 실패 | 컨텍스트 데이터 확인 |
-| E004 | 시뮬레이션 실패 | 베이스라인 데이터 확인 |
-| E005 | 검증 실패 | 근거 데이터 확인 |
-| E006 | 승인 권한 부족 | 상위 결재자 지정 |
-| E007 | 승인 타임아웃 | 재요청 또는 에스컬레이션 |
-| E008 | 워크플로 실행 실패 | 로그 확인 후 재시도 |
+| 코드 | 설명                | 대응 방안                |
+| ---- | ------------------- | ------------------------ |
+| E001 | 질문 유형 분류 실패 | 더 구체적인 키워드 포함  |
+| E002 | KG 쿼리 실패        | 데이터 존재 여부 확인    |
+| E003 | 대안 생성 실패      | 컨텍스트 데이터 확인     |
+| E004 | 시뮬레이션 실패     | 베이스라인 데이터 확인   |
+| E005 | 검증 실패           | 근거 데이터 확인         |
+| E006 | 승인 권한 부족      | 상위 결재자 지정         |
+| E007 | 승인 타임아웃       | 재요청 또는 에스컬레이션 |
+| E008 | 워크플로 실행 실패  | 로그 확인 후 재시도      |
 
 ---
 

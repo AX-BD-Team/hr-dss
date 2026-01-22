@@ -1,8 +1,8 @@
-import React from 'react';
-import { notFound } from 'next/navigation';
-import { DocsSidebar, docsStructure } from '../../../components/DocsSidebar';
-import { MarkdownViewer } from '../../../components/MarkdownViewer';
-import { getDocBySlug, getAllDocSlugs } from '../../../lib/docs';
+import React from "react";
+import { notFound } from "next/navigation";
+import { DocsSidebar, docsStructure } from "../../../components/DocsSidebar";
+import { MarkdownViewer } from "../../../components/MarkdownViewer";
+import { getDocBySlug, getAllDocSlugs } from "../../../lib/docs";
 
 interface Props {
   params: Promise<{
@@ -14,13 +14,13 @@ interface Props {
 export async function generateStaticParams() {
   const slugs = getAllDocSlugs();
   return slugs.map((slug) => ({
-    slug: slug.split('/'),
+    slug: slug.split("/"),
   }));
 }
 
 export default async function DocPage({ params }: Props) {
   const { slug } = await params;
-  const slugPath = slug.join('/');
+  const slugPath = slug.join("/");
   const doc = getDocBySlug(slugPath);
 
   if (!doc) {

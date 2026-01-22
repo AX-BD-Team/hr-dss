@@ -18,36 +18,39 @@
 
 ## 4대 유스케이스
 
-| ID | 유형 | 질문 예시 |
-|----|------|----------|
-| **A-1** | 12주 Capacity 병목 | "향후 12주 본부/팀별 가동률 90% 초과 주차와 병목 원인 예측" |
-| **B-1** | Go/No-go + 성공확률 | "'100억 미디어 AX' 내부 수행 가능 여부와 성공확률" |
-| **C-1** | 증원 원인분해 | "OOO팀 1명 증원 요청의 원인분해" |
-| **D-1** | 역량 투자 ROI | "AI-driven 전환 관점 역량 갭 Top10 정량화" |
+| ID      | 유형                | 질문 예시                                                   |
+| ------- | ------------------- | ----------------------------------------------------------- |
+| **A-1** | 12주 Capacity 병목  | "향후 12주 본부/팀별 가동률 90% 초과 주차와 병목 원인 예측" |
+| **B-1** | Go/No-go + 성공확률 | "'100억 미디어 AX' 내부 수행 가능 여부와 성공확률"          |
+| **C-1** | 증원 원인분해       | "OOO팀 1명 증원 요청의 원인분해"                            |
+| **D-1** | 역량 투자 ROI       | "AI-driven 전환 관점 역량 갭 Top10 정량화"                  |
 
 ## 기술 스택
 
 ### Backend
-| 기술 | 버전 | 용도 |
-|------|------|------|
-| Python | 3.11+ | 백엔드/에이전트 런타임 |
-| FastAPI | 0.115.0+ | REST API 서버 |
-| Claude Agent SDK | 0.1.19+ | 멀티에이전트 오케스트레이션 |
-| Neo4j AuraDB | - | Ontology/Knowledge Graph |
+
+| 기술             | 버전     | 용도                        |
+| ---------------- | -------- | --------------------------- |
+| Python           | 3.11+    | 백엔드/에이전트 런타임      |
+| FastAPI          | 0.115.0+ | REST API 서버               |
+| Claude Agent SDK | 0.1.19+  | 멀티에이전트 오케스트레이션 |
+| Neo4j AuraDB     | -        | Ontology/Knowledge Graph    |
 
 ### Frontend
-| 기술 | 버전 | 용도 |
-|------|------|------|
-| Next.js | 14+ | React 기반 UI |
-| TypeScript | 5.7+ | 타입 안전성 |
-| D3.js | - | Graph 시각화 |
+
+| 기술       | 버전 | 용도          |
+| ---------- | ---- | ------------- |
+| Next.js    | 14+  | React 기반 UI |
+| TypeScript | 5.7+ | 타입 안전성   |
+| D3.js      | -    | Graph 시각화  |
 
 ### Infrastructure
-| 기술 | 용도 |
-|------|------|
-| Cloudflare Workers | Edge Runtime |
-| Cloudflare D1 | Metadata 저장소 |
-| Cloudflare R2 | 파일 저장소 |
+
+| 기술               | 용도            |
+| ------------------ | --------------- |
+| Cloudflare Workers | Edge Runtime    |
+| Cloudflare D1      | Metadata 저장소 |
+| Cloudflare R2      | 파일 저장소     |
 
 ## 프로젝트 구조
 
@@ -116,26 +119,26 @@ pnpm dev
 
 ### Sub Agents
 
-| Agent | 용도 |
-|-------|------|
-| orchestrator | 워크플로 실행 및 서브에이전트 조율 |
-| query-decomposition | 질문 분해 (목표/제약/기간 추출) |
-| option-generator | 대안 3개 생성 (내부/혼합/역량강화) |
-| impact-simulator | As-Is vs To-Be 가동률 시뮬레이션 |
-| success-probability | 휴리스틱+모델 기반 성공확률 산출 |
-| validator | 근거 연결 검증 (환각 탐지) |
-| workflow-builder | 실행 계획 및 Workflow 생성 |
+| Agent               | 용도                               |
+| ------------------- | ---------------------------------- |
+| orchestrator        | 워크플로 실행 및 서브에이전트 조율 |
+| query-decomposition | 질문 분해 (목표/제약/기간 추출)    |
+| option-generator    | 대안 3개 생성 (내부/혼합/역량강화) |
+| impact-simulator    | As-Is vs To-Be 가동률 시뮬레이션   |
+| success-probability | 휴리스틱+모델 기반 성공확률 산출   |
+| validator           | 근거 연결 검증 (환각 탐지)         |
+| workflow-builder    | 실행 계획 및 Workflow 생성         |
 
 ### Skills
 
-| Skill | 용도 | 유스케이스 |
-|-------|------|-----------|
-| capacity-forecast | 12주 가동률 병목 예측 | A-1 |
-| go-nogo | Go/No-go + 성공확률 분석 | B-1 |
-| headcount-analysis | 증원 원인분해 | C-1 |
-| competency-gap | 역량 갭 분석 및 ROI | D-1 |
-| project-plan | 프로젝트 계획 수립 | - |
-| project-cleanup | 프로젝트 정리 (테스트/커밋) | - |
+| Skill              | 용도                        | 유스케이스 |
+| ------------------ | --------------------------- | ---------- |
+| capacity-forecast  | 12주 가동률 병목 예측       | A-1        |
+| go-nogo            | Go/No-go + 성공확률 분석    | B-1        |
+| headcount-analysis | 증원 원인분해               | C-1        |
+| competency-gap     | 역량 갭 분석 및 ROI         | D-1        |
+| project-plan       | 프로젝트 계획 수립          | -          |
+| project-cleanup    | 프로젝트 정리 (테스트/커밋) | -          |
 
 ## 테스트
 

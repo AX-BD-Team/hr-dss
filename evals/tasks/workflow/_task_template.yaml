@@ -3,18 +3,18 @@
 
 task:
   # ===== 필수 필드 =====
-  id: "{{task-id}}"  # 고유 ID (소문자, 하이픈, 언더스코어만)
-  type: workflow  # coding | workflow | conversational | research | computer_use
+  id: "{{task-id}}" # 고유 ID (소문자, 하이픈, 언더스코어만)
+  type: workflow # coding | workflow | conversational | research | computer_use
   desc: "{{task-description}}"
-  suite: "{{suite-id}}"  # 소속 Suite ID
+  suite: "{{suite-id}}" # 소속 Suite ID
 
   # ===== 메타데이터 (선택) =====
   version: "1.0.0"
   metadata:
-    domain: functionality  # security | performance | functionality | ux | integration | data_quality
-    difficulty: medium  # trivial | easy | medium | hard | expert
-    risk: low  # low | medium | high | critical
-    purpose: capability  # capability | regression
+    domain: functionality # security | performance | functionality | ux | integration | data_quality
+    difficulty: medium # trivial | easy | medium | hard | expert
+    risk: low # low | medium | high | critical
+    purpose: capability # capability | regression
     expected_pass_rate: 0.8
     owner: "{{owner-team}}"
 
@@ -66,21 +66,21 @@ task:
 
   # ===== Trial 설정 =====
   trials:
-    k: 5  # 실행 횟수
-    parallel: true  # 병렬 실행
-    stop_on_first_pass: false  # 첫 성공 시 중단 여부
+    k: 5 # 실행 횟수
+    parallel: true # 병렬 실행
+    stop_on_first_pass: false # 첫 성공 시 중단 여부
 
   # ===== 환경 설정 =====
   environment:
-    sandbox: container  # none | process | container | vm
+    sandbox: container # none | process | container | vm
     # image: "python:3.11-slim"
-    reset: clean  # clean | snapshot | persist
-    network: internal  # none | internal | external
+    reset: clean # clean | snapshot | persist
+    network: internal # none | internal | external
     # working_dir: "/workspace"
 
   # ===== 에이전트 설정 =====
   agent:
-    adapter: claude_agent_sdk  # claude_agent_sdk | claude_code | langchain | custom
+    adapter: claude_agent_sdk # claude_agent_sdk | claude_code | langchain | custom
     # agent_id: "orchestrator"  # 특정 에이전트 지정 시
     model: "claude-sonnet-4-20250514"
     max_turns: 20
@@ -128,7 +128,7 @@ task:
 
   # ===== 채점 방식 =====
   scoring:
-    mode: weighted  # weighted | binary | hybrid | partial_credit
+    mode: weighted # weighted | binary | hybrid | partial_credit
     pass_threshold: 0.8
 
   # ===== 타임아웃 =====

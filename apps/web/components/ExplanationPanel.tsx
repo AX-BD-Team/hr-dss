@@ -33,7 +33,12 @@ export interface SelectedOptionInfo {
 export interface ReasoningStep {
   stepId: string;
   stepNumber: number;
-  type: "QUERY_ANALYSIS" | "DATA_RETRIEVAL" | "OPTION_GENERATION" | "IMPACT_ANALYSIS" | "VALIDATION";
+  type:
+    | "QUERY_ANALYSIS"
+    | "DATA_RETRIEVAL"
+    | "OPTION_GENERATION"
+    | "IMPACT_ANALYSIS"
+    | "VALIDATION";
   title: string;
   description: string;
   input: string;
@@ -240,10 +245,20 @@ const ReasoningChain: React.FC<{
                   }}
                 >
                   <div>
-                    <div style={{ fontWeight: "bold", fontSize: "14px" }}>{step.title}</div>
-                    <div style={{ fontSize: "11px", color: "#666" }}>{step.type}</div>
+                    <div style={{ fontWeight: "bold", fontSize: "14px" }}>
+                      {step.title}
+                    </div>
+                    <div style={{ fontSize: "11px", color: "#666" }}>
+                      {step.type}
+                    </div>
                   </div>
-                  <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "8px",
+                      alignItems: "center",
+                    }}
+                  >
                     <ConfidenceBadge confidence={step.confidence} />
                     <span style={{ fontSize: "11px", color: "#999" }}>
                       {step.duration}ms
@@ -281,27 +296,55 @@ const ReasoningChain: React.FC<{
                     }}
                   >
                     <div style={{ marginBottom: "8px" }}>
-                      <div style={{ fontSize: "11px", fontWeight: "bold", color: "#666" }}>
+                      <div
+                        style={{
+                          fontSize: "11px",
+                          fontWeight: "bold",
+                          color: "#666",
+                        }}
+                      >
                         입력
                       </div>
-                      <div style={{ fontSize: "12px", fontFamily: "monospace" }}>
+                      <div
+                        style={{ fontSize: "12px", fontFamily: "monospace" }}
+                      >
                         {step.input}
                       </div>
                     </div>
                     <div style={{ marginBottom: "8px" }}>
-                      <div style={{ fontSize: "11px", fontWeight: "bold", color: "#666" }}>
+                      <div
+                        style={{
+                          fontSize: "11px",
+                          fontWeight: "bold",
+                          color: "#666",
+                        }}
+                      >
                         출력
                       </div>
-                      <div style={{ fontSize: "12px", fontFamily: "monospace" }}>
+                      <div
+                        style={{ fontSize: "12px", fontFamily: "monospace" }}
+                      >
                         {step.output}
                       </div>
                     </div>
                     {step.evidenceRefs.length > 0 && (
                       <div>
-                        <div style={{ fontSize: "11px", fontWeight: "bold", color: "#666" }}>
+                        <div
+                          style={{
+                            fontSize: "11px",
+                            fontWeight: "bold",
+                            color: "#666",
+                          }}
+                        >
                           참조 근거
                         </div>
-                        <div style={{ display: "flex", gap: "4px", flexWrap: "wrap" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            gap: "4px",
+                            flexWrap: "wrap",
+                          }}
+                        >
                           {step.evidenceRefs.map((ref) => (
                             <button
                               key={ref}
@@ -395,19 +438,31 @@ const EvidenceList: React.FC<{
                     </span>
                     <ConfidenceBadge confidence={item.confidence} />
                   </div>
-                  <div style={{ fontSize: "12px", color: "#666", marginBottom: "4px" }}>
+                  <div
+                    style={{
+                      fontSize: "12px",
+                      color: "#666",
+                      marginBottom: "4px",
+                    }}
+                  >
                     출처: {item.source}
                   </div>
                   <div style={{ fontSize: "13px" }}>{item.content}</div>
                   {item.linkedClaims.length > 0 && (
-                    <div style={{ marginTop: "8px", fontSize: "11px", color: "#999" }}>
+                    <div
+                      style={{
+                        marginTop: "8px",
+                        fontSize: "11px",
+                        color: "#999",
+                      }}
+                    >
                       연결된 주장: {item.linkedClaims.join(", ")}
                     </div>
                   )}
                 </div>
               ))}
             </div>
-          )
+          ),
       )}
     </div>
   );
@@ -447,7 +502,8 @@ const AssumptionsList: React.FC<{
                   marginBottom: "12px",
                 }}
               >
-                {categoryLabels[category as Assumption["category"]]} ({items.length})
+                {categoryLabels[category as Assumption["category"]]} (
+                {items.length})
               </div>
               {items.map((item) => (
                 <div
@@ -505,7 +561,7 @@ const AssumptionsList: React.FC<{
                 </div>
               ))}
             </div>
-          )
+          ),
       )}
     </div>
   );
@@ -580,7 +636,8 @@ const ValidationPanel: React.FC<{
             style={{
               fontSize: "24px",
               fontWeight: "bold",
-              color: validation.hallucinationRisk <= 0.05 ? "#4CAF50" : "#F44336",
+              color:
+                validation.hallucinationRisk <= 0.05 ? "#4CAF50" : "#F44336",
             }}
           >
             {(validation.hallucinationRisk * 100).toFixed(1)}%
@@ -633,7 +690,13 @@ const ValidationPanel: React.FC<{
                 borderLeft: "4px solid #F44336",
               }}
             >
-              <div style={{ fontWeight: "500", fontSize: "13px", marginBottom: "4px" }}>
+              <div
+                style={{
+                  fontWeight: "500",
+                  fontSize: "13px",
+                  marginBottom: "4px",
+                }}
+              >
                 {claim.text}
               </div>
               <div style={{ fontSize: "12px", color: "#666" }}>
@@ -748,7 +811,9 @@ const SimpleKGView: React.FC<{
                 cursor: "pointer",
               }}
             >
-              <span style={{ color: "#666" }}>[{node.type.substring(0, 2)}]</span>{" "}
+              <span style={{ color: "#666" }}>
+                [{node.type.substring(0, 2)}]
+              </span>{" "}
               {node.label}
             </div>
           ))}
@@ -787,7 +852,9 @@ export const ExplanationPanel: React.FC<ExplanationPanelProps> = ({
           borderBottom: "1px solid #e0e0e0",
         }}
       >
-        <div style={{ fontWeight: "bold", fontSize: "18px", marginBottom: "4px" }}>
+        <div
+          style={{ fontWeight: "bold", fontSize: "18px", marginBottom: "4px" }}
+        >
           의사결정 설명
         </div>
         <div style={{ fontSize: "12px", color: "#666" }}>
@@ -834,7 +901,9 @@ export const ExplanationPanel: React.FC<ExplanationPanelProps> = ({
                 flex: 1,
                 padding: "12px",
                 border: "none",
-                borderBottom: isActive ? "2px solid #2196F3" : "2px solid transparent",
+                borderBottom: isActive
+                  ? "2px solid #2196F3"
+                  : "2px solid transparent",
                 background: isActive ? "white" : "transparent",
                 color: isActive ? "#2196F3" : "#666",
                 fontWeight: isActive ? "bold" : "normal",
@@ -850,13 +919,21 @@ export const ExplanationPanel: React.FC<ExplanationPanelProps> = ({
       </div>
 
       {/* Content */}
-      <div style={{ padding: "20px", background: "#fafafa", minHeight: "400px" }}>
+      <div
+        style={{ padding: "20px", background: "#fafafa", minHeight: "400px" }}
+      >
         {activeTab === "reasoning" && (
-          <ReasoningChain steps={data.reasoningChain} onEvidenceClick={onEvidenceClick} />
+          <ReasoningChain
+            steps={data.reasoningChain}
+            onEvidenceClick={onEvidenceClick}
+          />
         )}
 
         {activeTab === "evidence" && (
-          <EvidenceList evidence={data.evidenceList} onEvidenceClick={onEvidenceClick} />
+          <EvidenceList
+            evidence={data.evidenceList}
+            onEvidenceClick={onEvidenceClick}
+          />
         )}
 
         {activeTab === "assumptions" && (
@@ -896,9 +973,11 @@ export const generateMockExplanationData = (): ExplanationData => {
         stepNumber: 1,
         type: "QUERY_ANALYSIS",
         title: "질문 분석",
-        description: "사용자 질문을 분석하여 CAPACITY 유형으로 분류하고 하위 쿼리로 분해",
+        description:
+          "사용자 질문을 분석하여 CAPACITY 유형으로 분류하고 하위 쿼리로 분해",
         input: "향후 12주간 AI팀의 가동률 병목 구간과 해결 방안은?",
-        output: "queryType: CAPACITY, subQueries: [utilization, forecast, bottleneck]",
+        output:
+          "queryType: CAPACITY, subQueries: [utilization, forecast, bottleneck]",
         confidence: 0.95,
         duration: 120,
         evidenceRefs: [],
@@ -1022,9 +1101,24 @@ export const generateMockExplanationData = (): ExplanationData => {
         properties: { headcount: 15, status: "ACTIVE" },
       },
       relatedNodes: [
-        { nodeId: "EMP-001", type: "Employee", label: "홍길동", properties: {} },
-        { nodeId: "PROJ-001", type: "Project", label: "AI 플랫폼", properties: {} },
-        { nodeId: "COMP-001", type: "Competency", label: "ML Engineering", properties: {} },
+        {
+          nodeId: "EMP-001",
+          type: "Employee",
+          label: "홍길동",
+          properties: {},
+        },
+        {
+          nodeId: "PROJ-001",
+          type: "Project",
+          label: "AI 플랫폼",
+          properties: {},
+        },
+        {
+          nodeId: "COMP-001",
+          type: "Competency",
+          label: "ML Engineering",
+          properties: {},
+        },
       ],
       relationships: [
         { from: "EMP-001", to: "ORG-AI-001", type: "BELONGS_TO" },

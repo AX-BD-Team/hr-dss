@@ -100,7 +100,9 @@ export const GraphViewer: React.FC<GraphViewerProps> = ({
   const [transform, setTransform] = useState({ x: 0, y: 0, k: 1 });
 
   // D3 시뮬레이션 상태
-  const simulationRef = useRef<d3.Simulation<GraphNode, GraphLink> | null>(null);
+  const simulationRef = useRef<d3.Simulation<GraphNode, GraphLink> | null>(
+    null,
+  );
 
   // 노드 색상 가져오기
   const getNodeColor = useCallback((node: GraphNode): string => {
@@ -120,7 +122,7 @@ export const GraphViewer: React.FC<GraphViewerProps> = ({
       if (highlightTypes.includes(node.type)) return baseSize * 1.2;
       return baseSize;
     },
-    [selectedNodeId, highlightTypes]
+    [selectedNodeId, highlightTypes],
   );
 
   // D3 초기화 및 업데이트
@@ -177,7 +179,7 @@ export const GraphViewer: React.FC<GraphViewerProps> = ({
           d3
             .forceLink<GraphNode, GraphLink>(data.links)
             .id((d) => d.id)
-            .distance(100)
+            .distance(100),
         )
         .force("charge", d3.forceManyBody().strength(-300))
         .force("center", d3.forceCenter(width / 2, height / 2))
@@ -237,7 +239,7 @@ export const GraphViewer: React.FC<GraphViewerProps> = ({
               if (!event.active) simulation.alphaTarget(0);
               d.fx = null;
               d.fy = null;
-            }) as any
+            }) as any,
         );
 
       // 노드 원
@@ -245,9 +247,7 @@ export const GraphViewer: React.FC<GraphViewerProps> = ({
         .append("circle")
         .attr("r", (d) => getNodeRadius(d))
         .attr("fill", (d) => getNodeColor(d))
-        .attr("stroke", (d) =>
-          selectedNodeId === d.id ? "#000" : "#fff"
-        )
+        .attr("stroke", (d) => (selectedNodeId === d.id ? "#000" : "#fff"))
         .attr("stroke-width", (d) => (selectedNodeId === d.id ? 3 : 2))
         .on("mouseover", (_event, d) => setHoveredNode(d))
         .on("mouseout", () => setHoveredNode(null))
@@ -287,12 +287,12 @@ export const GraphViewer: React.FC<GraphViewerProps> = ({
             .attr(
               "x",
               (d) =>
-                ((d.source as GraphNode).x! + (d.target as GraphNode).x!) / 2
+                ((d.source as GraphNode).x! + (d.target as GraphNode).x!) / 2,
             )
             .attr(
               "y",
               (d) =>
-                ((d.source as GraphNode).y! + (d.target as GraphNode).y!) / 2
+                ((d.source as GraphNode).y! + (d.target as GraphNode).y!) / 2,
             );
         }
 
@@ -352,7 +352,11 @@ export const GraphViewer: React.FC<GraphViewerProps> = ({
           .map(([type, color]) => (
             <div
               key={type}
-              style={{ display: "flex", alignItems: "center", marginBottom: "4px" }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "4px",
+              }}
             >
               <div
                 style={{
@@ -418,7 +422,7 @@ export const GraphViewer: React.FC<GraphViewerProps> = ({
                   .transition()
                   .call(
                     d3.zoom<SVGSVGElement, unknown>().transform as any,
-                    d3.zoomIdentity.scale(transform.k * 1.2)
+                    d3.zoomIdentity.scale(transform.k * 1.2),
                   );
               });
             }
@@ -441,7 +445,7 @@ export const GraphViewer: React.FC<GraphViewerProps> = ({
                   .transition()
                   .call(
                     d3.zoom<SVGSVGElement, unknown>().transform as any,
-                    d3.zoomIdentity.scale(transform.k / 1.2)
+                    d3.zoomIdentity.scale(transform.k / 1.2),
                   );
               });
             }
@@ -464,7 +468,7 @@ export const GraphViewer: React.FC<GraphViewerProps> = ({
                   .transition()
                   .call(
                     d3.zoom<SVGSVGElement, unknown>().transform as any,
-                    d3.zoomIdentity
+                    d3.zoomIdentity,
                   );
               });
             }
@@ -522,17 +526,19 @@ export const useGraphData = (endpoint: string) => {
 /**
  * Neo4j 쿼리 결과를 GraphData로 변환하는 유틸리티
  */
-export const convertNeo4jToGraphData = (
-  neo4jResult: {
-    nodes: Array<{ id: string; labels: string[]; properties: Record<string, unknown> }>;
-    relationships: Array<{
-      startNodeId: string;
-      endNodeId: string;
-      type: string;
-      properties?: Record<string, unknown>;
-    }>;
-  }
-): GraphData => {
+export const convertNeo4jToGraphData = (neo4jResult: {
+  nodes: Array<{
+    id: string;
+    labels: string[];
+    properties: Record<string, unknown>;
+  }>;
+  relationships: Array<{
+    startNodeId: string;
+    endNodeId: string;
+    type: string;
+    properties?: Record<string, unknown>;
+  }>;
+}): GraphData => {
   const nodes: GraphNode[] = neo4jResult.nodes.map((n) => ({
     id: n.id,
     label: String(n.properties.name || n.properties.employeeId || n.id),

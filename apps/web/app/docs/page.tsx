@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { DocsSidebar, docsStructure } from '../../components/DocsSidebar';
+import React from "react";
+import { DocsSidebar, docsStructure } from "../../components/DocsSidebar";
 
 export default function DocsIndexPage() {
   return (

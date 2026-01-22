@@ -11,11 +11,11 @@
 
 **SSDD (Skillful Spec-Driven Development)** = SDD + Claude Skills Integration
 
-| Skill | 용도 | 산출물 |
-|-------|------|--------|
-| ontology-design | Ontology 스키마 설계 | schema.cypher |
-| data-loader | KG 데이터 적재 | data-loader.ts |
-| agent-eval | 에이전트 평가 | AgentEvalDashboard |
+| Skill           | 용도                 | 산출물             |
+| --------------- | -------------------- | ------------------ |
+| ontology-design | Ontology 스키마 설계 | schema.cypher      |
+| data-loader     | KG 데이터 적재       | data-loader.ts     |
+| agent-eval      | 에이전트 평가        | AgentEvalDashboard |
 
 **문서 인덱스**: [docs/INDEX.md](docs/INDEX.md)
 
@@ -24,11 +24,13 @@
 ## 📜 프로젝트 헌법
 
 핵심 가치:
+
 - **팔란티어 수준 예측**: 목표/제약 기반 복수 데이터 연결을 통한 예측+시뮬레이션+처방
 - **근거 기반 의사결정**: ModelRun + Finding + Evidence로 모든 추론 추적 가능
 - **HITL (Human-in-the-Loop)**: DecisionGate/Approval을 통한 승인 후 Workflow 연결
 
 기술 원칙:
+
 - TDD (Test-Driven Development)
 - 컴포넌트 단일 책임 원칙
 - Evidence-first: 근거 없는 주장 금지
@@ -80,24 +82,24 @@
 
 ### 사용 가능한 Sub Agent
 
-| Agent | 용도 | 자동 호출 조건 |
-|-------|------|----------------|
-| orchestrator | 워크플로 실행 및 서브에이전트 조율 | 모든 Command 실행 시 |
-| query-decomposition | 질문 분해 (목표/제약/기간 추출) | 자연어 질문 입력 시 |
-| option-generator | 대안 3개 생성 (내부/혼합/역량강화) | 의사결정 요청 시 |
-| impact-simulator | As-Is vs To-Be 가동률 시뮬레이션 | 옵션 비교 요청 시 |
-| success-probability | 휴리스틱+모델 기반 성공확률 산출 | 옵션 평가 시 |
-| validator | 근거 연결 검증 (환각 탐지) | 응답 생성 후 |
-| workflow-builder | 실행 계획 및 Workflow 생성 | 승인 완료 후 |
+| Agent               | 용도                               | 자동 호출 조건       |
+| ------------------- | ---------------------------------- | -------------------- |
+| orchestrator        | 워크플로 실행 및 서브에이전트 조율 | 모든 Command 실행 시 |
+| query-decomposition | 질문 분해 (목표/제약/기간 추출)    | 자연어 질문 입력 시  |
+| option-generator    | 대안 3개 생성 (내부/혼합/역량강화) | 의사결정 요청 시     |
+| impact-simulator    | As-Is vs To-Be 가동률 시뮬레이션   | 옵션 비교 요청 시    |
+| success-probability | 휴리스틱+모델 기반 성공확률 산출   | 옵션 평가 시         |
+| validator           | 근거 연결 검증 (환각 탐지)         | 응답 생성 후         |
+| workflow-builder    | 실행 계획 및 Workflow 생성         | 승인 완료 후         |
 
 ### 사용 가능한 Skills
 
-| Skill | 용도 | 키워드 |
-|-------|------|--------|
-| capacity-forecast | 12주 가동률 병목 예측 | A-1 질문 |
-| go-nogo | Go/No-go + 성공확률 분석 | B-1 질문 |
-| headcount-analysis | 증원 원인분해 | C-1 질문 |
-| competency-gap | 역량 갭 분석 및 ROI | D-1 질문 |
+| Skill              | 용도                     | 키워드   |
+| ------------------ | ------------------------ | -------- |
+| capacity-forecast  | 12주 가동률 병목 예측    | A-1 질문 |
+| go-nogo            | Go/No-go + 성공확률 분석 | B-1 질문 |
+| headcount-analysis | 증원 원인분해            | C-1 질문 |
+| competency-gap     | 역량 갭 분석 및 ROI      | D-1 질문 |
 
 ---
 
@@ -105,11 +107,11 @@
 
 **형식**: Major.Minor.Patch (Semantic Versioning)
 
-| 버전 | 변경 기준 | 승인 |
-|------|-----------|------|
-| Major (X.0.0) | Breaking Changes | ⚠️ 사용자 승인 필수 |
-| Minor (0.X.0) | 새로운 기능 추가 | 자동 |
-| Patch (0.0.X) | 버그 수정, Hotfix | 자동 |
+| 버전          | 변경 기준         | 승인                |
+| ------------- | ----------------- | ------------------- |
+| Major (X.0.0) | Breaking Changes  | ⚠️ 사용자 승인 필수 |
+| Minor (0.X.0) | 새로운 기능 추가  | 자동                |
+| Patch (0.0.X) | 버그 수정, Hotfix | 자동                |
 
 ```bash
 npm run release:patch  # 패치 버전
@@ -121,11 +123,11 @@ npm run release:major  # 메이저 버전
 
 **package.json/pyproject.toml 버전과 GitHub Tag/Release는 반드시 일치해야 합니다.**
 
-| 항목 | 위치 | 동기화 |
-|------|------|--------|
-| 시스템 버전 | `package.json` / `pyproject.toml` | 기준값 |
-| GitHub Tag | `git tag vX.X.X` | 자동 동기화 |
-| GitHub Release | `gh release create` | 자동 동기화 |
+| 항목           | 위치                              | 동기화      |
+| -------------- | --------------------------------- | ----------- |
+| 시스템 버전    | `package.json` / `pyproject.toml` | 기준값      |
+| GitHub Tag     | `git tag vX.X.X`                  | 자동 동기화 |
+| GitHub Release | `gh release create`               | 자동 동기화 |
 
 ---
 
@@ -134,6 +136,7 @@ npm run release:major  # 메이저 버전
 **HR 의사결정 지원 시스템 Prototype**은 PoC 준비를 위한 "팔란티어 수준 예측" 가능성 검증 시스템입니다.
 
 **핵심 가치 제안**:
+
 - 복수 데이터 연결: BizForce(수요) ↔ TMS(공급) ↔ R&R ↔ HR Master ↔ Cost/Risk/Outcome
 - 예측+시뮬레이션+처방: ForecastPoint → Option/Scenario/Action → Evaluation/MetricValue
 - 근거/감사 가능: ModelRun + Finding + Evidence로 추적
@@ -150,23 +153,23 @@ npm run release:major  # 메이저 버전
 
 ## 🛠️ 기술 스택
 
-| 레이어 | 기술 | 버전 | 용도 |
-|--------|------|------|------|
-| **Frontend** | Next.js | 14+ | React 기반 UI |
-| **Frontend** | TypeScript | 5.7+ | 타입 안전성 |
-| **Frontend** | D3.js | - | Graph 시각화 |
-| **Backend** | Cloudflare Workers | - | Edge Runtime |
-| **Backend** | Hono | - | Web Framework |
-| **Runtime** | Python | 3.11+ | 백엔드/에이전트 런타임 |
-| **Backend** | FastAPI | 0.115.0+ | REST API 서버 |
-| **Agent SDK** | Claude Agent SDK | 0.1.19+ | 멀티에이전트 오케스트레이션 |
-| **AI Model** | Claude Sonnet 4 | 20250514 | LLM 추론 엔진 |
-| **Database** | Neo4j AuraDB | - | Ontology/Knowledge Graph |
-| **Database** | Cloudflare D1 | - | Metadata 저장소 |
-| **Storage** | Cloudflare R2 | - | 파일 저장소 |
-| **Testing** | pytest | 8.3.0+ | 단위/통합 테스트 |
-| **Linting** | ruff | 0.8.0+ | 코드 품질 검사 |
-| **Type Checking** | mypy | 1.13.0+ | 정적 타입 검사 |
+| 레이어            | 기술               | 버전     | 용도                        |
+| ----------------- | ------------------ | -------- | --------------------------- |
+| **Frontend**      | Next.js            | 14+      | React 기반 UI               |
+| **Frontend**      | TypeScript         | 5.7+     | 타입 안전성                 |
+| **Frontend**      | D3.js              | -        | Graph 시각화                |
+| **Backend**       | Cloudflare Workers | -        | Edge Runtime                |
+| **Backend**       | Hono               | -        | Web Framework               |
+| **Runtime**       | Python             | 3.11+    | 백엔드/에이전트 런타임      |
+| **Backend**       | FastAPI            | 0.115.0+ | REST API 서버               |
+| **Agent SDK**     | Claude Agent SDK   | 0.1.19+  | 멀티에이전트 오케스트레이션 |
+| **AI Model**      | Claude Sonnet 4    | 20250514 | LLM 추론 엔진               |
+| **Database**      | Neo4j AuraDB       | -        | Ontology/Knowledge Graph    |
+| **Database**      | Cloudflare D1      | -        | Metadata 저장소             |
+| **Storage**       | Cloudflare R2      | -        | 파일 저장소                 |
+| **Testing**       | pytest             | 8.3.0+   | 단위/통합 테스트            |
+| **Linting**       | ruff               | 0.8.0+   | 코드 품질 검사              |
+| **Type Checking** | mypy               | 1.13.0+  | 정적 타입 검사              |
 
 ---
 
@@ -241,7 +244,7 @@ hr-dss/
 Do what has been asked; nothing more, nothing less.
 NEVER create files unless they're absolutely necessary for achieving your goal.
 ALWAYS prefer editing an existing file to creating a new one.
-NEVER proactively create documentation files (*.md) or README files.
+NEVER proactively create documentation files (\*.md) or README files.
 
 # Context Engineering
 

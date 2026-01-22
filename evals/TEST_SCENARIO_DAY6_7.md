@@ -21,16 +21,16 @@ P7 웹/앱 Prototype UI의 기능 및 UX 검증
 
 ### 1.2 테스트 대상 컴포넌트
 
-| 컴포넌트 | 파일 | 핵심 기능 |
-|----------|------|----------|
-| ConversationUI | `ConversationUI.tsx` | 대화형 질문 입력, 시나리오 프리셋 |
-| OptionCompare | `OptionCompare.tsx` | 3안 비교, 레이더 차트, ROI |
-| ExplanationPanel | `ExplanationPanel.tsx` | 추론 경로, Evidence, KG 뷰 |
-| EvalDashboard | `EvalDashboard.tsx` | 시스템 헬스, 알림, 활동 피드 |
-| GraphViewer | `GraphViewer.tsx` | KG 시각화, 노드/관계 탐색 |
-| AgentEvalDashboard | `AgentEvalDashboard.tsx` | Agent 성능 지표, 평가 결과 |
-| OntologyScoreCard | `OntologyScoreCard.tsx` | Ontology 품질 지표 |
-| DataQualityReport | `DataQualityReport.tsx` | 데이터 품질 리포트 |
+| 컴포넌트           | 파일                     | 핵심 기능                         |
+| ------------------ | ------------------------ | --------------------------------- |
+| ConversationUI     | `ConversationUI.tsx`     | 대화형 질문 입력, 시나리오 프리셋 |
+| OptionCompare      | `OptionCompare.tsx`      | 3안 비교, 레이더 차트, ROI        |
+| ExplanationPanel   | `ExplanationPanel.tsx`   | 추론 경로, Evidence, KG 뷰        |
+| EvalDashboard      | `EvalDashboard.tsx`      | 시스템 헬스, 알림, 활동 피드      |
+| GraphViewer        | `GraphViewer.tsx`        | KG 시각화, 노드/관계 탐색         |
+| AgentEvalDashboard | `AgentEvalDashboard.tsx` | Agent 성능 지표, 평가 결과        |
+| OntologyScoreCard  | `OntologyScoreCard.tsx`  | Ontology 품질 지표                |
+| DataQualityReport  | `DataQualityReport.tsx`  | 데이터 품질 리포트                |
 
 ### 1.3 테스트 시나리오
 
@@ -532,14 +532,14 @@ class TestExplanationPanelStructure:
 
 ### 1.5 Day 6 체크리스트
 
-| 항목 | 검증 방법 | Pass 기준 |
-|------|----------|----------|
-| ConversationUI | 파일 + 구조 검증 | 인터페이스 정의 |
-| OptionCompare | 파일 + 구조 검증 | 3안 비교 구현 |
-| ExplanationPanel | 파일 + 구조 검증 | Evidence 표시 |
-| EvalDashboard | 파일 + 구조 검증 | 헬스 상태 표시 |
-| GraphViewer | 파일 + 구조 검증 | 노드/엣지 렌더링 |
-| AC-9 (UI 사용성) | 수동 테스트 | ≥ 80% |
+| 항목             | 검증 방법        | Pass 기준        |
+| ---------------- | ---------------- | ---------------- |
+| ConversationUI   | 파일 + 구조 검증 | 인터페이스 정의  |
+| OptionCompare    | 파일 + 구조 검증 | 3안 비교 구현    |
+| ExplanationPanel | 파일 + 구조 검증 | Evidence 표시    |
+| EvalDashboard    | 파일 + 구조 검증 | 헬스 상태 표시   |
+| GraphViewer      | 파일 + 구조 검증 | 노드/엣지 렌더링 |
+| AC-9 (UI 사용성) | 수동 테스트      | ≥ 80%            |
 
 ---
 
@@ -866,14 +866,14 @@ class TestQuantitativeComparison:
 
 ### 2.4 Day 7 체크리스트
 
-| 항목 | 검증 방법 | Pass 기준 |
-|------|----------|----------|
-| PoC Final Report | 파일 + 섹션 검증 | 7개 섹션 |
-| API 문서 | 파일 + 섹션 검증 | 완전성 |
-| 사용자 가이드 | 파일 + 섹션 검증 | 완전성 |
-| 비교 리포트 | 파일 + 섹션 검증 | 완전성 |
-| AC-1~AC-6 | 각 기준별 검증 | 모두 Pass |
-| 시간 단축률 | 정량 측정 | > 50% |
+| 항목             | 검증 방법        | Pass 기준 |
+| ---------------- | ---------------- | --------- |
+| PoC Final Report | 파일 + 섹션 검증 | 7개 섹션  |
+| API 문서         | 파일 + 섹션 검증 | 완전성    |
+| 사용자 가이드    | 파일 + 섹션 검증 | 완전성    |
+| 비교 리포트      | 파일 + 섹션 검증 | 완전성    |
+| AC-1~AC-6        | 각 기준별 검증   | 모두 Pass |
+| 시간 단축률      | 정량 측정        | > 50%     |
 
 ---
 
@@ -881,18 +881,18 @@ class TestQuantitativeComparison:
 
 ### 3.1 Acceptance 판정 매트릭스
 
-| AC ID | 기준 | 목표 | 측정 방법 | 판정 |
-|-------|------|------|----------|------|
-| AC-1 | 4대 UC 응답 | 100% | 수동 테스트 | ⬜ |
-| AC-2 | 3안 비교 | 100% | pytest | ⬜ |
-| AC-3 | 근거 연결률 | ≥ 95% | Validator 출력 | ⬜ |
-| AC-4 | 환각률 | ≤ 5% | Validator 출력 | ⬜ |
-| AC-5 | KG 커버리지 | 100% | Cypher 쿼리 | ⬜ |
-| AC-6 | HITL 워크플로 | 동작 | E2E 테스트 | ⬜ |
-| AC-7 | 응답 시간 | ≤ 30s | 성능 측정 | ⬜ |
-| AC-8 | 재현성 | ≥ 95% | 반복 테스트 | ⬜ |
-| AC-9 | UI 사용성 | ≥ 80% | 수동 테스트 | ⬜ |
-| AC-10 | 문서화 | 100% | 파일 검증 | ⬜ |
+| AC ID | 기준          | 목표  | 측정 방법      | 판정 |
+| ----- | ------------- | ----- | -------------- | ---- |
+| AC-1  | 4대 UC 응답   | 100%  | 수동 테스트    | ⬜   |
+| AC-2  | 3안 비교      | 100%  | pytest         | ⬜   |
+| AC-3  | 근거 연결률   | ≥ 95% | Validator 출력 | ⬜   |
+| AC-4  | 환각률        | ≤ 5%  | Validator 출력 | ⬜   |
+| AC-5  | KG 커버리지   | 100%  | Cypher 쿼리    | ⬜   |
+| AC-6  | HITL 워크플로 | 동작  | E2E 테스트     | ⬜   |
+| AC-7  | 응답 시간     | ≤ 30s | 성능 측정      | ⬜   |
+| AC-8  | 재현성        | ≥ 95% | 반복 테스트    | ⬜   |
+| AC-9  | UI 사용성     | ≥ 80% | 수동 테스트    | ⬜   |
+| AC-10 | 문서화        | 100%  | 파일 검증      | ⬜   |
 
 ### 3.2 최종 판정 기준
 
@@ -975,12 +975,14 @@ scenarios:
 ## E2E 데모 체크리스트
 
 ### 사전 준비
+
 - [ ] Neo4j 연결 확인
 - [ ] Mock 데이터 로드 완료
 - [ ] Agent Runtime 기동
 - [ ] UI 서버 기동
 
 ### 데모 중 확인
+
 - [ ] 질문 입력 → 응답 생성 (30초 이내)
 - [ ] 3안 비교 카드 표시
 - [ ] Evidence 연결 확인
@@ -988,6 +990,7 @@ scenarios:
 - [ ] Decision Log 기록
 
 ### 데모 후 확인
+
 - [ ] AC-1 ~ AC-6 모두 Pass
 - [ ] 성능 지표 목표 달성
 - [ ] 문서 완성도 확인
@@ -1016,4 +1019,4 @@ pytest tests/ -v --cov=backend --cov-report=html
 
 ---
 
-*이 문서는 PoC 최종 단계에서 업데이트될 수 있습니다.*
+_이 문서는 PoC 최종 단계에서 업데이트될 수 있습니다._

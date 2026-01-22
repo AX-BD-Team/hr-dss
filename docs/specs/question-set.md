@@ -8,11 +8,11 @@
 
 모든 질문은 다음 3단계 흐름을 따릅니다:
 
-| 단계 | 내용 | Input | Output |
-|------|------|-------|--------|
-| **1. 문제 정의** | Scope + Horizon + Objective + Constraint + KPI | 자연어 질문 | 구조화된 요청서 (DecisionCase) |
-| **2. 대안 탐색** | 3안(내부/혼합/역량강화) + As-Is vs To-Be 시뮬레이션 | DecisionCase | Option 비교표 (Evaluation) |
-| **3. 보고/기획** | 1페이지 요약 + 실행계획 + HITL 승인 + Workflow | 선택된 Option | 실행 패키지 (Action + WorkflowTask) |
+| 단계             | 내용                                                | Input         | Output                              |
+| ---------------- | --------------------------------------------------- | ------------- | ----------------------------------- |
+| **1. 문제 정의** | Scope + Horizon + Objective + Constraint + KPI      | 자연어 질문   | 구조화된 요청서 (DecisionCase)      |
+| **2. 대안 탐색** | 3안(내부/혼합/역량강화) + As-Is vs To-Be 시뮬레이션 | DecisionCase  | Option 비교표 (Evaluation)          |
+| **3. 보고/기획** | 1페이지 요약 + 실행계획 + HITL 승인 + Workflow      | 선택된 Option | 실행 패키지 (Action + WorkflowTask) |
 
 ---
 
@@ -20,12 +20,12 @@
 
 ### A-1: 12주 Capacity 병목 예측
 
-| 항목 | 내용 |
-|------|------|
-| **질문 예시** | "향후 12주간 본부/팀별 가동률 90% 초과 주차와 병목 원인을 예측해줘" |
-| **카테고리** | Capacity Planning |
-| **Horizon** | 12주 (TimeBucket: WEEK) |
-| **핵심 Output** | ForecastPoint(UTILIZATION) + Finding(병목 원인) |
+| 항목            | 내용                                                                |
+| --------------- | ------------------------------------------------------------------- |
+| **질문 예시**   | "향후 12주간 본부/팀별 가동률 90% 초과 주차와 병목 원인을 예측해줘" |
+| **카테고리**    | Capacity Planning                                                   |
+| **Horizon**     | 12주 (TimeBucket: WEEK)                                             |
+| **핵심 Output** | ForecastPoint(UTILIZATION) + Finding(병목 원인)                     |
 
 #### 단계별 입력/출력
 
@@ -117,12 +117,12 @@ Output (실행 패키지):
 
 ### B-1: Go/No-go + 성공확률
 
-| 항목 | 내용 |
-|------|------|
-| **질문 예시** | "'100억 미디어 AX' 프로젝트를 내부 수행 가능한지, 성공확률은 얼마인지 알려줘" |
-| **카테고리** | Project Feasibility |
-| **Horizon** | 프로젝트 기간 |
-| **핵심 Output** | ForecastPoint(SUCCESS_PROB, MARGIN) + Risk Assessment |
+| 항목            | 내용                                                                          |
+| --------------- | ----------------------------------------------------------------------------- |
+| **질문 예시**   | "'100억 미디어 AX' 프로젝트를 내부 수행 가능한지, 성공확률은 얼마인지 알려줘" |
+| **카테고리**    | Project Feasibility                                                           |
+| **Horizon**     | 프로젝트 기간                                                                 |
+| **핵심 Output** | ForecastPoint(SUCCESS_PROB, MARGIN) + Risk Assessment                         |
 
 #### 단계별 입력/출력
 
@@ -203,12 +203,12 @@ Output (Option 비교표):
 
 ### C-1: 증원 원인분해
 
-| 항목 | 내용 |
-|------|------|
-| **질문 예시** | "데이터플랫폼팀 1명 증원 요청의 원인을 분해해줘" |
-| **카테고리** | Headcount Analysis |
-| **Horizon** | 현재 + 향후 6개월 |
-| **핵심 Output** | Finding(rootCause) + Evidence |
+| 항목            | 내용                                             |
+| --------------- | ------------------------------------------------ |
+| **질문 예시**   | "데이터플랫폼팀 1명 증원 요청의 원인을 분해해줘" |
+| **카테고리**    | Headcount Analysis                               |
+| **Horizon**     | 현재 + 향후 6개월                                |
+| **핵심 Output** | Finding(rootCause) + Evidence                    |
 
 #### 단계별 입력/출력
 
@@ -288,12 +288,12 @@ Output (Finding 분석):
 
 ### D-1: 역량 투자 ROI
 
-| 항목 | 내용 |
-|------|------|
-| **질문 예시** | "AI-driven 전환 관점에서 역량 갭 Top10을 정량화해줘" |
-| **카테고리** | Competency Gap Analysis |
-| **Horizon** | 1년 |
-| **핵심 Output** | CompetencyGap + ImpactAssessment |
+| 항목            | 내용                                                 |
+| --------------- | ---------------------------------------------------- |
+| **질문 예시**   | "AI-driven 전환 관점에서 역량 갭 Top10을 정량화해줘" |
+| **카테고리**    | Competency Gap Analysis                              |
+| **Horizon**     | 1년                                                  |
+| **핵심 Output** | CompetencyGap + ImpactAssessment                     |
 
 #### 단계별 입력/출력
 
@@ -332,7 +332,7 @@ Output (CompetencyGap 분석):
   gapAnalysis:
     - rank: 1
       competency: "Generative AI Application"
-      currentLevel: 1.5  # 5점 만점
+      currentLevel: 1.5 # 5점 만점
       requiredLevel: 4.0
       gapScore: 2.5
       affectedProjects: 5
@@ -372,13 +372,13 @@ Output (CompetencyGap 분석):
 
 ## 3. 질문 확장 (추가 후보)
 
-| ID | 유형 | 질문 예시 | 우선순위 |
-|----|------|----------|----------|
-| A-2 | Capacity | "특정 프로젝트 종료 시 유휴 인력 재배치 시뮬레이션" | P2 |
-| B-2 | Go/No-go | "동시 수주 시 리소스 충돌 분석" | P2 |
-| C-2 | Headcount | "전사 인력 구조 최적화 방안" | P3 |
-| D-2 | Competency | "퇴직 리스크 인력의 역량 대체 계획" | P2 |
-| E-1 | R&R | "대무 체계 커버리지 분석" | P2 |
+| ID  | 유형       | 질문 예시                                           | 우선순위 |
+| --- | ---------- | --------------------------------------------------- | -------- |
+| A-2 | Capacity   | "특정 프로젝트 종료 시 유휴 인력 재배치 시뮬레이션" | P2       |
+| B-2 | Go/No-go   | "동시 수주 시 리소스 충돌 분석"                     | P2       |
+| C-2 | Headcount  | "전사 인력 구조 최적화 방안"                        | P3       |
+| D-2 | Competency | "퇴직 리스크 인력의 역량 대체 계획"                 | P2       |
+| E-1 | R&R        | "대무 체계 커버리지 분석"                           | P2       |
 
 ---
 
@@ -386,12 +386,12 @@ Output (CompetencyGap 분석):
 
 ### 질문별 필수 데이터
 
-| 질문 | 필수 노드 | 필수 관계 |
-|------|----------|----------|
-| A-1 | OrgUnit, Employee, Assignment, TimeBucket, Availability | BELONGS_TO, ASSIGNED_TO, FOR_BUCKET |
-| B-1 | Opportunity, DemandSignal, ResourceDemand, Employee, Competency | HAS_SIGNAL, IMPLIES_DEMAND, REQUIRES_ROLE |
-| C-1 | OrgUnit, Employee, Assignment, Competency, Project | BELONGS_TO, ASSIGNED_TO, HAS_EVIDENCE |
-| D-1 | Competency, CompetencyEvidence, Employee, LearningProgram | HAS_EVIDENCE, FOR_COMPETENCY |
+| 질문 | 필수 노드                                                       | 필수 관계                                 |
+| ---- | --------------------------------------------------------------- | ----------------------------------------- |
+| A-1  | OrgUnit, Employee, Assignment, TimeBucket, Availability         | BELONGS_TO, ASSIGNED_TO, FOR_BUCKET       |
+| B-1  | Opportunity, DemandSignal, ResourceDemand, Employee, Competency | HAS_SIGNAL, IMPLIES_DEMAND, REQUIRES_ROLE |
+| C-1  | OrgUnit, Employee, Assignment, Competency, Project              | BELONGS_TO, ASSIGNED_TO, HAS_EVIDENCE     |
+| D-1  | Competency, CompetencyEvidence, Employee, LearningProgram       | HAS_EVIDENCE, FOR_COMPETENCY              |
 
 ---
 
@@ -445,4 +445,4 @@ Output (CompetencyGap 분석):
 
 ---
 
-*이 문서는 PoC 진행 중 질문이 추가/수정될 수 있습니다.*
+_이 문서는 PoC 진행 중 질문이 추가/수정될 수 있습니다._

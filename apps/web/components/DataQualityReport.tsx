@@ -68,7 +68,12 @@ export interface QualityTrend {
 export interface QualityIssue {
   id: string;
   severity: "CRITICAL" | "HIGH" | "MEDIUM" | "LOW";
-  category: "MISSING_DATA" | "DUPLICATE" | "INCONSISTENT" | "STALE" | "INVALID_FK";
+  category:
+    | "MISSING_DATA"
+    | "DUPLICATE"
+    | "INCONSISTENT"
+    | "STALE"
+    | "INVALID_FK";
   entityName: string;
   fieldName?: string;
   description: string;
@@ -138,7 +143,10 @@ const TYPE_LABELS: Record<string, { label: string; color: string }> = {
   VALIDATION_RULE: { label: "검증 규칙", color: "#FF9800" },
 };
 
-const METRIC_LABELS: Record<string, { label: string; goodDirection: "higher" | "lower" }> = {
+const METRIC_LABELS: Record<
+  string,
+  { label: string; goodDirection: "higher" | "lower" }
+> = {
   missing_rate: { label: "결측률", goodDirection: "lower" },
   duplicate_rate: { label: "중복률", goodDirection: "lower" },
   required_field_rate: { label: "필수필드 충족률", goodDirection: "higher" },
@@ -163,7 +171,8 @@ const OverallScoreCard: React.FC<{
   status: string;
   summary: DataQualitySummary;
 }> = ({ score, status, summary }) => {
-  const statusColor = STATUS_COLORS[status as keyof typeof STATUS_COLORS] || "#666";
+  const statusColor =
+    STATUS_COLORS[status as keyof typeof STATUS_COLORS] || "#666";
 
   return (
     <div
@@ -175,12 +184,20 @@ const OverallScoreCard: React.FC<{
         marginBottom: "24px",
       }}
     >
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <div>
           <div style={{ fontSize: "14px", opacity: 0.9, marginBottom: "8px" }}>
             Data Readiness Score
           </div>
-          <div style={{ fontSize: "48px", fontWeight: "bold" }}>{score.toFixed(0)}%</div>
+          <div style={{ fontSize: "48px", fontWeight: "bold" }}>
+            {score.toFixed(0)}%
+          </div>
           <div
             style={{
               display: "inline-block",
@@ -197,7 +214,9 @@ const OverallScoreCard: React.FC<{
         </div>
         <div style={{ textAlign: "right" }}>
           <div style={{ marginBottom: "16px" }}>
-            <div style={{ fontSize: "24px", fontWeight: "bold" }}>{summary.totalEntities}</div>
+            <div style={{ fontSize: "24px", fontWeight: "bold" }}>
+              {summary.totalEntities}
+            </div>
             <div style={{ fontSize: "12px", opacity: 0.9 }}>엔터티</div>
           </div>
           <div style={{ marginBottom: "16px" }}>
@@ -221,14 +240,21 @@ const OverallScoreCard: React.FC<{
 const MetricBar: React.FC<{
   metric: MetricResult;
 }> = ({ metric }) => {
-  const config = METRIC_LABELS[metric.name] || { label: metric.name, goodDirection: "higher" };
+  const config = METRIC_LABELS[metric.name] || {
+    label: metric.name,
+    goodDirection: "higher",
+  };
   const isPercentage = metric.unit === "%";
-  const displayValue = isPercentage ? `${(metric.value * 100).toFixed(1)}%` : metric.value.toFixed(2);
+  const displayValue = isPercentage
+    ? `${(metric.value * 100).toFixed(1)}%`
+    : metric.value.toFixed(2);
   const displayTarget = isPercentage
     ? `${(metric.target * 100).toFixed(0)}%`
     : metric.target.toString();
 
-  const progressValue = isPercentage ? metric.value * 100 : Math.min((metric.value / metric.target) * 100, 100);
+  const progressValue = isPercentage
+    ? metric.value * 100
+    : Math.min((metric.value / metric.target) * 100, 100);
   const progressColor = STATUS_COLORS[metric.status];
 
   return (
@@ -249,7 +275,9 @@ const MetricBar: React.FC<{
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <span style={{ fontWeight: "bold" }}>{displayValue}</span>
-          <span style={{ fontSize: "12px", color: "#666" }}>목표: {displayTarget}</span>
+          <span style={{ fontSize: "12px", color: "#666" }}>
+            목표: {displayTarget}
+          </span>
           <span
             style={{
               padding: "2px 8px",
@@ -293,7 +321,9 @@ const EntityCard: React.FC<{
   onEntityClick?: (entityName: string) => void;
 }> = ({ entity, expanded, onToggle, onEntityClick }) => {
   const statusColor = STATUS_COLORS[entity.overallStatus];
-  const passedMetrics = entity.metrics.filter((m) => m.status === "PASS").length;
+  const passedMetrics = entity.metrics.filter(
+    (m) => m.status === "PASS",
+  ).length;
 
   return (
     <div
@@ -346,12 +376,14 @@ const EntityCard: React.FC<{
               {entity.entityName}
             </div>
             <div style={{ fontSize: "12px", color: "#666" }}>
-              {entity.recordCount.toLocaleString()} 레코드 | {passedMetrics}/{entity.metrics.length}{" "}
-              지표 통과
+              {entity.recordCount.toLocaleString()} 레코드 | {passedMetrics}/
+              {entity.metrics.length} 지표 통과
             </div>
           </div>
         </div>
-        <span style={{ fontSize: "18px", color: "#999" }}>{expanded ? "[-]" : "[+]"}</span>
+        <span style={{ fontSize: "18px", color: "#999" }}>
+          {expanded ? "[-]" : "[+]"}
+        </span>
       </div>
 
       {/* Metrics */}
@@ -387,7 +419,9 @@ const CorrelationChart: React.FC<{
       <h3 style={{ margin: "0 0 16px 0", fontSize: "16px" }}>
         데이터 품질 - Agent 성능 상관관계
       </h3>
-      <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}>
+      <table
+        style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}
+      >
         <thead>
           <tr style={{ background: "#f5f5f5" }}>
             <th style={{ padding: "10px", textAlign: "left" }}>엔터티</th>
@@ -422,7 +456,9 @@ const CorrelationChart: React.FC<{
                   {corr.correlation}
                 </span>
               </td>
-              <td style={{ padding: "10px", fontSize: "12px", color: "#666" }}>{corr.impact}</td>
+              <td style={{ padding: "10px", fontSize: "12px", color: "#666" }}>
+                {corr.impact}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -460,8 +496,16 @@ const TrendChart: React.FC<{
         boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
       }}
     >
-      <h3 style={{ margin: "0 0 16px 0", fontSize: "16px" }}>품질 점수 트렌드</h3>
-      <div style={{ position: "relative", height: chartHeight + 40, width: chartWidth }}>
+      <h3 style={{ margin: "0 0 16px 0", fontSize: "16px" }}>
+        품질 점수 트렌드
+      </h3>
+      <div
+        style={{
+          position: "relative",
+          height: chartHeight + 40,
+          width: chartWidth,
+        }}
+      >
         {/* Y축 가이드라인 */}
         {[100, 90, 80, 70].map((val) => (
           <div
@@ -476,13 +520,21 @@ const TrendChart: React.FC<{
               color: "#999",
             }}
           >
-            <span style={{ position: "absolute", left: -30, top: -8 }}>{val}%</span>
+            <span style={{ position: "absolute", left: -30, top: -8 }}>
+              {val}%
+            </span>
           </div>
         ))}
 
         {/* 데이터 포인트 및 라인 */}
         <svg
-          style={{ position: "absolute", left: 40, top: 0, width: "calc(100% - 60px)", height: chartHeight }}
+          style={{
+            position: "absolute",
+            left: 40,
+            top: 0,
+            width: "calc(100% - 60px)",
+            height: chartHeight,
+          }}
           viewBox={`0 0 ${(trends.length - 1) * 60 + 20} ${chartHeight}`}
           preserveAspectRatio="none"
         >
@@ -491,7 +543,9 @@ const TrendChart: React.FC<{
             fill="none"
             stroke="#667eea"
             strokeWidth="2"
-            points={trends.map((t, i) => `${i * 60 + 10},${getY(t.overallScore)}`).join(" ")}
+            points={trends
+              .map((t, i) => `${i * 60 + 10},${getY(t.overallScore)}`)
+              .join(" ")}
           />
           {/* 포인트 */}
           {trends.map((t, i) => (
@@ -519,8 +573,14 @@ const TrendChart: React.FC<{
           }}
         >
           {trends.map((t, i) => (
-            <div key={i} style={{ fontSize: "10px", color: "#666", textAlign: "center" }}>
-              {new Date(t.date).toLocaleDateString("ko-KR", { month: "short", day: "numeric" })}
+            <div
+              key={i}
+              style={{ fontSize: "10px", color: "#666", textAlign: "center" }}
+            >
+              {new Date(t.date).toLocaleDateString("ko-KR", {
+                month: "short",
+                day: "numeric",
+              })}
             </div>
           ))}
         </div>
@@ -538,7 +598,9 @@ const TrendChart: React.FC<{
       >
         <div>
           <div style={{ fontSize: "12px", color: "#666" }}>현재 점수</div>
-          <div style={{ fontSize: "20px", fontWeight: "bold", color: "#667eea" }}>
+          <div
+            style={{ fontSize: "20px", fontWeight: "bold", color: "#667eea" }}
+          >
             {trends[trends.length - 1].overallScore.toFixed(1)}%
           </div>
         </div>
@@ -554,14 +616,22 @@ const TrendChart: React.FC<{
                   : "#F44336",
             }}
           >
-            {trends[trends.length - 1].overallScore >= trends[0].overallScore ? "+" : ""}
-            {(trends[trends.length - 1].overallScore - trends[0].overallScore).toFixed(1)}%
+            {trends[trends.length - 1].overallScore >= trends[0].overallScore
+              ? "+"
+              : ""}
+            {(
+              trends[trends.length - 1].overallScore - trends[0].overallScore
+            ).toFixed(1)}
+            %
           </div>
         </div>
         <div>
           <div style={{ fontSize: "12px", color: "#666" }}>평균</div>
           <div style={{ fontSize: "20px", fontWeight: "bold" }}>
-            {(trends.reduce((sum, t) => sum + t.overallScore, 0) / trends.length).toFixed(1)}%
+            {(
+              trends.reduce((sum, t) => sum + t.overallScore, 0) / trends.length
+            ).toFixed(1)}
+            %
           </div>
         </div>
       </div>
@@ -579,14 +649,21 @@ const IssueList: React.FC<{
 
   const filteredIssues = useMemo(() => {
     return issues.filter((issue) => {
-      if (filterSeverity !== "ALL" && issue.severity !== filterSeverity) return false;
-      if (filterCategory !== "ALL" && issue.category !== filterCategory) return false;
+      if (filterSeverity !== "ALL" && issue.severity !== filterSeverity)
+        return false;
+      if (filterCategory !== "ALL" && issue.category !== filterCategory)
+        return false;
       return true;
     });
   }, [issues, filterSeverity, filterCategory]);
 
   const severityCounts = useMemo(() => {
-    const counts: Record<string, number> = { CRITICAL: 0, HIGH: 0, MEDIUM: 0, LOW: 0 };
+    const counts: Record<string, number> = {
+      CRITICAL: 0,
+      HIGH: 0,
+      MEDIUM: 0,
+      LOW: 0,
+    };
     issues.forEach((i) => counts[i.severity]++);
     return counts;
   }, [issues]);
@@ -603,7 +680,9 @@ const IssueList: React.FC<{
         }}
       >
         <div style={{ fontSize: "48px", marginBottom: "16px" }}>*</div>
-        <div style={{ color: "#4CAF50", fontWeight: "bold" }}>이슈가 없습니다</div>
+        <div style={{ color: "#4CAF50", fontWeight: "bold" }}>
+          이슈가 없습니다
+        </div>
         <div style={{ color: "#666", fontSize: "14px", marginTop: "8px" }}>
           모든 데이터 품질 검사를 통과했습니다
         </div>
@@ -633,11 +712,16 @@ const IssueList: React.FC<{
         {Object.entries(severityCounts).map(([severity, count]) => (
           <div
             key={severity}
-            onClick={() => setFilterSeverity(filterSeverity === severity ? "ALL" : severity)}
+            onClick={() =>
+              setFilterSeverity(filterSeverity === severity ? "ALL" : severity)
+            }
             style={{
               padding: "8px 16px",
               borderRadius: "8px",
-              background: filterSeverity === severity ? SEVERITY_COLORS[severity as keyof typeof SEVERITY_COLORS] : "white",
+              background:
+                filterSeverity === severity
+                  ? SEVERITY_COLORS[severity as keyof typeof SEVERITY_COLORS]
+                  : "white",
               color: filterSeverity === severity ? "white" : "#333",
               cursor: "pointer",
               display: "flex",
@@ -664,7 +748,11 @@ const IssueList: React.FC<{
         <select
           value={filterCategory}
           onChange={(e) => setFilterCategory(e.target.value)}
-          style={{ padding: "6px 12px", borderRadius: "4px", border: "1px solid #ccc" }}
+          style={{
+            padding: "6px 12px",
+            borderRadius: "4px",
+            border: "1px solid #ccc",
+          }}
         >
           <option value="ALL">전체 카테고리</option>
           {Object.entries(CATEGORY_LABELS).map(([key, val]) => (
@@ -681,7 +769,10 @@ const IssueList: React.FC<{
       {/* 이슈 목록 */}
       <div style={{ maxHeight: "400px", overflow: "auto" }}>
         {filteredIssues.map((issue) => {
-          const categoryConfig = CATEGORY_LABELS[issue.category] || { label: issue.category, icon: "[?]" };
+          const categoryConfig = CATEGORY_LABELS[issue.category] || {
+            label: issue.category,
+            icon: "[?]",
+          };
           const severityColor = SEVERITY_COLORS[issue.severity];
 
           return (
@@ -695,9 +786,22 @@ const IssueList: React.FC<{
                 borderLeft: `4px solid ${severityColor}`,
               }}
             >
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                }}
+              >
                 <div style={{ flex: 1 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      marginBottom: "8px",
+                    }}
+                  >
                     <span
                       style={{
                         padding: "2px 8px",
@@ -720,15 +824,21 @@ const IssueList: React.FC<{
                     >
                       {categoryConfig.icon} {categoryConfig.label}
                     </span>
-                    <span style={{ fontSize: "12px", color: "#666" }}>{issue.entityName}</span>
+                    <span style={{ fontSize: "12px", color: "#666" }}>
+                      {issue.entityName}
+                    </span>
                     {issue.fieldName && (
-                      <span style={{ fontSize: "12px", color: "#999" }}>/ {issue.fieldName}</span>
+                      <span style={{ fontSize: "12px", color: "#999" }}>
+                        / {issue.fieldName}
+                      </span>
                     )}
                   </div>
-                  <div style={{ fontSize: "14px", marginBottom: "4px" }}>{issue.description}</div>
+                  <div style={{ fontSize: "14px", marginBottom: "4px" }}>
+                    {issue.description}
+                  </div>
                   <div style={{ fontSize: "12px", color: "#666" }}>
-                    영향 레코드: {issue.affectedRecords.toLocaleString()}건 | 감지:{" "}
-                    {new Date(issue.detectedAt).toLocaleString("ko-KR")}
+                    영향 레코드: {issue.affectedRecords.toLocaleString()}건 |
+                    감지: {new Date(issue.detectedAt).toLocaleString("ko-KR")}
                   </div>
                 </div>
               </div>
@@ -784,7 +894,10 @@ const RecommendationPanel: React.FC<{
       }}
     >
       {recommendations.map((rec) => {
-        const typeConfig = TYPE_LABELS[rec.type] || { label: rec.type, color: "#666" };
+        const typeConfig = TYPE_LABELS[rec.type] || {
+          label: rec.type,
+          color: "#666",
+        };
         const priorityColor = PRIORITY_COLORS[rec.priority];
 
         return (
@@ -798,7 +911,13 @@ const RecommendationPanel: React.FC<{
               borderTop: `4px solid ${priorityColor}`,
             }}
           >
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "12px" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginBottom: "12px",
+              }}
+            >
               <div style={{ display: "flex", gap: "8px" }}>
                 <span
                   style={{
@@ -836,8 +955,17 @@ const RecommendationPanel: React.FC<{
               </span>
             </div>
 
-            <h4 style={{ margin: "0 0 8px 0", fontSize: "15px" }}>{rec.title}</h4>
-            <p style={{ margin: "0 0 12px 0", fontSize: "13px", color: "#666", lineHeight: 1.5 }}>
+            <h4 style={{ margin: "0 0 8px 0", fontSize: "15px" }}>
+              {rec.title}
+            </h4>
+            <p
+              style={{
+                margin: "0 0 12px 0",
+                fontSize: "13px",
+                color: "#666",
+                lineHeight: 1.5,
+              }}
+            >
               {rec.description}
             </p>
 
@@ -849,12 +977,24 @@ const RecommendationPanel: React.FC<{
                 marginBottom: "12px",
               }}
             >
-              <div style={{ fontSize: "11px", color: "#666", marginBottom: "4px" }}>예상 효과</div>
-              <div style={{ fontSize: "13px", color: "#2196F3" }}>{rec.expectedImpact}</div>
+              <div
+                style={{ fontSize: "11px", color: "#666", marginBottom: "4px" }}
+              >
+                예상 효과
+              </div>
+              <div style={{ fontSize: "13px", color: "#2196F3" }}>
+                {rec.expectedImpact}
+              </div>
             </div>
 
             {rec.relatedIssues && rec.relatedIssues.length > 0 && (
-              <div style={{ fontSize: "12px", color: "#999", marginBottom: "12px" }}>
+              <div
+                style={{
+                  fontSize: "12px",
+                  color: "#999",
+                  marginBottom: "12px",
+                }}
+              >
                 관련 이슈: {rec.relatedIssues.length}건
               </div>
             )}
@@ -905,8 +1045,8 @@ const TabNavigation: React.FC<{
           tab.id === "issues"
             ? issueCounts?.issues
             : tab.id === "recommendations"
-            ? issueCounts?.recommendations
-            : undefined;
+              ? issueCounts?.recommendations
+              : undefined;
 
         return (
           <button
@@ -920,7 +1060,9 @@ const TabNavigation: React.FC<{
               fontSize: "14px",
               fontWeight: isActive ? "bold" : "normal",
               color: isActive ? "#667eea" : "#666",
-              borderBottom: isActive ? "2px solid #667eea" : "2px solid transparent",
+              borderBottom: isActive
+                ? "2px solid #667eea"
+                : "2px solid transparent",
               marginBottom: "-2px",
               whiteSpace: "nowrap",
               display: "flex",
@@ -962,8 +1104,12 @@ export const DataQualityReport: React.FC<DataQualityReportProps> = ({
   onRecommendationAction,
   showImpactAnalysis = true,
 }) => {
-  const [expandedEntities, setExpandedEntities] = useState<Set<string>>(new Set());
-  const [filterStatus, setFilterStatus] = useState<"ALL" | "PASS" | "FAIL">("ALL");
+  const [expandedEntities, setExpandedEntities] = useState<Set<string>>(
+    new Set(),
+  );
+  const [filterStatus, setFilterStatus] = useState<"ALL" | "PASS" | "FAIL">(
+    "ALL",
+  );
   const [sortBy, setSortBy] = useState<"name" | "score" | "records">("name");
   const [activeTab, setActiveTab] = useState<string>("overview");
 
@@ -974,7 +1120,9 @@ export const DataQualityReport: React.FC<DataQualityReportProps> = ({
     // Filter
     if (filterStatus !== "ALL") {
       entities = entities.filter((e) =>
-        filterStatus === "PASS" ? e.overallStatus === "PASS" : e.overallStatus !== "PASS"
+        filterStatus === "PASS"
+          ? e.overallStatus === "PASS"
+          : e.overallStatus !== "PASS",
       );
     }
 
@@ -982,8 +1130,12 @@ export const DataQualityReport: React.FC<DataQualityReportProps> = ({
     entities.sort((a, b) => {
       switch (sortBy) {
         case "score":
-          const aScore = a.metrics.filter((m) => m.status === "PASS").length / a.metrics.length;
-          const bScore = b.metrics.filter((m) => m.status === "PASS").length / b.metrics.length;
+          const aScore =
+            a.metrics.filter((m) => m.status === "PASS").length /
+            a.metrics.length;
+          const bScore =
+            b.metrics.filter((m) => m.status === "PASS").length /
+            b.metrics.length;
           return bScore - aScore;
         case "records":
           return b.recordCount - a.recordCount;
@@ -1031,7 +1183,9 @@ export const DataQualityReport: React.FC<DataQualityReportProps> = ({
   };
 
   const expandAll = () => {
-    setExpandedEntities(new Set(metrics.entityResults.map((e) => e.entityName)));
+    setExpandedEntities(
+      new Set(metrics.entityResults.map((e) => e.entityName)),
+    );
   };
 
   const collapseAll = () => {
@@ -1039,10 +1193,13 @@ export const DataQualityReport: React.FC<DataQualityReportProps> = ({
   };
 
   // 이슈 및 권장조치 카운트
-  const issueCounts = useMemo(() => ({
-    issues: metrics.issues?.length || 0,
-    recommendations: metrics.recommendations?.length || 0,
-  }), [metrics.issues, metrics.recommendations]);
+  const issueCounts = useMemo(
+    () => ({
+      issues: metrics.issues?.length || 0,
+      recommendations: metrics.recommendations?.length || 0,
+    }),
+    [metrics.issues, metrics.recommendations],
+  );
 
   // 개요 탭 콘텐츠
   const renderOverviewTab = () => (
@@ -1056,38 +1213,63 @@ export const DataQualityReport: React.FC<DataQualityReportProps> = ({
           marginBottom: "24px",
         }}
       >
-        {(Object.entries(metricSummaries) as [string, MetricSummary][]).map(([name, summary]) => {
-          const config = METRIC_LABELS[name] || { label: name };
-          const passRate = (summary.passed / summary.total) * 100;
-          const avgDisplay =
-            name.includes("rate") ? `${(summary.avgValue * 100).toFixed(1)}%` : summary.avgValue.toFixed(2);
+        {(Object.entries(metricSummaries) as [string, MetricSummary][]).map(
+          ([name, summary]) => {
+            const config = METRIC_LABELS[name] || { label: name };
+            const passRate = (summary.passed / summary.total) * 100;
+            const avgDisplay = name.includes("rate")
+              ? `${(summary.avgValue * 100).toFixed(1)}%`
+              : summary.avgValue.toFixed(2);
 
-          return (
-            <div
-              key={name}
-              style={{
-                padding: "16px",
-                background: "white",
-                borderRadius: "8px",
-                boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
-              }}
-            >
-              <div style={{ fontSize: "12px", color: "#666", marginBottom: "8px" }}>
-                {config.label}
+            return (
+              <div
+                key={name}
+                style={{
+                  padding: "16px",
+                  background: "white",
+                  borderRadius: "8px",
+                  boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: "12px",
+                    color: "#666",
+                    marginBottom: "8px",
+                  }}
+                >
+                  {config.label}
+                </div>
+                <div
+                  style={{
+                    fontSize: "24px",
+                    fontWeight: "bold",
+                    marginBottom: "4px",
+                  }}
+                >
+                  {avgDisplay}
+                </div>
+                <div style={{ fontSize: "12px" }}>
+                  <span style={{ color: STATUS_COLORS.PASS }}>
+                    {summary.passed}
+                  </span>
+                  <span style={{ color: "#666" }}> / {summary.total} 통과</span>
+                  <span
+                    style={{
+                      marginLeft: "8px",
+                      color:
+                        passRate === 100
+                          ? STATUS_COLORS.PASS
+                          : STATUS_COLORS.WARNING,
+                    }}
+                  >
+                    ({passRate.toFixed(0)}%)
+                  </span>
+                </div>
               </div>
-              <div style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "4px" }}>
-                {avgDisplay}
-              </div>
-              <div style={{ fontSize: "12px" }}>
-                <span style={{ color: STATUS_COLORS.PASS }}>{summary.passed}</span>
-                <span style={{ color: "#666" }}> / {summary.total} 통과</span>
-                <span style={{ marginLeft: "8px", color: passRate === 100 ? STATUS_COLORS.PASS : STATUS_COLORS.WARNING }}>
-                  ({passRate.toFixed(0)}%)
-                </span>
-              </div>
-            </div>
-          );
-        })}
+            );
+          },
+        )}
       </div>
 
       {/* 빠른 상태 요약 */}
@@ -1111,8 +1293,16 @@ export const DataQualityReport: React.FC<DataQualityReportProps> = ({
             borderLeft: `4px solid ${issueCounts.issues > 0 ? "#F44336" : "#4CAF50"}`,
           }}
         >
-          <div style={{ fontSize: "12px", color: "#666", marginBottom: "8px" }}>발견된 이슈</div>
-          <div style={{ fontSize: "32px", fontWeight: "bold", color: issueCounts.issues > 0 ? "#F44336" : "#4CAF50" }}>
+          <div style={{ fontSize: "12px", color: "#666", marginBottom: "8px" }}>
+            발견된 이슈
+          </div>
+          <div
+            style={{
+              fontSize: "32px",
+              fontWeight: "bold",
+              color: issueCounts.issues > 0 ? "#F44336" : "#4CAF50",
+            }}
+          >
             {issueCounts.issues}
           </div>
           <div style={{ fontSize: "12px", color: "#666" }}>
@@ -1132,8 +1322,16 @@ export const DataQualityReport: React.FC<DataQualityReportProps> = ({
             borderLeft: `4px solid ${issueCounts.recommendations > 0 ? "#FF9800" : "#4CAF50"}`,
           }}
         >
-          <div style={{ fontSize: "12px", color: "#666", marginBottom: "8px" }}>권장 조치</div>
-          <div style={{ fontSize: "32px", fontWeight: "bold", color: issueCounts.recommendations > 0 ? "#FF9800" : "#4CAF50" }}>
+          <div style={{ fontSize: "12px", color: "#666", marginBottom: "8px" }}>
+            권장 조치
+          </div>
+          <div
+            style={{
+              fontSize: "32px",
+              fontWeight: "bold",
+              color: issueCounts.recommendations > 0 ? "#FF9800" : "#4CAF50",
+            }}
+          >
             {issueCounts.recommendations}
           </div>
           <div style={{ fontSize: "12px", color: "#666" }}>
@@ -1153,12 +1351,19 @@ export const DataQualityReport: React.FC<DataQualityReportProps> = ({
             borderLeft: `4px solid #2196F3`,
           }}
         >
-          <div style={{ fontSize: "12px", color: "#666", marginBottom: "8px" }}>엔터티 상태</div>
+          <div style={{ fontSize: "12px", color: "#666", marginBottom: "8px" }}>
+            엔터티 상태
+          </div>
           <div style={{ fontSize: "32px", fontWeight: "bold" }}>
             {metrics.summary.passedEntities}/{metrics.summary.totalEntities}
           </div>
           <div style={{ fontSize: "12px", color: "#666" }}>
-            통과 ({((metrics.summary.passedEntities / metrics.summary.totalEntities) * 100).toFixed(0)}%)
+            통과 (
+            {(
+              (metrics.summary.passedEntities / metrics.summary.totalEntities) *
+              100
+            ).toFixed(0)}
+            %)
           </div>
         </div>
       </div>
@@ -1176,16 +1381,41 @@ export const DataQualityReport: React.FC<DataQualityReportProps> = ({
             marginBottom: "24px",
           }}
         >
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <div>
-              <div style={{ fontSize: "14px", fontWeight: "bold", marginBottom: "4px" }}>품질 트렌드</div>
-              <div style={{ fontSize: "12px", color: "#666" }}>최근 7일 변화 추이</div>
+              <div
+                style={{
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  marginBottom: "4px",
+                }}
+              >
+                품질 트렌드
+              </div>
+              <div style={{ fontSize: "12px", color: "#666" }}>
+                최근 7일 변화 추이
+              </div>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
               <div style={{ textAlign: "right" }}>
                 <div style={{ fontSize: "12px", color: "#666" }}>현재</div>
-                <div style={{ fontSize: "20px", fontWeight: "bold", color: "#667eea" }}>
-                  {metrics.trends[metrics.trends.length - 1].overallScore.toFixed(1)}%
+                <div
+                  style={{
+                    fontSize: "20px",
+                    fontWeight: "bold",
+                    color: "#667eea",
+                  }}
+                >
+                  {metrics.trends[
+                    metrics.trends.length - 1
+                  ].overallScore.toFixed(1)}
+                  %
                 </div>
               </div>
               <div
@@ -1193,18 +1423,27 @@ export const DataQualityReport: React.FC<DataQualityReportProps> = ({
                   padding: "8px 12px",
                   borderRadius: "4px",
                   background:
-                    metrics.trends[metrics.trends.length - 1].overallScore >= metrics.trends[0].overallScore
+                    metrics.trends[metrics.trends.length - 1].overallScore >=
+                    metrics.trends[0].overallScore
                       ? "#E8F5E9"
                       : "#FFEBEE",
                   color:
-                    metrics.trends[metrics.trends.length - 1].overallScore >= metrics.trends[0].overallScore
+                    metrics.trends[metrics.trends.length - 1].overallScore >=
+                    metrics.trends[0].overallScore
                       ? "#4CAF50"
                       : "#F44336",
                   fontWeight: "bold",
                 }}
               >
-                {metrics.trends[metrics.trends.length - 1].overallScore >= metrics.trends[0].overallScore ? "+" : ""}
-                {(metrics.trends[metrics.trends.length - 1].overallScore - metrics.trends[0].overallScore).toFixed(1)}%
+                {metrics.trends[metrics.trends.length - 1].overallScore >=
+                metrics.trends[0].overallScore
+                  ? "+"
+                  : ""}
+                {(
+                  metrics.trends[metrics.trends.length - 1].overallScore -
+                  metrics.trends[0].overallScore
+                ).toFixed(1)}
+                %
               </div>
             </div>
           </div>
@@ -1236,8 +1475,14 @@ export const DataQualityReport: React.FC<DataQualityReportProps> = ({
         <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
           <select
             value={filterStatus}
-            onChange={(e) => setFilterStatus(e.target.value as typeof filterStatus)}
-            style={{ padding: "6px 12px", borderRadius: "4px", border: "1px solid #ccc" }}
+            onChange={(e) =>
+              setFilterStatus(e.target.value as typeof filterStatus)
+            }
+            style={{
+              padding: "6px 12px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+            }}
           >
             <option value="ALL">전체</option>
             <option value="PASS">통과만</option>
@@ -1246,7 +1491,11 @@ export const DataQualityReport: React.FC<DataQualityReportProps> = ({
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-            style={{ padding: "6px 12px", borderRadius: "4px", border: "1px solid #ccc" }}
+            style={{
+              padding: "6px 12px",
+              borderRadius: "4px",
+              border: "1px solid #ccc",
+            }}
           >
             <option value="name">이름순</option>
             <option value="score">점수순</option>
@@ -1312,7 +1561,12 @@ export const DataQualityReport: React.FC<DataQualityReportProps> = ({
       case "entities":
         return renderEntitiesTab();
       case "issues":
-        return <IssueList issues={metrics.issues || []} onIssueClick={onIssueClick} />;
+        return (
+          <IssueList
+            issues={metrics.issues || []}
+            onIssueClick={onIssueClick}
+          />
+        );
       case "trends":
         return <TrendChart trends={metrics.trends || []} />;
       case "recommendations":
@@ -1460,8 +1714,8 @@ export const generateMockDataQualityMetrics = (): DataQualityMetrics => {
       metrics.filter((m) => m.status !== "PASS").length === 0
         ? "PASS"
         : metrics.some((m) => m.status === "FAIL")
-        ? "FAIL"
-        : "WARNING";
+          ? "FAIL"
+          : "WARNING";
 
     return {
       entityName: name,
@@ -1472,11 +1726,15 @@ export const generateMockDataQualityMetrics = (): DataQualityMetrics => {
   });
 
   const totalRecords = entityResults.reduce((sum, e) => sum + e.recordCount, 0);
-  const passedEntities = entityResults.filter((e) => e.overallStatus === "PASS").length;
+  const passedEntities = entityResults.filter(
+    (e) => e.overallStatus === "PASS",
+  ).length;
   const overallScore =
     (entityResults.reduce(
-      (sum, e) => sum + e.metrics.filter((m) => m.status === "PASS").length / e.metrics.length,
-      0
+      (sum, e) =>
+        sum +
+        e.metrics.filter((m) => m.status === "PASS").length / e.metrics.length,
+      0,
     ) /
       entityResults.length) *
     100;
@@ -1506,7 +1764,12 @@ export const generateMockDataQualityMetrics = (): DataQualityMetrics => {
     "STALE",
     "INVALID_FK",
   ];
-  const issueSeverities: QualityIssue["severity"][] = ["CRITICAL", "HIGH", "MEDIUM", "LOW"];
+  const issueSeverities: QualityIssue["severity"][] = [
+    "CRITICAL",
+    "HIGH",
+    "MEDIUM",
+    "LOW",
+  ];
 
   const issues: QualityIssue[] = entityResults
     .filter((e) => e.overallStatus !== "PASS")
@@ -1522,55 +1785,77 @@ export const generateMockDataQualityMetrics = (): DataQualityMetrics => {
         fieldName: idx % 2 === 0 ? "employeeId" : undefined,
         description: getIssueDescription(category, entity.entityName),
         affectedRecords: Math.floor(Math.random() * 50) + 5,
-        detectedAt: new Date(Date.now() - Math.random() * 86400000 * 3).toISOString(),
+        detectedAt: new Date(
+          Date.now() - Math.random() * 86400000 * 3,
+        ).toISOString(),
         suggestedAction: getIssueSuggestedAction(category),
       };
     });
 
   // 권장 조치 생성
-  const recommendations: Recommendation[] = issues.length > 0 ? [
-    {
-      id: "rec-1",
-      priority: "HIGH",
-      type: "DATA_FIX",
-      title: "FK 참조 무결성 복구",
-      description: "assignments 테이블의 employeeId 필드에서 존재하지 않는 직원 ID 참조를 수정합니다.",
-      expectedImpact: "KG 쿼리 정확도 15% 향상 예상",
-      effort: "MEDIUM",
-      relatedIssues: issues.filter((i) => i.category === "INVALID_FK").map((i) => i.id),
-    },
-    {
-      id: "rec-2",
-      priority: "MEDIUM",
-      type: "PROCESS_IMPROVEMENT",
-      title: "데이터 입력 검증 강화",
-      description: "필수 필드 누락을 방지하기 위해 입력 단계에서 유효성 검사를 추가합니다.",
-      expectedImpact: "데이터 결측률 50% 감소 예상",
-      effort: "LOW",
-      relatedIssues: issues.filter((i) => i.category === "MISSING_DATA").map((i) => i.id),
-    },
-    {
-      id: "rec-3",
-      priority: "LOW",
-      type: "MONITORING",
-      title: "중복 데이터 모니터링 알림 설정",
-      description: "중복 레코드 발생 시 실시간 알림을 받을 수 있도록 모니터링 규칙을 설정합니다.",
-      expectedImpact: "중복 데이터 조기 발견으로 품질 유지",
-      effort: "LOW",
-    },
-  ] : [];
+  const recommendations: Recommendation[] =
+    issues.length > 0
+      ? [
+          {
+            id: "rec-1",
+            priority: "HIGH",
+            type: "DATA_FIX",
+            title: "FK 참조 무결성 복구",
+            description:
+              "assignments 테이블의 employeeId 필드에서 존재하지 않는 직원 ID 참조를 수정합니다.",
+            expectedImpact: "KG 쿼리 정확도 15% 향상 예상",
+            effort: "MEDIUM",
+            relatedIssues: issues
+              .filter((i) => i.category === "INVALID_FK")
+              .map((i) => i.id),
+          },
+          {
+            id: "rec-2",
+            priority: "MEDIUM",
+            type: "PROCESS_IMPROVEMENT",
+            title: "데이터 입력 검증 강화",
+            description:
+              "필수 필드 누락을 방지하기 위해 입력 단계에서 유효성 검사를 추가합니다.",
+            expectedImpact: "데이터 결측률 50% 감소 예상",
+            effort: "LOW",
+            relatedIssues: issues
+              .filter((i) => i.category === "MISSING_DATA")
+              .map((i) => i.id),
+          },
+          {
+            id: "rec-3",
+            priority: "LOW",
+            type: "MONITORING",
+            title: "중복 데이터 모니터링 알림 설정",
+            description:
+              "중복 레코드 발생 시 실시간 알림을 받을 수 있도록 모니터링 규칙을 설정합니다.",
+            expectedImpact: "중복 데이터 조기 발견으로 품질 유지",
+            effort: "LOW",
+          },
+        ]
+      : [];
 
   return {
     generatedAt: new Date().toISOString(),
     dataSource: "data/mock",
     overallScore,
-    overallStatus: overallScore >= 90 ? "READY" : overallScore >= 70 ? "WARNING" : "NOT_READY",
+    overallStatus:
+      overallScore >= 90
+        ? "READY"
+        : overallScore >= 70
+          ? "WARNING"
+          : "NOT_READY",
     summary: {
       totalEntities: entityResults.length,
       totalRecords,
       passedEntities,
       failedEntities: entityResults.length - passedEntities,
-      readinessLevel: overallScore >= 90 ? "READY" : overallScore >= 70 ? "WARNING" : "NOT_READY",
+      readinessLevel:
+        overallScore >= 90
+          ? "READY"
+          : overallScore >= 70
+            ? "WARNING"
+            : "NOT_READY",
     },
     entityResults,
     trends,
@@ -1580,7 +1865,10 @@ export const generateMockDataQualityMetrics = (): DataQualityMetrics => {
 };
 
 // 이슈 설명 생성 헬퍼
-function getIssueDescription(category: QualityIssue["category"], entityName: string): string {
+function getIssueDescription(
+  category: QualityIssue["category"],
+  entityName: string,
+): string {
   const descriptions: Record<QualityIssue["category"], string> = {
     MISSING_DATA: `${entityName} 테이블에서 필수 필드 값이 누락된 레코드가 발견되었습니다.`,
     DUPLICATE: `${entityName} 테이블에서 동일한 키를 가진 중복 레코드가 발견되었습니다.`,
@@ -1603,33 +1891,34 @@ function getIssueSuggestedAction(category: QualityIssue["category"]): string {
   return actions[category];
 }
 
-export const generateMockPerformanceCorrelations = (): PerformanceCorrelation[] => {
-  return [
-    {
-      metricName: "key_match_rate",
-      entityName: "assignments",
-      qualityScore: 0.97,
-      agentPerformance: 0.95,
-      correlation: "STRONG",
-      impact: "FK 매칭률이 낮으면 KG 쿼리 정확도 저하",
-    },
-    {
-      metricName: "missing_rate",
-      entityName: "employees",
-      qualityScore: 0.98,
-      agentPerformance: 0.92,
-      correlation: "MODERATE",
-      impact: "직원 정보 결측 시 역량 분석 정확도 감소",
-    },
-    {
-      metricName: "required_field_rate",
-      entityName: "projects",
-      qualityScore: 0.88,
-      agentPerformance: 0.85,
-      correlation: "STRONG",
-      impact: "프로젝트 필수 정보 미충족 시 영향 분석 불가",
-    },
-  ];
-};
+export const generateMockPerformanceCorrelations =
+  (): PerformanceCorrelation[] => {
+    return [
+      {
+        metricName: "key_match_rate",
+        entityName: "assignments",
+        qualityScore: 0.97,
+        agentPerformance: 0.95,
+        correlation: "STRONG",
+        impact: "FK 매칭률이 낮으면 KG 쿼리 정확도 저하",
+      },
+      {
+        metricName: "missing_rate",
+        entityName: "employees",
+        qualityScore: 0.98,
+        agentPerformance: 0.92,
+        correlation: "MODERATE",
+        impact: "직원 정보 결측 시 역량 분석 정확도 감소",
+      },
+      {
+        metricName: "required_field_rate",
+        entityName: "projects",
+        qualityScore: 0.88,
+        agentPerformance: 0.85,
+        correlation: "STRONG",
+        impact: "프로젝트 필수 정보 미충족 시 영향 분석 불가",
+      },
+    ];
+  };
 
 export default DataQualityReport;

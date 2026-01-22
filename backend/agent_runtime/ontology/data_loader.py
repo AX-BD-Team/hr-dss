@@ -306,6 +306,12 @@ class Neo4jDataLoader:
             # DeliveryRoles
             for role in data.get("deliveryRoles", []):
                 try:
+                    role_data = {
+                        "deliveryRoleId": role.get("deliveryRoleId"),
+                        "name": role.get("name"),
+                        "category": role.get("category", "GENERAL"),
+                        "description": role.get("description", ""),
+                    }
                     session.run(
                         """
                         MERGE (d:DeliveryRole {deliveryRoleId: $deliveryRoleId})
@@ -313,7 +319,7 @@ class Neo4jDataLoader:
                             d.category = $category,
                             d.description = $description
                     """,
-                        **role,
+                        **role_data,
                     )
                     created += 1
                 except Exception as e:
@@ -322,6 +328,12 @@ class Neo4jDataLoader:
             # Responsibilities
             for resp in data.get("responsibilities", []):
                 try:
+                    resp_data = {
+                        "responsibilityId": resp.get("responsibilityId"),
+                        "name": resp.get("name"),
+                        "description": resp.get("description", ""),
+                        "category": resp.get("category", "GENERAL"),
+                    }
                     session.run(
                         """
                         MERGE (r:Responsibility {responsibilityId: $responsibilityId})
@@ -329,7 +341,7 @@ class Neo4jDataLoader:
                             r.description = $description,
                             r.category = $category
                     """,
-                        **resp,
+                        **resp_data,
                     )
                     created += 1
                 except Exception as e:
@@ -585,6 +597,20 @@ class Neo4jDataLoader:
             # ResourceDemands
             for dem in data.get("resourceDemands", []):
                 try:
+                    dem_data = {
+                        "demandId": dem.get("demandId"),
+                        "sourceType": dem.get("sourceType", "OPPORTUNITY"),
+                        "sourceId": dem.get("sourceId", dem.get("signalId", "")),
+                        "requestedOrgUnitId": dem.get("requestedOrgUnitId", ""),
+                        "quantityFTE": dem.get("quantityFTE", 1.0),
+                        "startDate": dem.get("startDate"),
+                        "endDate": dem.get("endDate"),
+                        "probability": dem.get("probability", 0.5),
+                        "priority": dem.get("priority", "MEDIUM"),
+                        "status": dem.get("status", "OPEN"),
+                        "requiredCompetencies": dem.get("requiredCompetencies", []),
+                        "deliveryRoleId": dem.get("deliveryRoleId", ""),
+                    }
                     session.run(
                         """
                         MERGE (r:ResourceDemand {demandId: $demandId})
@@ -597,9 +623,10 @@ class Neo4jDataLoader:
                             r.probability = $probability,
                             r.priority = $priority,
                             r.status = $status,
-                            r.requiredCompetencies = $requiredCompetencies
+                            r.requiredCompetencies = $requiredCompetencies,
+                            r.deliveryRoleId = $deliveryRoleId
                     """,
-                        **dem,
+                        **dem_data,
                     )
                     created += 1
                 except Exception as e:
@@ -786,15 +813,26 @@ class Neo4jDataLoader:
             # TimeBuckets
             for tb in data.get("timeBuckets", []):
                 try:
+                    tb_data = {
+                        "bucketId": tb.get("bucketId"),
+                        "bucketType": tb.get("bucketType", tb.get("granularity", "WEEK")),
+                        "bucketStart": tb.get("bucketStart", tb.get("startDate")),
+                        "bucketEnd": tb.get("bucketEnd", tb.get("endDate")),
+                        "label": tb.get("label", f"W{tb.get('week', '')}"),
+                        "year": tb.get("year"),
+                        "week": tb.get("week"),
+                    }
                     session.run(
                         """
                         MERGE (t:TimeBucket {bucketId: $bucketId})
                         SET t.bucketType = $bucketType,
                             t.bucketStart = date($bucketStart),
                             t.bucketEnd = date($bucketEnd),
-                            t.label = $label
+                            t.label = $label,
+                            t.year = $year,
+                            t.week = $week
                     """,
-                        **tb,
+                        **tb_data,
                     )
                     created += 1
                 except Exception as e:

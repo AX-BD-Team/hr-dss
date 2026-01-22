@@ -51,7 +51,7 @@ def test_connection():
             result = session.run("MATCH ()-[r]->() RETURN count(r) AS rels")
             rels = result.single()["rels"]
 
-            print(f"\n현재 데이터베이스 상태:")
+            print("\n현재 데이터베이스 상태:")
             print(f"  - 노드 수: {nodes}")
             print(f"  - 관계 수: {rels}")
 

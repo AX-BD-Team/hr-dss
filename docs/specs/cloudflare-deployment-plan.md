@@ -1,7 +1,91 @@
 # HR-DSS Cloudflare 클라우드 배포 계획
 
-> 마지막 업데이트: 2025-01-21
-> 버전: 1.0
+> 마지막 업데이트: 2025-01-22
+> 버전: 1.1
+
+---
+
+## 0. 프로젝트 현황 및 배포 준비 상태
+
+### 0.1 구현 현황
+
+| 레이어 | 컴포넌트 | 상태 | 비고 |
+|--------|----------|------|------|
+| **Frontend** | Next.js App | ✅ 완료 | 8개 컴포넌트, 4개 페이지 |
+| **Frontend** | Cloudflare Pages 설정 | ✅ 완료 | `output: 'export'` 설정 |
+| **API Gateway** | Cloudflare Workers | ✅ 완료 | CORS, Rate Limiting, 프록시 |
+| **API Gateway** | wrangler.toml | ✅ 완료 | hr.minu.best 도메인 설정 |
+| **Backend** | Agent Runtime | ✅ 완료 | 6개 에이전트 구현 |
+| **Backend** | Ontology/KG | ✅ 완료 | 검증기, 데이터 로더, 쿼리 |
+| **Backend** | HITL Workflow | ✅ 완료 | 승인 워크플로우 |
+| **Backend** | FastAPI 라우터 | ❌ **미구현** | `backend/api/` 필요 |
+| **인프라** | Dockerfile | ✅ 완료 | Multi-stage 빌드 |
+| **인프라** | docker-compose | ✅ 완료 | 로컬 개발 환경 |
+| **인프라** | Railway 설정 | ✅ 완료 | railway.json, railway.toml |
+| **인프라** | GitHub Actions | ✅ 완료 | deploy-cloudflare.yml |
+| **테스트** | pytest | ✅ 완료 | Day 2-7 테스트 |
+
+### 0.2 파일 구조 현황
+
+```
+hr-dss/
+├── apps/web/                    # ✅ Frontend (Next.js 14)
+│   ├── components/              # 8개 컴포넌트
+│   │   ├── ConversationUI.tsx
+│   │   ├── OptionCompare.tsx
+│   │   ├── ExplanationPanel.tsx
+│   │   ├── GraphViewer.tsx
+│   │   ├── EvalDashboard.tsx
+│   │   ├── AgentEvalDashboard.tsx
+│   │   ├── OntologyScoreCard.tsx
+│   │   └── DataQualityReport.tsx
+│   ├── app/                     # 4개 페이지
+│   │   ├── page.tsx             # /
+│   │   ├── decisions/page.tsx   # /decisions
+│   │   ├── dashboard/page.tsx   # /dashboard
+│   │   └── graph/page.tsx       # /graph
+│   ├── next.config.js           # Cloudflare Pages 설정
+│   └── package.json
+├── backend/                      # ✅ Backend (FastAPI)
+│   ├── agent_runtime/
+│   │   ├── agents/              # 6개 에이전트
+│   │   ├── ontology/            # KG 검증/쿼리
+│   │   ├── workflows/           # HITL
+│   │   └── data_quality/        # 품질 검사
+│   ├── database/                # 모델 정의
+│   └── api/                     # ❌ 미구현 (필요!)
+│       └── main.py              # ❌ 미구현
+├── workers/api-gateway/          # ✅ Cloudflare Workers
+│   ├── src/index.ts
+│   ├── wrangler.toml
+│   └── package.json
+├── Dockerfile                    # ✅ 완료
+├── docker-compose.yml            # ✅ 완료
+├── railway.json                  # ✅ 완료
+├── railway.toml                  # ✅ 완료
+└── .github/workflows/
+    └── deploy-cloudflare.yml     # ✅ 완료
+```
+
+### 0.3 배포 차단 요소 (Blockers)
+
+| 순위 | 항목 | 영향 | 해결 방안 |
+|------|------|------|----------|
+| 🔴 1 | **FastAPI 라우터 미구현** | Backend 배포 불가 | `backend/api/main.py` 구현 |
+| 🟡 2 | GitHub Secrets 미설정 | CI/CD 실패 | 대시보드에서 설정 |
+| 🟡 3 | Cloudflare 계정 미설정 | 배포 불가 | 계정 생성 및 도메인 설정 |
+| 🟡 4 | Railway 프로젝트 미생성 | Backend 배포 불가 | 프로젝트 생성 |
+| 🟢 5 | Neo4j Aura 미연결 | KG 기능 제한 | 인스턴스 생성 |
+
+### 0.4 도메인 설정 현황
+
+| 항목 | 설정값 | 상태 |
+|------|--------|------|
+| Production Frontend | `https://hr.minu.best` | 📝 코드 설정 완료 |
+| Production API | `https://api.hr.minu.best` | 📝 코드 설정 완료 |
+| Staging Frontend | `https://staging.hr.minu.best` | 📝 코드 설정 완료 |
+| Staging API | `https://staging-api.hr.minu.best` | 📝 코드 설정 완료 |
+| Cloudflare DNS | minu.best | ⚠️ DNS 레코드 추가 필요 |
 
 ---
 
@@ -604,9 +688,82 @@ Permissions-Policy: geolocation=(), microphone=()
 
 ---
 
-## 부록 A: Cloudflare 설정 체크리스트
+## 부록 A: 배포 작업 계획
 
-### A.1 초기 설정
+### A.1 Phase 1: 코드 완성 (필수)
+
+| 우선순위 | 작업 | 담당 | 예상 소요 |
+|----------|------|------|----------|
+| 🔴 P0 | **FastAPI 라우터 구현** (`backend/api/main.py`) | 개발 | 2-4시간 |
+| 🔴 P0 | Health check 엔드포인트 (`/health`) | 개발 | 30분 |
+| 🔴 P0 | Agent API 엔드포인트 (`/api/v1/agents/*`) | 개발 | 2시간 |
+| 🟡 P1 | Decision API 엔드포인트 (`/api/v1/decisions/*`) | 개발 | 2시간 |
+| 🟡 P1 | Graph API 엔드포인트 (`/api/v1/graph/*`) | 개발 | 1시간 |
+
+**FastAPI 라우터 구조 (필요):**
+```
+backend/api/
+├── __init__.py
+├── main.py              # FastAPI app, 라우터 등록
+├── routers/
+│   ├── __init__.py
+│   ├── health.py        # /health
+│   ├── agents.py        # /api/v1/agents/*
+│   ├── decisions.py     # /api/v1/decisions/*
+│   └── graph.py         # /api/v1/graph/*
+└── dependencies.py      # 공통 의존성
+```
+
+### A.2 Phase 2: 인프라 설정 (수동)
+
+| 순서 | 작업 | 플랫폼 | 체크 |
+|------|------|--------|------|
+| 1 | Cloudflare 계정 확인/생성 | cloudflare.com | [ ] |
+| 2 | minu.best 도메인 Cloudflare 등록 확인 | Cloudflare DNS | [ ] |
+| 3 | GitHub Secrets 설정 | GitHub | [ ] |
+| 4 | Cloudflare Pages 프로젝트 생성 | Cloudflare | [ ] |
+| 5 | Railway 프로젝트 생성 | railway.app | [ ] |
+| 6 | Neo4j Aura 인스턴스 생성 | neo4j.com | [ ] |
+| 7 | Railway 환경 변수 설정 | Railway | [ ] |
+
+### A.3 Phase 3: 배포 및 검증
+
+| 순서 | 작업 | 검증 방법 |
+|------|------|----------|
+| 1 | Frontend 배포 (Pages) | `https://hr.minu.best` 접속 |
+| 2 | Workers 배포 | `https://api.hr.minu.best/health` |
+| 3 | Backend 배포 (Railway) | Workers → Railway 프록시 확인 |
+| 4 | DNS 레코드 추가 | dig 명령으로 확인 |
+| 5 | E2E 테스트 | 전체 플로우 확인 |
+
+### A.4 GitHub Secrets 설정
+
+```
+Repository → Settings → Secrets and variables → Actions
+```
+
+| Secret Name | 값 | 상태 |
+|-------------|-----|------|
+| `CLOUDFLARE_API_TOKEN` | Cloudflare API 토큰 | [ ] 미설정 |
+| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare 계정 ID | [ ] 미설정 |
+| `RAILWAY_TOKEN` | Railway 배포 토큰 | [ ] 미설정 |
+
+### A.5 DNS 레코드 설정 (Cloudflare)
+
+```
+Type    Name              Content                              Proxy
+─────────────────────────────────────────────────────────────────────
+CNAME   hr                hr-dss-web.pages.dev                 ✓
+CNAME   api.hr            hr-dss-api-gateway.workers.dev       ✓
+CNAME   staging.hr        hr-dss-web.pages.dev                 ✓
+CNAME   staging-api.hr    hr-dss-api-gateway-staging.workers.dev  ✓
+```
+
+---
+
+## 부록 B: Cloudflare 설정 체크리스트
+
+### B.1 초기 설정
 
 - [ ] Cloudflare 계정 생성
 - [ ] 도메인 추가 및 네임서버 변경
@@ -614,21 +771,21 @@ Permissions-Policy: geolocation=(), microphone=()
 - [ ] Pages 프로젝트 생성
 - [ ] Workers 프로젝트 생성
 
-### A.2 Zero Trust 설정
+### B.2 Zero Trust 설정 (선택, PoC 이후)
 
 - [ ] Access Application 생성
 - [ ] Identity Provider 연동 (SSO)
 - [ ] Access Policy 설정
 - [ ] Tunnel 생성 및 연결
 
-### A.3 보안 설정
+### B.3 보안 설정
 
 - [ ] WAF 규칙 활성화
 - [ ] Rate Limiting 설정
 - [ ] Bot Management 설정
 - [ ] Security Headers 설정
 
-### A.4 모니터링 설정
+### B.4 모니터링 설정
 
 - [ ] Analytics 대시보드 구성
 - [ ] Logpush 설정

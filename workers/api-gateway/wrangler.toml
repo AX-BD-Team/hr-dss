@@ -25,9 +25,11 @@ ALLOWED_ORIGINS = "http://localhost:3000"
 # 스테이징 환경
 [env.staging]
 name = "hr-dss-api-gateway-staging"
-routes = [
-  { pattern = "api-staging.minu.best/*", zone_name = "minu.best" }
-]
+workers_dev = true
+# routes는 Zone 권한이 있는 API 토큰 필요
+# routes = [
+#   { pattern = "api-staging.minu.best/*", zone_name = "minu.best" }
+# ]
 
 [env.staging.vars]
 ENVIRONMENT = "staging"
@@ -39,9 +41,10 @@ ALLOWED_ORIGINS = "https://staging.hr.minu.best"
 [env.production]
 name = "hr-dss-api-gateway"
 workers_dev = true
-routes = [
-  { pattern = "api-hr.minu.best/*", zone_name = "minu.best" }
-]
+# routes는 Zone 권한이 있는 API 토큰 필요
+# routes = [
+#   { pattern = "api-hr.minu.best/*", zone_name = "minu.best" }
+# ]
 
 [env.production.vars]
 ENVIRONMENT = "production"

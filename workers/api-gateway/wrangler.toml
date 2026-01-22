@@ -41,10 +41,9 @@ ALLOWED_ORIGINS = "https://staging.hr.minu.best"
 [env.production]
 name = "hr-dss-api-gateway"
 workers_dev = true
-# routes는 Zone 권한이 있는 API 토큰 필요
-# routes = [
-#   { pattern = "api-hr.minu.best/*", zone_name = "minu.best" }
-# ]
+routes = [
+  { pattern = "api-hr.minu.best/*", zone_name = "minu.best" }
+]
 
 [env.production.vars]
 ENVIRONMENT = "production"

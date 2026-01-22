@@ -8,10 +8,14 @@ export default function HomePage() {
   const [systemStatus, setSystemStatus] = React.useState<'loading' | 'healthy' | 'error'>('loading');
 
   React.useEffect(() => {
-    // API 상태 확인
-    fetch(`${API_URL}/health`)
+    // API 상태 확인 (타임아웃 3초)
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+    fetch(`${API_URL}/health`, { signal: controller.signal })
       .then((res) => res.ok ? setSystemStatus('healthy') : setSystemStatus('error'))
-      .catch(() => setSystemStatus('error'));
+      .catch(() => setSystemStatus('error'))
+      .finally(() => clearTimeout(timeoutId));
   }, []);
 
   return (
@@ -40,16 +44,21 @@ export default function HomePage() {
                 systemStatus === 'healthy'
                   ? 'badge-success'
                   : systemStatus === 'error'
-                  ? 'badge-error'
+                  ? 'badge-warning'
                   : 'badge-info'
               }`}
             >
               {systemStatus === 'healthy'
                 ? '정상 운영 중'
                 : systemStatus === 'error'
-                ? '연결 오류'
+                ? '백엔드 미연결'
                 : '확인 중...'}
             </span>
+            {systemStatus === 'error' && (
+              <span className="status-hint">
+                (프론트엔드 전용 모드로 실행 중)
+              </span>
+            )}
           </div>
         </div>
       </section>
@@ -147,6 +156,12 @@ export default function HomePage() {
           display: flex;
           align-items: center;
           gap: 8px;
+          flex-wrap: wrap;
+        }
+
+        .status-hint {
+          font-size: 12px;
+          color: var(--text-secondary);
         }
 
         .section-title {

@@ -26,7 +26,7 @@ ALLOWED_ORIGINS = "http://localhost:3000"
 [env.staging]
 name = "hr-dss-api-gateway-staging"
 routes = [
-  { pattern = "staging-api.hr.minu.best/*", zone_name = "minu.best" }
+  { pattern = "api-staging.minu.best/*", zone_name = "minu.best" }
 ]
 
 [env.staging.vars]
@@ -40,7 +40,7 @@ ALLOWED_ORIGINS = "https://staging.hr.minu.best"
 name = "hr-dss-api-gateway"
 workers_dev = true
 routes = [
-  { pattern = "api.hr.minu.best/*", zone_name = "minu.best" }
+  { pattern = "api-hr.minu.best/*", zone_name = "minu.best" }
 ]
 
 [env.production.vars]

@@ -15,33 +15,37 @@ enabled = true
 # 개발 환경 설정
 [env.development]
 name = "hr-dss-api-gateway-dev"
-vars = { ENVIRONMENT = "development", LOG_LEVEL = "debug" }
 
 [env.development.vars]
+ENVIRONMENT = "development"
+LOG_LEVEL = "debug"
 BACKEND_URL = "http://localhost:8000"
 ALLOWED_ORIGINS = "http://localhost:3000"
 
 # 스테이징 환경
 [env.staging]
 name = "hr-dss-api-gateway-staging"
-vars = { ENVIRONMENT = "staging", LOG_LEVEL = "info" }
 routes = [
   { pattern = "staging-api.hr.minu.best/*", zone_name = "minu.best" }
 ]
 
 [env.staging.vars]
+ENVIRONMENT = "staging"
+LOG_LEVEL = "info"
 BACKEND_URL = "https://hr-dss-staging.up.railway.app"
 ALLOWED_ORIGINS = "https://staging.hr.minu.best"
 
 # 프로덕션 환경
 [env.production]
 name = "hr-dss-api-gateway"
-vars = { ENVIRONMENT = "production", LOG_LEVEL = "warn" }
+workers_dev = true
 routes = [
   { pattern = "api.hr.minu.best/*", zone_name = "minu.best" }
 ]
 
 [env.production.vars]
+ENVIRONMENT = "production"
+LOG_LEVEL = "warn"
 BACKEND_URL = "https://hr-dss.up.railway.app"
 ALLOWED_ORIGINS = "https://hr.minu.best"
 
@@ -68,8 +72,4 @@ ALLOWED_ORIGINS = "https://hr.minu.best"
 # name = "SESSIONS"
 # class_name = "SessionManager"
 
-[build]
-command = "npm run build"
-
-[site]
-bucket = "./dist"
+# 빌드 설정 없음 - wrangler가 자동으로 TypeScript 처리

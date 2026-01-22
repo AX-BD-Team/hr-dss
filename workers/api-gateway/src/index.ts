@@ -9,7 +9,7 @@
  * - 인증 토큰 검증
  */
 
-import { Router, IRequest } from 'itty-router';
+import { AutoRouter, IRequest } from 'itty-router';
 
 // 환경 변수 타입 정의
 export interface Env {
@@ -28,7 +28,7 @@ interface RateLimit {
 }
 
 // 라우터 생성
-const router = Router();
+const router = AutoRouter();
 
 // =============================================================================
 // 미들웨어
@@ -321,6 +321,6 @@ async function logRequest(env: Env, entry: LogEntry): Promise<void> {
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    return router.handle(request, env, ctx);
+    return router.fetch(request, env, ctx);
   },
 };

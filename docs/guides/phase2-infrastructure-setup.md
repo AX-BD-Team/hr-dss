@@ -1,7 +1,19 @@
 # Phase 2: 인프라 설정 가이드
 
-> 마지막 업데이트: 2025-01-22
+> 마지막 업데이트: 2026-01-22
 > 예상 소요: 1-2시간
+
+---
+
+## 현재 상태 (2026-01-22)
+
+| 항목 | 상태 | URL |
+|------|------|-----|
+| Cloudflare Pages | ✅ 완료 | https://hr.minu.best |
+| Cloudflare Pages (Staging) | ✅ 완료 | https://staging.hr.minu.best |
+| Cloudflare Workers | ✅ 완료 | https://api-hr.minu.best |
+| Railway Backend | 🔄 대기 | - |
+| Neo4j Aura | ❌ 미설정 | - |
 
 ---
 
@@ -14,17 +26,17 @@
 ### 1.2 설정 순서
 
 ```
-1. Cloudflare 계정 확인
+1. Cloudflare 계정 확인        ✅ 완료
        ↓
-2. GitHub Secrets 설정
+2. GitHub Secrets 설정         🔄 진행중
        ↓
-3. Cloudflare Pages 프로젝트 생성
+3. Cloudflare Pages 프로젝트   ✅ 완료
        ↓
-4. Railway 프로젝트 생성
+4. Railway 프로젝트 생성       🔄 대기
        ↓
-5. Neo4j Aura 인스턴스 생성
+5. Neo4j Aura 인스턴스 생성    ❌ 미시작
        ↓
-6. DNS 레코드 설정
+6. DNS 레코드 설정             ✅ 완료
 ```
 
 ### 1.3 필요한 계정
@@ -94,13 +106,17 @@ Account ID 예시: abcd1234567890efghij1234567890kl
 5. Environment variables (Production):
 
 ```
-NEXT_PUBLIC_API_URL = https://api.hr.minu.best
+NEXT_PUBLIC_API_URL = https://api-hr.minu.best
 NEXT_PUBLIC_ENVIRONMENT = production
 ```
 
 6. **Save and Deploy**
 
-### 2.5 Workers 배포 (첫 배포)
+> ✅ **완료**: Pages 프로젝트 `hr-dss-web` 생성 및 배포됨
+> - Production: https://hr.minu.best
+> - Staging: https://staging.hr.minu.best
+
+### 2.5 Workers 배포 (첫 배포) ✅ 완료
 
 ```bash
 # 로컬에서 Workers 배포
@@ -109,6 +125,13 @@ npm install
 wrangler login
 wrangler deploy --env production
 ```
+
+**배포 결과:**
+- Workers.dev: `https://hr-dss-api-gateway.sinclair-account.workers.dev`
+- 커스텀 도메인: `https://api-hr.minu.best`
+
+> ⚠️ Workers 서브도메인은 계정마다 다릅니다. `wrangler whoami`로 확인 후
+> `wrangler subdomain`으로 서브도메인을 조회하세요.
 
 ---
 
@@ -252,14 +275,19 @@ postgresql://user:pass@ep-xxx.us-east-1.aws.neon.tech/hr_dss?sslmode=require
 
 Cloudflare Dashboard → `minu.best` → **DNS** → **Add record**
 
-| Type  | Name             | Content                                  | Proxy     |
-| ----- | ---------------- | ---------------------------------------- | --------- |
-| CNAME | `hr`             | `hr-dss-web.pages.dev`                   | ✓ Proxied |
-| CNAME | `api.hr`         | `hr-dss-api-gateway.workers.dev`         | ✓ Proxied |
-| CNAME | `staging.hr`     | `hr-dss-web.pages.dev`                   | ✓ Proxied |
-| CNAME | `staging-api.hr` | `hr-dss-api-gateway-staging.workers.dev` | ✓ Proxied |
+> ⚠️ **중요**: Cloudflare Universal SSL은 1단계 서브도메인(`*.minu.best`)만 커버합니다.
+> 따라서 `api.hr.minu.best` 대신 `api-hr.minu.best`를 사용합니다.
 
-> ⚠️ Pages/Workers 배포 후 실제 `*.pages.dev` / `*.workers.dev` 주소로 업데이트
+| Type  | Name          | Content                                              | Proxy     | 상태 |
+| ----- | ------------- | ---------------------------------------------------- | --------- | ---- |
+| CNAME | `hr`          | `hr-dss-web.pages.dev`                               | ✓ Proxied | ✅   |
+| CNAME | `staging`     | `hr-dss-web.pages.dev`                               | ✓ Proxied | ✅   |
+| CNAME | `api-hr`      | `hr-dss-api-gateway.sinclair-account.workers.dev`    | ✓ Proxied | ✅   |
+| CNAME | `api-staging` | `hr-dss-api-gateway.sinclair-account.workers.dev`    | ✓ Proxied | 🔄   |
+
+**실제 배포 URL:**
+- Pages: `hr-dss-web.pages.dev`
+- Workers: `hr-dss-api-gateway.sinclair-account.workers.dev`
 
 ### 6.2 SSL/TLS 설정
 
@@ -284,37 +312,58 @@ Cloudflare Dashboard → `minu.best` → **DNS** → **Add record**
 # Frontend 확인
 curl -I https://hr.minu.best
 
-# API Gateway 확인
-curl https://api.hr.minu.best/health
+# API Gateway 확인 (1단계 서브도메인 사용)
+curl https://api-hr.minu.best/health
 
-# Backend 확인 (Workers 경유)
-curl https://api.hr.minu.best/api
+# API 정보 확인
+curl https://api-hr.minu.best/api
+
+# Backend 확인 (Workers 경유 - Railway 배포 후)
+curl https://api-hr.minu.best/api/v1/health
 ```
 
 ### 7.2 예상 응답
 
-**Frontend** (`https://hr.minu.best`):
+**Frontend** (`https://hr.minu.best`): ✅ 확인됨
 
 ```
-HTTP/2 200
-content-type: text/html
+HTTP/1.1 200 OK
+content-type: text/html; charset=utf-8
 ```
 
-**API Gateway** (`https://api.hr.minu.best/health`):
+**API Gateway** (`https://api-hr.minu.best/health`): ✅ 확인됨
 
 ```json
 {
   "status": "healthy",
   "service": "hr-dss-api-gateway",
-  "timestamp": "2025-01-22T..."
+  "timestamp": "2026-01-22T04:16:46.770Z"
 }
 ```
 
-**Backend API** (`https://api.hr.minu.best/api`):
+**API Info** (`https://api-hr.minu.best/api`): ✅ 확인됨
 
 ```json
 {
-  "name": "HR-DSS API",
+  "name": "HR-DSS API Gateway",
+  "version": "0.1.0",
+  "environment": "production",
+  "endpoints": {
+    "health": "/health",
+    "api": "/api/v1/*",
+    "agents": "/api/v1/agents/*",
+    "decisions": "/api/v1/decisions/*",
+    "graph": "/api/v1/graph/*"
+  }
+}
+```
+
+**Backend API** (`https://api-hr.minu.best/api/v1/health`): 🔄 Railway 배포 필요
+
+```json
+{
+  "status": "healthy",
+  "service": "hr-dss-api",
   "version": "0.2.0",
   "environment": "production"
 }
@@ -326,12 +375,12 @@ content-type: text/html
 
 ### 8.1 Cloudflare
 
-- [ ] 계정 로그인 확인
-- [ ] `minu.best` 도메인 등록 확인
-- [ ] API Token 생성
-- [ ] Account ID 확인
-- [ ] Pages 프로젝트 생성 (`hr-dss-web`)
-- [ ] Workers 첫 배포
+- [x] 계정 로그인 확인
+- [x] `minu.best` 도메인 등록 확인
+- [ ] API Token 생성 (CI/CD용)
+- [x] Account ID 확인: `02ae9a2bead25d99caa8f3258b81f568`
+- [x] Pages 프로젝트 생성 (`hr-dss-web`)
+- [x] Workers 첫 배포 (`hr-dss-api-gateway`)
 
 ### 8.2 GitHub
 
@@ -354,10 +403,12 @@ content-type: text/html
 
 ### 8.5 DNS
 
-- [ ] `hr` CNAME 레코드 추가
-- [ ] `api.hr` CNAME 레코드 추가
-- [ ] SSL/TLS Full (strict) 설정
-- [ ] DNS 전파 확인 (최대 24시간)
+- [x] `hr` CNAME 레코드 추가 → https://hr.minu.best ✅
+- [x] `staging` CNAME 레코드 추가 → https://staging.hr.minu.best ✅
+- [x] `api-hr` CNAME 레코드 추가 → https://api-hr.minu.best ✅
+- [ ] `api-staging` CNAME 레코드 추가
+- [x] SSL/TLS 설정 확인
+- [x] DNS 전파 확인
 
 ---
 
@@ -399,6 +450,41 @@ wrangler deploy --env production
 1. DNS 전파 대기 (최대 24-48시간)
 2. `dig hr.minu.best` 로 확인
 3. Cloudflare Proxy 상태 확인 (주황색 구름)
+
+### 9.5 SSL 인증서 오류 (2단계 서브도메인)
+
+**증상**: `api.hr.minu.best` 접속 시 SSL handshake 실패
+**원인**: Cloudflare Universal SSL은 `*.minu.best` (1단계)만 커버
+
+**해결**:
+1. **권장**: 1단계 서브도메인 사용 (`api-hr.minu.best`)
+2. **대안**: Advanced Certificate Manager 구매 (유료)
+
+```bash
+# 변경 전 (SSL 미지원)
+api.hr.minu.best     # 2단계 서브도메인
+
+# 변경 후 (SSL 지원)
+api-hr.minu.best     # 1단계 서브도메인
+```
+
+### 9.6 Workers itty-router 오류
+
+**증상**: Error 1101 - Worker threw exception
+**원인**: itty-router v5 API 변경
+
+**해결**:
+```typescript
+// 변경 전 (v4)
+import { Router } from 'itty-router';
+const router = Router();
+router.handle(request, env, ctx);
+
+// 변경 후 (v5)
+import { AutoRouter } from 'itty-router';
+const router = AutoRouter();
+router.fetch(request, env, ctx);
+```
 
 ---
 

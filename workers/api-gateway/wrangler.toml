@@ -49,7 +49,7 @@ workers_dev = true
 [env.production.vars]
 ENVIRONMENT = "production"
 LOG_LEVEL = "warn"
-BACKEND_URL = "https://hr-dss.up.railway.app"
+BACKEND_URL = "https://hr-dssweb-production.up.railway.app"
 ALLOWED_ORIGINS = "https://hr.minu.best"
 
 # Rate Limiting (Paid Plan 필요)
